@@ -9,35 +9,65 @@ export async function POST(req: Request) {
     tags.push('mythra-lead');
     if (d?.persona) tags.push(`mythra-persona-${d.persona.toLowerCase()}`);
     
+    const locationId = 'AeIZDAxEhTypA4Eja6j6';
+    const apiKey = 'pit-bc2b732d-2bb3-459e-b6aa-a544f50bb35e';
+    
     const payload = {
+      locationId: locationId,
       firstName: contact.firstName || '',
       lastName: contact.lastName || '',
-      name: `${contact.firstName || ''} ${contact.lastName || ''}`.trim(),
       email: contact.email || '',
       phone: contact.whatsapp || '',
       companyName: contact.company || '',
       website: contact.website || '',
       tags: tags,
-      source: 'MYTHRA Discovery Funnel',
-      customField: {
-        'Message': contact.message || '',
-        'Recommended Path': r || '',
-        'Score': String(i?.score || 0)
-      }
+      source: 'MYTHRA Discovery Funnel'
     };
 
-    // Push to GoHighLevel API v1
-    const ghlRes = await fetch('https://rest.gohighlevel.com/v1/contacts/', {
+    // 1. Create Contact in GHL v2
+    const ghlRes = await fetch('https://services.leadconnectorhq.com/contacts/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer pit-bc2b732d-2bb3-459e-b6aa-a544f50bb35e'
+        'Authorization': `Bearer ${apiKey}`,
+        'Version': '2021-07-28'
       },
       body: JSON.stringify(payload)
     });
 
     if (!ghlRes.ok) {
-      console.error('GHL Error:', await ghlRes.text());
+      console.error('GHL Contact Error:', await ghlRes.text());
+      throw new Error('Failed to create contact');
+    }
+
+    const contactData = await ghlRes.json();
+    const contactId = contactData.contact?.id;
+
+    // 2. Create Opportunity in GHL v2
+    if (contactId) {
+      const oppPayload = {
+        locationId: locationId,
+        pipelineId: 'upL94xEQbDfaAiIRlyiD',
+        pipelineStageId: '1565480e-e873-4bc4-89b5-c148dc986422',
+        name: `MYTHRA Lead - ${contact.firstName || 'Unknown'} ${contact.lastName || ''}`.trim(),
+        status: 'open',
+        contactId: contactId,
+        monetaryValue: 0
+      };
+
+      const oppRes = await fetch('https://services.leadconnectorhq.com/opportunities/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`,
+          'Version': '2021-07-28'
+        },
+        body: JSON.stringify(oppPayload)
+      });
+      
+      if (!oppRes.ok) {
+         console.error('GHL Opp Error:', await oppRes.text());
+      }
     }
 
     return new Response(JSON.stringify({ success: true }), {
