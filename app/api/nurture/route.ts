@@ -1,50 +1,53 @@
 export async function POST(req: Request) {
   try {
     const data = await req.json();
-    const { d, i, r } = data; // d = draft, i = intelligence, r = recommendation
+    const { d, i, action, contactId } = data; // d = draft, i = intelligence
     const contact = d?.contact || {};
-    
-    // Construct GoHighLevel payload
-    const tags = i?.tags || [];
-    tags.push('mythra-lead');
-    if (d?.persona) tags.push(`mythra-persona-${d.persona.toLowerCase()}`);
     
     const locationId = 'AeIZDAxEhTypA4Eja6j6';
     const apiKey = 'pit-bc2b732d-2bb3-459e-b6aa-a544f50bb35e';
-    
-    const payload = {
-      locationId: locationId,
-      firstName: contact.firstName || '',
-      lastName: contact.lastName || '',
-      email: contact.email || '',
-      phone: contact.whatsapp || '',
-      companyName: contact.company || '',
-      website: contact.website || '',
-      tags: tags,
-      source: 'MYTHRA Discovery Funnel'
-    };
 
-    // 1. Create Contact in GHL v2
-    const ghlRes = await fetch('https://services.leadconnectorhq.com/contacts/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
-        'Version': '2021-07-28'
-      },
-      body: JSON.stringify(payload)
-    });
+    if (action === 'contact') {
+      const tags = i?.tags || [];
+      tags.push('mythra-lead');
+      if (d?.persona) tags.push(`mythra-persona-${d.persona.toLowerCase()}`);
+      
+      const payload = {
+        locationId: locationId,
+        firstName: contact.firstName || '',
+        lastName: contact.lastName || '',
+        email: contact.email || '',
+        phone: contact.whatsapp || '',
+        companyName: contact.company || '',
+        website: contact.website || '',
+        tags: tags,
+        source: 'MYTHRA Discovery Funnel'
+      };
 
-    if (!ghlRes.ok) {
-      console.error('GHL Contact Error:', await ghlRes.text());
-      throw new Error('Failed to create contact');
+      const ghlRes = await fetch('https://services.leadconnectorhq.com/contacts/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`,
+          'Version': '2021-07-28'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!ghlRes.ok) {
+        console.error('GHL Contact Error:', await ghlRes.text());
+        throw new Error('Failed to create contact');
+      }
+
+      const contactData = await ghlRes.json();
+      return new Response(JSON.stringify({ success: true, contactId: contactData.contact?.id }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
 
-    const contactData = await ghlRes.json();
-    const contactId = contactData.contact?.id;
-
-    // 2. Create Opportunity in GHL v2
-    if (contactId) {
+    if (action === 'opportunity') {
+      if (!contactId) throw new Error('Missing contactId');
       const oppPayload = {
         locationId: locationId,
         pipelineId: 'upL94xEQbDfaAiIRlyiD',
@@ -67,13 +70,16 @@ export async function POST(req: Request) {
       
       if (!oppRes.ok) {
          console.error('GHL Opp Error:', await oppRes.text());
+         throw new Error('Failed to create opportunity');
       }
+
+      return new Response(JSON.stringify({ success: true }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
 
-    return new Response(JSON.stringify({ success: true }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' }
-    });
+    return new Response(JSON.stringify({ error: 'Invalid action' }), { status: 400 });
   } catch (err) {
     console.error('API Error:', err);
     return new Response(JSON.stringify({ error: 'Failed to process lead' }), {
