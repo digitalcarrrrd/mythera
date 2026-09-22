@@ -1,126 +1,123 @@
-# vinext-starter
+# MYTHRA — AI-Native Film & Drama Studio
 
-A clean full-stack starter running on [vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and Drizzle support.
+> **"Stories anyone can enter. Studios anyone can build. Films brands can own."**
 
-## Prerequisites
+MYTHRA is an AI-native film and drama studio. AI is the production medium; storytelling, IP, audience psychology, localization, and distribution are the business.
 
-- Node.js `>=22.13.0`
-- Portable: Windows, macOS, or Linux; no Bash required
-- Managed Linux: managed Linux runtime with Bash, `flock`, `curl`, `sha256sum`, and GNU `timeout`
-- Git is required only for publishing
+---
 
-## Sites Lifecycle
+## 🏛️ Brand & Route Architecture
 
-The Sites initializer copies the shared starter and selects managed-linux only when `SITES_MANAGED_LINUX_CONTAINER=1`; otherwise it selects portable. It saves the selection only in ignored `.sites-runtime/execution-profile.json`. Both profiles copy/configure first, then use the plugin's separate `install-dependencies.mjs` step to measure installation independently. Edit source under `app/` and follow the Sites skill for installation, preview, builds, and publishing.
+All public routes, interactive conversion funnels, and protected studio operations live in a unified Next.js App Router architecture:
 
-Whenever reopening or moving a checkout, run `node <plugin-root>/scripts/configure-execution-profile.mjs` before project commands. Profile changes do not alter tracked source or require reinstalling otherwise-valid dependencies; restart an existing preview to use the new selection. Do not commit or upload `.sites-runtime/`.
+| Route | Purpose & Description |
+| :--- | :--- |
+| `/` | **Master Brand Router** — Hero, verified proof teaser, 3 commercial doors, the story engine model, and final CTA. |
+| `/you` | **MYTHRA YOU** — Personalized cinema landing page, 6 emotional use cases, filterable gallery, 4-tier pricing ladder, likeness trust panel, and FAQ. |
+| `/you/start` | **Interactive YOU Funnel** — Step-by-step questionnaire, format selection, likeness pre-check, tailored recommendation, and checkout trigger. |
+| `/you/onboarding` | **Secure Post-Order Onboarding** — Multi-step likeness & voice consent contracts, encrypted uploaders for reference photos/audio, story facts, pronunciation, and deletion controls. |
+| `/filmmaker` | **MYTHRA FILMMAKER** — Education and one-person studio building landing page, 6-stage transformation pipeline, curriculum ladder (Blueprint, Starter, Cohort, Accelerator), and FAQ. |
+| `/filmmaker/start` | **Filmmaker Diagnostic Quiz** — Ambition, experience level, biggest bottleneck, 90-day milestone, and tailored program routing. |
+| `/studios` | **MYTHRA STUDIOS** — B2B production, branded drama, and IP adaptation. 5 intent pathways, starting at $7,500+, capabilities, and engagement models. |
+| `/studios/start` | **B2B Branching Funnel** — Dynamic branching by intent (Brand, IP, Audience, Production, Finance) with automated lead scoring and tailored next steps. |
+| `/genesis` | **Genesis Case Study** — Scroll narrative of the audited 28-minute first-film experiment produced in <72 hours for <$1,000 compute. |
+| `/method` | **The Drama Method** — Interactive 12-step story architecture exploration from audience psychology to global distribution. |
+| `/stories` | **Stories & Originals Portfolio** — Filterable gallery across Fantasy, Sci-fi, Founder, Romance, Wedding, and Drama with explicit permission labels. |
+| `/legal/likeness-consent` | **Likeness & Voice Consent Terms** — Formal biometric policy, non-training guarantees, minor protection, and revocation mechanisms. |
+| `/legal/privacy` | **Biometric Privacy Policy** — GDPR/CCPA compliant retention and deletion windows. |
+| `/legal/terms` | **Terms of Service** — Creative stylization notices, revision policies, and commercial licensing tiers. |
+| `/admin/*` | **Studio Operations Suite** — Dashboard, Leads & Scoring, Orders, Active Productions, Proof Verification Manager, Offers Editor, CRM Sync Logs, and Funnel Simulator. |
 
-This starter does not use `wrangler.jsonc`.
+---
 
-`install:ci` runs `npm ci` once against the shared lockfile, disables parent-workspace discovery, and includes required dev/optional dependencies despite production/omit settings. Sharp defaults to prebuilt binaries unless explicitly configured otherwise. Do not overlap installers.
+## 🎯 Offer Architecture & Pricing Catalog
 
-- **Portable:** Preserve host HOME, npm cache, registry, proxy, temporary paths, retry/concurrency settings, and lifecycle-script policy. Use `--prefer-offline --no-audit --no-fund`.
-- **Managed Linux:** Use the existing project-local HOME/cache/tmp setup and Linux install lock, tarball preflight, and timeout. Restore the image-seeded npm cache only when its lockfile hash matches; retain network fallback. Builds keep their existing timeout. These helpers are not invoked by the portable profile.
+Centralized in [`lib/offers.ts`](file:///d:/mythera/lib/offers.ts) and editable via `/admin/offers`:
 
-`scripts/sites-env.mjs` preserves the caller's HOME, npm cache, proxy, XDG, and temporary-directory configuration while defaulting Wrangler and Miniflare state to the checkout. If npm reports an unwritable cache, select a writable path with `npm_config_cache` for that install. The `dev` and `start` scripts also keep Wrangler logs inside the checkout. Generated `.sites-runtime/` and `.wrangler/` directories are disposable and ignored by Git.
+### 1. MYTHRA YOU (Personalized Cinema)
+* **MYTHRA MOMENT ($79)**: 20–30s template-led scene, 1 authorized star, 1080p master, 1 revision, 3–5 business days. No cloned voice.
+* **MYTHRA TRAILER ($299 · Recommended Hero)**: 60–90s bespoke movie trailer, custom premise, 1 lead star (face + optional voice clone), 5–8 story beats, score & sound mix, 1080p + 9:16 vertical cut, 2 revisions, 7–10 business days.
+* **MYTHRA STORY (From $1,500)**: 3–5 min bespoke short film, story interview, custom screenplay/storyboard, 1–2 stars, 50% deposit after feasibility review, 2–4 weeks.
+* **MYTHRA LEGACY (From $5,000)**: 8–15 min premium life/founder/wedding heirloom documentary, dedicated Creative Director research call, milestone billing.
 
-On portable, `npm run dev` uses `vinext dev` with HMR, starting at port 5173. Vinext records the running server in ignored `.vinext/` state, rejects an ordinary duplicate launch, and recovers stale state after a stopped process; exactly simultaneous starts can race. Pass `--port <port>` or `--hostname <host>` after `npm run dev --` when needed; keep portable previews on loopback.
+### 2. MYTHRA FILMMAKER (Education & Studio Pipeline)
+* **THE ONE-PERSON STUDIO BLUEPRINT (Free)**: 45–60 min intensive workshop breakdown of the 12-Step Drama Method.
+* **MYTHRA STARTER ($149)**: Self-paced 8-module fundamentals, templates, prompt bibles, 1-year access.
+* **MYTHRA FILMMAKER COHORT ($749 Founding / $997 Standard · Recommended Hero)**: 6-week live production sprint with weekly reviews; finish and publish 1 portfolio film or trailer.
+* **MYTHRA STUDIO ACCELERATOR (From $2,500)**: Application-only 8–12 week mentorship for working creators, agencies, and boutique teams.
 
-For browser QA on managed Linux, use `sites-preview start`. The project's dev script runs Vite and accepts the supervisor's `--host 0.0.0.0 --port 4173 --strictPort` arguments. The internal browser uses `http://terminal.local:4173/`; it is not a user-facing URL. The supervisor owns the preview lifecycle. The ignored local profile survives the supervisor's cleared process environment.
+### 3. MYTHRA STUDIOS (B2B Production & IP)
+* *Public Anchor Rule:* "Studio engagements begin at $7,500. Original IP and long-form productions are scoped individually."
+* **STORY CONCEPT SPRINT ($2,500)**: Strategic story opportunity mapping, core premise, and visual treatment. (100% credited toward productions over $15K contracted within 30 days).
+* **SOCIAL DRAMA PILOT (From $7,500)**: 45–90s premium branded story pilot or proof-of-concept.
+* **BRANDED SHORT FILM (From $15,000)**: 3–5 min original standalone cinema film with brand alignment.
+* **EPISODIC STORY SYSTEM (From $30,000)**: Series format bible, pilot + 2 episodes, reusable digital asset system.
+* **LONG-FORM / ORIGINAL IP / CO-PRODUCTION (From $50,000)**: Custom milestone finance, global localization, and distribution agreements.
 
-The portable profile simulates ChatGPT sign-in only for loopback development requests. Visit `/signin-with-chatgpt?return_to=/` to sign in as `local_seedy` (`seedy@sites.test`, display name `Seedy`) and `/signout-with-chatgpt?return_to=/` to sign out. The development cookie preserves that identity across server restarts. Mock auth is disabled in the managed-linux profile and is not included in production builds; hosted authentication remains dispatch-owned.
+---
 
-The Worker uses `vinext/server/fetch-handler`, including Vinext's config-aware image handling. After building, `npm start` runs that Worker locally through Wrangler on `127.0.0.1`, sharing `.wrangler/state` with dev preview and local D1 migrations; it does not deploy the site or simulate sign-in. Use the URL printed by the server. Pass `npm start -- --port <port>` to select a different built-preview port.
+## 🛡️ Truth & Proof Controls Enforcement
 
-Local previews use Miniflare's placeholder `Request.cf` metadata without a network lookup. Set `CLOUDFLARE_CF_FETCH_ENABLED=true` to opt into fetching preview metadata; this setting does not change hosted request metadata.
+Centralized in [`lib/proof.ts`](file:///d:/mythera/lib/proof.ts):
 
-Local tool usage metrics are disabled by default. Set `WRANGLER_SEND_METRICS=true` to opt in.
+* **Enforcement Rule:** Unverified claims are strictly hidden from production public display unless `verified: true` and an audited evidence reference code is attached.
+* **Attribution Separation:** Official owned channel performance (50M verified views in 7 days on Episode 1 alone, 4M Facebook) is strictly isolated from licensed partner views (5M) and observed third-party fan reposts (300M+). Third-party reach is explicitly labeled with methodology notes.
 
-## Included Shape
+---
 
-- edit site code under `app/`
-- `app/chatgpt-auth.ts` provides optional dispatch-owned ChatGPT sign-in helpers
-- `.openai/hosting.json` declares optional Sites D1 and R2 bindings
-- `vite.config.ts` simulates declared bindings for local development
-- `db/index.ts` reads the D1 binding from the Cloudflare Worker environment
-- `db/schema.ts` starts intentionally empty
-- `@cloudflare/workers-types` provides Worker types; `cloudflare-env.d.ts` declares optional `DB`/`BUCKET` bindings—update these declarations if binding names change
-- `examples/d1/` contains an optional D1 example surface
-- `drizzle.config.ts` supports local migration generation when needed
+## 🧠 Lead Scoring & GoHighLevel (GHL) CRM Integration
 
-## Workspace Auth Headers
+Centralized in [`lib/lead-scoring.ts`](file:///d:/mythera/lib/lead-scoring.ts) and [`lib/ghl-mapping.ts`](file:///d:/mythera/lib/ghl-mapping.ts):
 
-Signed-in visitors receive both `oai-authenticated-user-id` and `oai-authenticated-user-email`. Private Sites require every visitor to sign in; public Sites may also have anonymous visitors, for whom neither header is present.
+### Scoring Matrix:
+* `+30 pts`: Studio Budget $30K+
+* `+20 pts`: Studio Budget $15K–$30K
+* `+20 pts`: Ready within 60 days
+* `+20 pts`: Distribution audience 10M+
+* `+20 pts`: Strategic distribution or co-production fit
+* `+15 pts`: Script, brief, or rights already prepared
+* `+15 pts`: Executive decision-maker role
+* `+15 pts`: Verified corporate domain email & company
+* `+10 pts`: Detailed project message (>60 characters)
 
-The user ID is stable for the same user on the same Site and different across Sites. Use it as the durable user key; use email and name for display or contact purposes.
+### Qualification Categories:
+* **0–24 pts (`nurture`)**: Automated nurture track, educational blueprints, and content updates.
+* **25–49 pts (`qualified`)**: Standard queue review and discovery call dispatch.
+* **50+ pts (`priority`)**: Immediate executive creative director routing and priority proposal queue.
 
-SIWC-authenticated workspace sites may also receive `oai-authenticated-user-full-name` when the user's SIWC profile has a non-empty `name` claim. The full-name value is percent-encoded UTF-8 and is accompanied by `oai-authenticated-user-full-name-encoding: percent-encoded-utf-8`.
+### Active GHL Tags:
+`MYTHRA_YOU`, `MYTHRA_YOU_TRAILER`, `MYTHRA_YOU_BESPOKE`, `MYTHRA_FILMMAKER`, `MYTHRA_FILMMAKER_BEGINNER`, `MYTHRA_FILMMAKER_COHORT`, `MYTHRA_FILMMAKER_ACCELERATOR`, `MYTHRA_STUDIOS`, `MYTHRA_STUDIOS_BRAND`, `MYTHRA_STUDIOS_IP`, `MYTHRA_STUDIOS_MEDIA`, `MYTHRA_STUDIOS_FINANCE`, `MYTHRA_PRIORITY`, `MYTHRA_QUALIFIED`, `MYTHRA_NURTURE`.
 
-Treat the full name as optional and fall back to email when it is absent:
+---
 
-```tsx
-import { headers } from "next/headers";
+## 🔒 Security & Biometric Likeness Protections
 
-export default async function Home() {
-  const requestHeaders = await headers();
-  const userId = requestHeaders.get("oai-authenticated-user-id");
-  const email = requestHeaders.get("oai-authenticated-user-email");
-  const encodedFullName = requestHeaders.get("oai-authenticated-user-full-name");
-  const fullName =
-    encodedFullName &&
-    requestHeaders.get("oai-authenticated-user-full-name-encoding") ===
-      "percent-encoded-utf-8"
-      ? decodeURIComponent(encodedFullName)
-      : null;
+1. **Explicit Multi-Step Consent**: Separate signatures for likeness generation and voice cloning.
+2. **Private Storage Architecture**: Raw biometric reference files are stored exclusively in private encrypted buckets with short-lived signed URLs (15-minute expiry). Raw files are never exposed in public buckets, URLs, logs, or analytics.
+3. **Zero Model Training by Default**: Public AI model training on customer uploads is strictly disabled by default.
+4. **Automated Purging**: Customers choose automated purging after 30 days or immediate post-delivery deletion.
 
-  const displayName = fullName ?? email;
-  // ...
-}
+---
+
+## 🚀 Development & Build Commands
+
+```bash
+# Type check all TypeScript files
+npx tsc --noEmit
+
+# Run Next.js / Vinext build
+node scripts/run-framework.mjs build
+
+# Start local dev server
+node scripts/run-framework.mjs dev
 ```
 
-## Optional Dispatch-Owned ChatGPT Sign-In
+---
 
-Import the ready-to-use helpers from `app/chatgpt-auth.ts` when the site needs optional or required ChatGPT sign-in:
+## 🧪 Admin Simulator & Debugger
 
-- Use `getChatGPTUser()` for optional signed-in UI.
-- Use the returned `userId` as the stable user key for user-owned records; do not use email as a durable identifier.
-- Use `requireChatGPTUser(returnTo)` for server-rendered pages that should send anonymous visitors through Sign in with ChatGPT.
-- In a Server Component, start sign-in with `<a href={chatGPTSignInPath(returnTo)} target="_top">`. The auth helper module is server-only; do not import it into a Client Component.
-- Do not use `fetch`, XHR, a client-side router, or a framework link that can prefetch the sign-in route. SIWC must start as a top-level navigation.
-- Never request the AuthAPI authorization endpoint directly. The dispatch-owned `/signin-with-chatgpt` route must start the SIWC flow.
-- Use `chatGPTSignOutPath(returnTo)` for browser sign-out links or actions.
-- Pass a same-origin relative `returnTo` path for the destination after sign-in or sign-out. The helper validates and safely encodes it.
-- Mark protected pages with `export const dynamic = "force-dynamic"` because they depend on per-request identity headers.
-
-Dispatch owns `/signin-with-chatgpt`, `/signout-with-chatgpt`, `/callback`, the OAuth cookies, and identity header injection. Do not implement app routes for those reserved paths. Routes that do not import and call the helper remain anonymous-compatible.
-
-SIWC establishes identity only; it does not prove workspace membership. Use the Sites hosting platform's access policy controls for workspace-wide restrictions, or enforce explicit server-side membership or allowlist checks.
-
-Use SIWC for account pages, user-specific dashboards, saved records, and write actions tied to the current ChatGPT user. Leave public content anonymous.
-
-## Local D1 migrations
-
-For a D1-backed local preview, generate SQL with `npm run db:generate`. Build once through the Sites skill's build entrypoint (or `npm run build` for standalone use) to generate `dist/server/wrangler.json`, rebuilding if bindings change. From the project root, apply each pending migration in order:
-
-```sh
-node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0000_example.sql
-```
-
-Replace the filename with the pending migration and `DB` with your D1 binding name if different. Use `.wrangler/state`, not `.wrangler/state/v3`; Wrangler adds the versioned directories. Do not replay migrations already applied locally. This updates only the preview database; publishing applies production migrations separately.
-
-## Diagnostic Commands
-
-- `npm run install:ci`: perform the one locked dependency install
-- `npm run dev`: start the Vite/Vinext development server
-- `npm run build`: build the deployable Sites artifact
-- `npm run start`: preview the built Worker locally with D1/R2 support
-- `npm run db:generate`: generate Drizzle migrations after schema changes
-
-When using the Sites plugin, follow its skill instructions for installation, builds, and publishing. These npm commands remain available for standalone use.
-
-The portable build runs Vinext directly without a host `timeout` command. The managed-linux build uses `scripts/build-verified.sh` and its existing `SITES_BUILD_TIMEOUT` setting.
-
-## Learn More
-
-- [vinext Documentation](https://github.com/cloudflare/vinext)
-- [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)
+Navigate to `/admin/funnel-test` to:
+* Test lead scoring algorithms across custom answer payloads.
+* Inspect generated GHL tags, qualification categories, and recommended tiers.
+* Preview outbound CRM JSON payloads.
+* Trigger live mock or real API dispatches.

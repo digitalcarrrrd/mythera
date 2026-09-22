@@ -2,7 +2,7 @@ import { questions, personas, recommendation as getRec, type Persona } from '@/l
 
 export async function POST(req: Request) {
   try {
-    const data = await req.json();
+    const data = (await req.json()) as any;
     const { d, i, action, contactId } = data; // d = draft, i = intelligence
     const contact = d?.contact || {};
     const persona = (d?.persona || 'GENERAL') as Persona;
@@ -100,7 +100,7 @@ export async function POST(req: Request) {
         throw new Error('Failed to upsert contact: ' + errText);
       }
 
-      const contactData = await ghlRes.json();
+      const contactData = (await ghlRes.json()) as any;
       const newContactId = contactData.contact?.id;
 
       // 2. Add complete select options & answers to Contact Notes in GHL
@@ -160,7 +160,7 @@ Submitted via mythralab.com`;
             email: notifyEmail
           })
         });
-        const adminData = await adminContactRes.json();
+        const adminData = (await adminContactRes.json()) as any;
         const adminContactId = adminData.contact?.id;
 
         if (adminContactId) {
@@ -279,7 +279,7 @@ Submitted via mythralab.com`;
           },
           body: JSON.stringify({ locationId, firstName: 'Shahid', lastName: 'Notification', email: notifyEmail })
         });
-        const adminData = await adminContactRes.json();
+        const adminData = (await adminContactRes.json()) as any;
         const adminContactId = adminData.contact?.id;
 
         if (adminContactId) {

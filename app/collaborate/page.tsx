@@ -1,2 +1,5 @@
-import {Funnel} from '@/components/mythra';
-export default Funnel;
+import { redirect } from 'next/navigation';
+
+export default function CollaborateRedirectPage() {
+  redirect('/studios/start');
+}
