@@ -99,14 +99,14 @@ export default function FilmGallery() {
     : GALLERY_DATA.filter((item) => item.genre.toLowerCase() === activeFilter.toLowerCase());
 
   return (
-    <section className="py-20 px-6 sm:px-12 bg-[#0c0e0d] border-t border-[#ffffff15]">
+    <section className="py-20 px-6 sm:px-12 bg-[#000000] border-t border-[#ffffff15]">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <span className="w-2 h-2 rounded-full bg-[#d6e8aa]" />
-              <span className="eyebrow-text text-xs text-[#d6e8aa]">CINEMATIC PROOF & WORK</span>
+              <span className="w-2 h-2 rounded-full bg-[#d8ff44]" />
+              <span className="eyebrow-text text-xs text-[#d8ff44]">CINEMATIC PROOF & WORK</span>
             </div>
             <h2 className="font-sans text-3xl sm:text-5xl font-black tracking-tight text-[#f3f3eb] uppercase">
               STORIES & PORTFOLIO
@@ -125,8 +125,8 @@ export default function FilmGallery() {
               onClick={() => setActiveFilter(filter)}
               className={`text-xs uppercase tracking-wider px-5 py-2.5 rounded-full font-bold transition-all ${
                 activeFilter === filter
-                  ? 'bg-[#d6e8aa] text-[#11160e] border-2 border-[#11160e] shadow-[0_3px_0_0_#11160e]'
-                  : 'bg-[#141714] text-[#9ea399] hover:text-white border-2 border-[#ffffff15]'
+                  ? 'bg-[#d8ff44] text-[#000000] border-2 border-[#000000] shadow-[0_3px_0_0_#000000]'
+                  : 'bg-[#080a08] text-[#9ea399] hover:text-white border-2 border-[#ffffff15]'
               }`}
             >
               {filter}
@@ -140,10 +140,10 @@ export default function FilmGallery() {
             <div
               key={item.id}
               onClick={() => setSelectedFilm(item)}
-              className="group cursor-pointer bg-[#141714] border-2 border-[#ffffff15] hover:border-[#d6e8aa] rounded-2xl transition-all duration-300 overflow-hidden flex flex-col justify-between shadow-xl"
+              className="group cursor-pointer bg-[#080a08] border-2 border-[#ffffff15] hover:border-[#d8ff44] rounded-2xl transition-all duration-300 overflow-hidden flex flex-col justify-between shadow-xl"
             >
               {/* Thumbnail Container */}
-              <div className="relative aspect-video bg-[#181c17] flex items-center justify-center overflow-hidden border-b border-[#ffffff15]">
+              <div className="relative aspect-video bg-[#050605] flex items-center justify-center overflow-hidden border-b border-[#ffffff15]">
                 {item.imageBg && (
                   <img
                     src={item.imageBg}
@@ -151,11 +151,11 @@ export default function FilmGallery() {
                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-60"
                   />
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0c0e0d] via-transparent to-transparent opacity-85 z-10" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-transparent to-transparent opacity-85 z-10" />
 
                 {/* Content info */}
                 <div className="text-center p-6 z-20">
-                  <span className="text-[10px] uppercase tracking-widest text-[#d6e8aa] font-mono font-bold block mb-1">
+                  <span className="text-[10px] uppercase tracking-widest text-[#d8ff44] font-mono font-bold block mb-1">
                     {item.genre} · {item.duration}
                   </span>
                   <span className="font-sans text-lg font-black text-[#f3f3eb] block max-w-xs">
@@ -164,14 +164,14 @@ export default function FilmGallery() {
                 </div>
 
                 {/* Play Button Overlay */}
-                <div className="absolute z-20 w-12 h-12 rounded-full bg-[#11160e]/90 border-2 border-[#d6e8aa] flex items-center justify-center text-[#d6e8aa] group-hover:bg-[#d6e8aa] group-hover:text-[#11160e] transition-all shadow-lg">
+                <div className="absolute z-20 w-12 h-12 rounded-full bg-[#000000]/90 border-2 border-[#d8ff44] flex items-center justify-center text-[#d8ff44] group-hover:bg-[#d8ff44] group-hover:text-[#000000] transition-all shadow-lg">
                   <Play className="w-5 h-5 ml-0.5 fill-current" />
                 </div>
 
                 {/* Permission Badge */}
                 <div className="absolute top-3 left-3 z-20">
-                  <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-wider bg-[#0c0e0d]/90 border border-[#ffffff20] text-[#f3f3eb] font-semibold px-2.5 py-1 rounded-full">
-                    <ShieldCheck className="w-3 h-3 text-[#d6e8aa]" />
+                  <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-wider bg-[#000000]/90 border border-[#ffffff20] text-[#f3f3eb] font-semibold px-2.5 py-1 rounded-full">
+                    <ShieldCheck className="w-3 h-3 text-[#d8ff44]" />
                     {item.label}
                   </span>
                 </div>
@@ -183,7 +183,7 @@ export default function FilmGallery() {
                   <span>{item.category}</span>
                   <span>{item.duration}</span>
                 </div>
-                <h3 className="font-sans text-xl font-bold text-[#f3f3eb] mb-2 group-hover:text-[#d6e8aa] transition-colors">
+                <h3 className="font-sans text-xl font-bold text-[#f3f3eb] mb-2 group-hover:text-[#d8ff44] transition-colors">
                   {item.title}
                 </h3>
                 <p className="text-xs text-[#9ea399] leading-relaxed">
@@ -198,7 +198,7 @@ export default function FilmGallery() {
       {/* Modal Video Player Simulation */}
       {selectedFilm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-in fade-in">
-          <div className="relative w-full max-w-3xl bg-[#141714] border-2 border-[#d6e8aa]/50 rounded-2xl p-6 sm:p-8 text-[#f3f3eb] shadow-2xl">
+          <div className="relative w-full max-w-3xl bg-[#080a08] border-2 border-[#d8ff44]/50 rounded-2xl p-6 sm:p-8 text-[#f3f3eb] shadow-2xl">
             <button
               onClick={() => setSelectedFilm(null)}
               className="absolute top-4 right-4 text-xs text-[#9ea399] hover:text-white uppercase font-bold px-3 py-1 bg-[#1a1e19] rounded-full"
@@ -206,7 +206,7 @@ export default function FilmGallery() {
               Close [ESC]
             </button>
 
-            <div className="aspect-video bg-[#0c0e0d] border border-[#ffffff20] rounded-xl flex flex-col items-center justify-center p-8 text-center my-4 overflow-hidden relative">
+            <div className="aspect-video bg-[#000000] border border-[#ffffff20] rounded-xl flex flex-col items-center justify-center p-8 text-center my-4 overflow-hidden relative">
               {selectedFilm.imageBg && (
                 <img
                   src={selectedFilm.imageBg}
@@ -215,10 +215,10 @@ export default function FilmGallery() {
                 />
               )}
               <div className="relative z-10">
-                <span className="eyebrow-text text-[#d6e8aa] mb-2 block">{selectedFilm.genre} PREVIEW</span>
+                <span className="eyebrow-text text-[#d8ff44] mb-2 block">{selectedFilm.genre} PREVIEW</span>
                 <h3 className="font-sans text-3xl font-black mb-3">{selectedFilm.title}</h3>
                 <p className="text-xs text-[#9ea399] max-w-md mx-auto mb-6">{selectedFilm.synopsis}</p>
-                <div className="inline-flex items-center gap-2 text-xs text-[#d6e8aa] bg-[#1a1e19] px-4 py-2 rounded-full border border-[#d6e8aa]/30">
+                <div className="inline-flex items-center gap-2 text-xs text-[#d8ff44] bg-[#0d100c] px-4 py-2 rounded-full border border-[#d8ff44]/30">
                   <ShieldCheck className="w-4 h-4" />
                   <span>Authorized likeness on file &bull; Master delivered in 1080p</span>
                 </div>

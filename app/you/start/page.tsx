@@ -299,8 +299,8 @@ export default function MythraYouFunnelPage() {
       {/* STEP 8: Contact Capture & Pre-Authorization Check */}
       {step === 8 && (
         <div>
-          <div className="mb-6 p-4 bg-[#151412] border border-[#262522]">
-            <span className="text-[10px] uppercase font-mono tracking-widest text-[#C8965B] block mb-2">
+          <div className="mb-6 p-4 bg-[#080a08] border border-[#ffffff15] rounded-2xl">
+            <span className="text-[10px] uppercase font-mono tracking-widest text-[#d8ff44] font-bold block mb-2">
               AUTHORIZATION PRE-CHECK
             </span>
             <label className="flex items-start gap-3 cursor-pointer text-xs text-[#F4F0E8]">
@@ -308,7 +308,7 @@ export default function MythraYouFunnelPage() {
                 type="checkbox"
                 required
                 defaultChecked
-                className="mt-0.5 rounded bg-[#090909] border-[#262522] text-[#C8965B] focus:ring-0"
+                className="mt-0.5 rounded bg-[#000000] border-[#ffffff15] text-[#d8ff44] focus:ring-0"
               />
               <span>
                 I confirm that I am the depicted adult, or I have written authority to commission this film for a consenting loved one / child as legal guardian.

@@ -65,7 +65,7 @@ export default function ContactStep({
               value={contact.firstName}
               onChange={(e) => handleChange('firstName', e.target.value)}
               placeholder="e.g. Jordan"
-              className="w-full bg-[#141714] border border-[#252a24] focus:border-[#d6e8aa] rounded-xl px-4 py-3.5 text-sm text-[#f3f3eb] outline-none transition-colors"
+              className="w-full bg-[#0d100c] border border-[#ffffff15] focus:border-[#d8ff44] rounded-xl px-4 py-3.5 text-sm text-[#f3f3eb] outline-none transition-colors"
             />
           </div>
           <div>
@@ -78,7 +78,7 @@ export default function ContactStep({
               value={contact.lastName}
               onChange={(e) => handleChange('lastName', e.target.value)}
               placeholder="e.g. Hayes"
-              className="w-full bg-[#141714] border border-[#252a24] focus:border-[#d6e8aa] rounded-xl px-4 py-3.5 text-sm text-[#f3f3eb] outline-none transition-colors"
+              className="w-full bg-[#0d100c] border border-[#ffffff15] focus:border-[#d8ff44] rounded-xl px-4 py-3.5 text-sm text-[#f3f3eb] outline-none transition-colors"
             />
           </div>
         </div>
@@ -95,7 +95,7 @@ export default function ContactStep({
               value={contact.email}
               onChange={(e) => handleChange('email', e.target.value)}
               placeholder="jordan@company.com"
-              className="w-full bg-[#141714] border border-[#252a24] focus:border-[#d6e8aa] rounded-xl px-4 py-3.5 text-sm text-[#f3f3eb] outline-none transition-colors"
+              className="w-full bg-[#0d100c] border border-[#ffffff15] focus:border-[#d8ff44] rounded-xl px-4 py-3.5 text-sm text-[#f3f3eb] outline-none transition-colors"
             />
           </div>
           <div>
@@ -107,7 +107,7 @@ export default function ContactStep({
               value={contact.whatsapp || ''}
               onChange={(e) => handleChange('whatsapp', e.target.value)}
               placeholder="+1 555 019 2834"
-              className="w-full bg-[#141714] border border-[#252a24] focus:border-[#d6e8aa] rounded-xl px-4 py-3.5 text-sm text-[#f3f3eb] outline-none transition-colors"
+              className="w-full bg-[#0d100c] border border-[#ffffff15] focus:border-[#d8ff44] rounded-xl px-4 py-3.5 text-sm text-[#f3f3eb] outline-none transition-colors"
             />
           </div>
         </div>
@@ -124,7 +124,7 @@ export default function ContactStep({
                 value={contact.organization || ''}
                 onChange={(e) => handleChange('organization', e.target.value)}
                 placeholder="e.g. Nexus Studios / @ChannelName"
-                className="w-full bg-[#141714] border border-[#252a24] focus:border-[#d6e8aa] rounded-xl px-4 py-3.5 text-sm text-[#f3f3eb] outline-none transition-colors"
+                className="w-full bg-[#0d100c] border border-[#ffffff15] focus:border-[#d8ff44] rounded-xl px-4 py-3.5 text-sm text-[#f3f3eb] outline-none transition-colors"
               />
             </div>
             <div>
@@ -136,7 +136,7 @@ export default function ContactStep({
                 value={contact.role || ''}
                 onChange={(e) => handleChange('role', e.target.value)}
                 placeholder="e.g. Founder, CMO, Director"
-                className="w-full bg-[#141714] border border-[#252a24] focus:border-[#d6e8aa] rounded-xl px-4 py-3.5 text-sm text-[#f3f3eb] outline-none transition-colors"
+                className="w-full bg-[#0d100c] border border-[#ffffff15] focus:border-[#d8ff44] rounded-xl px-4 py-3.5 text-sm text-[#f3f3eb] outline-none transition-colors"
               />
             </div>
           </div>
@@ -152,7 +152,7 @@ export default function ContactStep({
             value={contact.message || ''}
             onChange={(e) => handleChange('message', e.target.value)}
             placeholder="Tell us any specific story goals, deadline requirements, or creative ideas..."
-            className="w-full bg-[#141714] border border-[#252a24] focus:border-[#d6e8aa] rounded-xl p-4 text-sm text-[#f3f3eb] outline-none resize-none transition-colors"
+            className="w-full bg-[#0d100c] border border-[#ffffff15] focus:border-[#d8ff44] rounded-xl p-4 text-sm text-[#f3f3eb] outline-none resize-none transition-colors"
           />
         </div>
 
@@ -162,7 +162,7 @@ export default function ContactStep({
             type="checkbox"
             checked={contact.consentMarketing || false}
             onChange={(e) => handleChange('consentMarketing', e.target.checked)}
-            className="mt-1 rounded bg-[#141714] border-[#252a24] text-[#d6e8aa] focus:ring-0"
+            className="mt-1 rounded bg-[#0d100c] border-[#ffffff15] text-[#d8ff44] focus:ring-0"
           />
           <span className="text-xs text-[#a3a89e] leading-relaxed">
             I agree to receive the personalized production brief and occasional studio insights from MYTHRA. (Unsubscribe anytime).
@@ -170,9 +170,9 @@ export default function ContactStep({
         </label>
       </div>
 
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-[#252a24]">
-        <div className="flex items-center gap-2 text-xs text-[#727b66]">
-          <Lock className="w-4 h-4 text-[#d6e8aa]" />
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-[#ffffff15]">
+        <div className="flex items-center gap-2 text-xs text-[#8e9587]">
+          <Lock className="w-4 h-4 text-[#d8ff44]" />
           <span>SSL 256-bit encrypted · Privacy guaranteed</span>
         </div>
 

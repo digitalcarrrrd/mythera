@@ -4,11 +4,11 @@ import PathSelector from '../../components/PathSelector';
 
 export default function StoriesPage() {
   return (
-    <div className="pt-24 pb-20 bg-[#090909] text-[#F4F0E8]">
+    <div className="pt-24 pb-20 bg-[#000000] text-[#F4F0E8]">
       {/* Hero */}
-      <section className="py-20 px-6 sm:px-8 border-b border-[#1C1B19]">
+      <section className="py-20 px-6 sm:px-8 border-b border-[#ffffff15]">
         <div className="max-w-4xl mx-auto text-center">
-          <span className="eyebrow-text block mb-3 text-[#C8965B]">ORIGINALS & COMMISSIONS</span>
+          <span className="eyebrow-text block mb-3 text-[#d8ff44]">ORIGINALS & COMMISSIONS</span>
           <h1 className="font-serif text-4xl sm:text-6xl font-bold uppercase tracking-tight leading-tight">
             MYTHRA STORIES & PORTFOLIO
           </h1>

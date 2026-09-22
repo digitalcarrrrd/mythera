@@ -25,7 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className="min-h-screen flex flex-col justify-between bg-[#090909] text-[#F4F0E8] antialiased">
+      <body className="min-h-screen flex flex-col justify-between bg-[#000000] text-[#F4F0E8] antialiased">
         {/* Subtle Film Grain Texture Overlay */}
         <div className="film-grain" />
 
@@ -36,70 +36,70 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
 
         {/* Cinematic Master Footer */}
-        <footer className="border-t border-[#1C1B19] bg-[#090909] pt-16 pb-12 px-6 sm:px-8">
+        <footer className="border-t border-[#ffffff15] bg-[#000000] pt-16 pb-12 px-6 sm:px-8">
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-10 mb-12">
             {/* Brand column */}
             <div className="md:col-span-2 space-y-4">
-              <Link href="/" className="font-serif text-2xl font-bold tracking-tight text-[#F4F0E8] hover:text-[#C8965B] transition-colors">
+              <a href="/" className="font-serif text-2xl font-bold tracking-tight text-[#F4F0E8] hover:text-[#d8ff44] transition-colors">
                 MYTHRA
-              </Link>
+              </a>
               <p className="text-xs text-[#A7A39B] max-w-sm leading-relaxed">
                 An original AI-native story studio. We do not use AI to imitate legacy studios more cheaply; we redesign how stories are created, tested, and localized across global audiences.
               </p>
-              <div className="flex items-center gap-2 text-[11px] text-[#727b66]">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#C8965B]" />
+              <div className="flex items-center gap-2 text-[11px] text-[#8e9587]">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#d8ff44]" />
                 <span>Zero model training on customer likeness by default.</span>
               </div>
             </div>
 
             {/* Path 1: For You */}
             <div className="space-y-3">
-              <span className="film-credit block text-[#C8965B]">MYTHRA YOU</span>
+              <span className="film-credit block text-[#d8ff44]">MYTHRA YOU</span>
               <ul className="space-y-2 text-xs text-[#A7A39B]">
-                <li><Link href="/you" className="hover:text-white transition-colors">Personalized Cinema</Link></li>
-                <li><Link href="/you/start?tier=you-trailer" className="hover:text-white transition-colors">Create Movie Trailer ($299)</Link></li>
-                <li><Link href="/you/start?tier=you-moment" className="hover:text-white transition-colors">Mythra Moment ($79)</Link></li>
-                <li><Link href="/you/start?tier=you-story" className="hover:text-white transition-colors">Bespoke Short Film</Link></li>
-                <li><Link href="/legal/likeness-consent" className="hover:text-white transition-colors">Likeness Consent Policy</Link></li>
+                <li><a href="/you" className="hover:text-[#d8ff44] transition-colors">Personalized Cinema</a></li>
+                <li><a href="/you/start?tier=you-trailer" className="hover:text-[#d8ff44] transition-colors">Create Movie Trailer ($299)</a></li>
+                <li><a href="/you/start?tier=you-moment" className="hover:text-[#d8ff44] transition-colors">Mythra Moment ($79)</a></li>
+                <li><a href="/you/start?tier=you-story" className="hover:text-[#d8ff44] transition-colors">Bespoke Short Film</a></li>
+                <li><a href="/legal/likeness-consent" className="hover:text-[#d8ff44] transition-colors">Likeness Consent Policy</a></li>
               </ul>
             </div>
 
             {/* Path 2: Filmmaker */}
             <div className="space-y-3">
-              <span className="film-credit block text-[#C8965B]">MYTHRA FILMMAKER</span>
+              <span className="film-credit block text-[#d8ff44]">MYTHRA FILMMAKER</span>
               <ul className="space-y-2 text-xs text-[#A7A39B]">
-                <li><Link href="/filmmaker" className="hover:text-white transition-colors">One-Person Studio System</Link></li>
-                <li><Link href="/filmmaker/start?tier=film-cohort" className="hover:text-white transition-colors">6-Week Live Cohort ($749)</Link></li>
-                <li><Link href="/filmmaker/start?tier=film-blueprint" className="hover:text-white transition-colors">Free Studio Blueprint</Link></li>
-                <li><Link href="/filmmaker/start?tier=film-starter" className="hover:text-white transition-colors">Self-Paced Starter ($149)</Link></li>
-                <li><Link href="/method" className="hover:text-white transition-colors">The 12-Step Drama Method</Link></li>
+                <li><a href="/filmmaker" className="hover:text-[#d8ff44] transition-colors">One-Person Studio System</a></li>
+                <li><a href="/filmmaker/start?tier=film-cohort" className="hover:text-[#d8ff44] transition-colors">6-Week Live Cohort ($749)</a></li>
+                <li><a href="/filmmaker/start?tier=film-blueprint" className="hover:text-[#d8ff44] transition-colors">Free Studio Blueprint</a></li>
+                <li><a href="/filmmaker/start?tier=film-starter" className="hover:text-[#d8ff44] transition-colors">Self-Paced Starter ($149)</a></li>
+                <li><a href="/method" className="hover:text-[#d8ff44] transition-colors">The 12-Step Drama Method</a></li>
               </ul>
             </div>
 
-            {/* Path 3: Studios & Legal */}
+            {/* Path 3: Studios & Governance */}
             <div className="space-y-3">
-              <span className="film-credit block text-[#C8965B]">STUDIOS & GOVERNANCE</span>
+              <span className="film-credit block text-[#d8ff44]">STUDIOS & GOVERNANCE</span>
               <ul className="space-y-2 text-xs text-[#A7A39B]">
-                <li><Link href="/studios" className="hover:text-white transition-colors">Branded Drama & Original IP</Link></li>
-                <li><Link href="/genesis" className="hover:text-white transition-colors">Genesis Case Study</Link></li>
-                <li><Link href="/stories" className="hover:text-white transition-colors">Portfolio & Originals</Link></li>
-                <li><Link href="/legal/privacy" className="hover:text-white transition-colors">Privacy & Data Retention</Link></li>
-                <li><Link href="/legal/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>
+                <li><a href="/studios" className="hover:text-[#d8ff44] transition-colors">Branded Drama & Original IP</a></li>
+                <li><a href="/genesis" className="hover:text-[#d8ff44] transition-colors">Genesis Case Study</a></li>
+                <li><a href="/stories" className="hover:text-[#d8ff44] transition-colors">Portfolio & Originals</a></li>
+                <li><a href="/legal/privacy" className="hover:text-[#d8ff44] transition-colors">Privacy & Data Retention</a></li>
+                <li><a href="/legal/terms" className="hover:text-[#d8ff44] transition-colors">Terms of Service</a></li>
               </ul>
             </div>
           </div>
 
           {/* Bottom copyright & admin portal trigger */}
-          <div className="max-w-7xl mx-auto border-t border-[#1C1B19] pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-[#727b66]">
+          <div className="max-w-7xl mx-auto border-t border-[#ffffff15] pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-[#8e9587]">
             <div>
               &copy; {new Date().getFullYear()} MYTHRA Studio Inc. All rights reserved. Registered AI-Native Cinema Network.
             </div>
             <div className="flex items-center gap-6">
-              <Link href="/legal/privacy" className="hover:underline">Privacy Policy</Link>
-              <Link href="/legal/terms" className="hover:underline">Terms of Service</Link>
-              <Link href="/admin/funnel-test" className="text-[#A7A39B] hover:text-[#C8965B] flex items-center gap-1">
-                <ShieldCheck className="w-3 h-3" /> Admin Suite
-              </Link>
+              <a href="/legal/privacy" className="hover:text-[#d8ff44] transition-colors">Privacy Policy</a>
+              <a href="/legal/terms" className="hover:text-[#d8ff44] transition-colors">Terms of Service</a>
+              <a href="/admin/funnel-test" className="text-[#A7A39B] hover:text-[#d8ff44] flex items-center gap-1 transition-colors">
+                <ShieldCheck className="w-3 h-3 text-[#d8ff44]" /> Admin Suite
+              </a>
             </div>
           </div>
         </footer>

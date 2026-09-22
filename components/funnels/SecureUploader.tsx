@@ -104,10 +104,10 @@ export default function SecureUploader({
     <div className="mb-6">
       <div className="flex items-center justify-between mb-2">
         <label className="text-xs uppercase tracking-wider text-[#a3a89e] font-semibold flex items-center gap-1.5">
-          {isAudio ? <FileAudio className="w-4 h-4 text-[#d6e8aa]" /> : <ImageIcon className="w-4 h-4 text-[#d6e8aa]" />}
+          {isAudio ? <FileAudio className="w-4 h-4 text-[#d8ff44]" /> : <ImageIcon className="w-4 h-4 text-[#d8ff44]" />}
           <span>{title}</span>
         </label>
-        <span className="text-[10px] font-mono text-[#727b66]">
+        <span className="text-[10px] font-mono text-[#8e9587]">
           {files.length}/{maxFiles} uploaded
         </span>
       </div>
@@ -131,8 +131,8 @@ export default function SecureUploader({
         onClick={() => fileInputRef.current?.click()}
         className={`border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all ${
           isDragging
-            ? 'border-[#d6e8aa] bg-[#1e231e]'
-            : 'border-[#252a24] bg-[#141714] hover:border-[#384036]'
+            ? 'border-[#d8ff44] bg-[#11160e]'
+            : 'border-[#ffffff15] bg-[#0d100c] hover:border-[#d8ff44]/40'
         }`}
       >
         <input
@@ -144,14 +144,14 @@ export default function SecureUploader({
           className="hidden"
         />
 
-        <div className="w-12 h-12 rounded-full bg-[#1e231e] text-[#d6e8aa] flex items-center justify-center mx-auto mb-3">
+        <div className="w-12 h-12 rounded-full bg-[#11160e] text-[#d8ff44] flex items-center justify-center mx-auto mb-3">
           <UploadCloud className="w-6 h-6" />
         </div>
 
         <p className="text-xs font-semibold text-[#f3f3eb] mb-1">
           {uploading ? 'Encrypting & uploading securely...' : 'Click to select or drag and drop files'}
         </p>
-        <span className="text-[10px] text-[#727b66] block font-mono">
+        <span className="text-[10px] text-[#8e9587] block font-mono">
           {isAudio ? 'Clean voice WAV, MP3, M4A up to 30MB' : 'High-res JPG, PNG, WebP up to 15MB'}
         </span>
       </div>
@@ -170,12 +170,12 @@ export default function SecureUploader({
           {files.map((file) => (
             <div
               key={file.id}
-              className="flex items-center justify-between p-3.5 rounded-xl bg-[#181d18] border border-[#252a24] text-xs text-[#f3f3eb]"
+              className="flex items-center justify-between p-3.5 rounded-xl bg-[#0d100c] border border-[#ffffff15] text-xs text-[#f3f3eb]"
             >
               <div className="flex items-center gap-2.5 overflow-hidden">
-                <ShieldCheck className="w-4 h-4 text-[#d6e8aa] shrink-0" />
+                <ShieldCheck className="w-4 h-4 text-[#d8ff44] shrink-0" />
                 <span className="truncate max-w-[200px] sm:max-w-xs font-medium">{file.name}</span>
-                <span className="text-[10px] font-mono text-[#727b66]">
+                <span className="text-[10px] font-mono text-[#8e9587]">
                   ({(file.size / (1024 * 1024)).toFixed(2)} MB)
                 </span>
               </div>

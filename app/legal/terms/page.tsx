@@ -4,11 +4,11 @@ import { ArrowLeft } from 'lucide-react';
 
 export default function TermsOfServicePage() {
   return (
-    <div className="pt-28 pb-20 px-6 sm:px-8 bg-[#090909] text-[#F4F0E8]">
+    <div className="pt-28 pb-20 px-6 sm:px-8 bg-[#000000] text-[#F4F0E8]">
       <div className="max-w-4xl mx-auto">
-        <Link href="/" className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-[#A7A39B] hover:text-[#C8965B] mb-8">
+        <a href="/" className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-[#A7A39B] hover:text-[#d8ff44] mb-8 transition-colors">
           <ArrowLeft className="w-4 h-4" /> Back to Studio
-        </Link>
+        </a>
 
         <h1 className="font-serif text-3xl sm:text-5xl font-bold uppercase mb-4">
           TERMS OF SERVICE & CREATIVE EXPECTATIONS
@@ -17,7 +17,7 @@ export default function TermsOfServicePage() {
           Effective Date: August 2026 &bull; MYTHRA Studio Inc.
         </p>
 
-        <div className="space-y-8 text-xs sm:text-sm text-[#A7A39B] leading-relaxed border-t border-[#1C1B19] pt-8">
+        <div className="space-y-8 text-xs sm:text-sm text-[#A7A39B] leading-relaxed border-t border-[#ffffff15] pt-8">
           <h2 className="font-serif text-xl font-bold text-[#F4F0E8]">1. Creative Scope & Stylization Notice</h2>
           <p>
             MYTHRA produces stylized narrative cinema using cutting-edge AI-native workflows. The customer acknowledges that productions are creative artistic interpretations and does not guarantee counterfeit photorealism.

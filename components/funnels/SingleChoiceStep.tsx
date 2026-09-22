@@ -54,8 +54,8 @@ export default function SingleChoiceStep({
               onClick={() => handleOptionClick(option.id)}
               className={`text-left p-6 rounded-2xl border transition-all duration-200 relative flex flex-col justify-between ${
                 isSelected
-                  ? 'bg-[#1e231e] border-[#d6e8aa] ring-2 ring-[#d6e8aa]/50 shadow-[0_4px_20px_rgba(214,232,170,0.15)]'
-                  : 'bg-[#141714] border-[#252a24] hover:border-[#384036] hover:bg-[#181d18]'
+                  ? 'bg-[#11160e] border-[#d8ff44] ring-2 ring-[#d8ff44]/50 shadow-[0_4px_20px_rgba(216,255,68,0.2)]'
+                  : 'bg-[#0d100c] border-[#ffffff15] hover:border-[#d8ff44]/40 hover:bg-[#121611]'
               }`}
             >
               <div>
@@ -64,12 +64,12 @@ export default function SingleChoiceStep({
                     {option.title}
                   </span>
                   {isSelected && (
-                    <div className="w-6 h-6 rounded-full bg-[#d6e8aa] flex items-center justify-center text-[#11160e]">
+                    <div className="w-6 h-6 rounded-full bg-[#d8ff44] flex items-center justify-center text-[#000000]">
                       <Check className="w-3.5 h-3.5 stroke-[3]" />
                     </div>
                   )}
                   {option.badge && !isSelected && (
-                    <span className="text-[10px] font-mono uppercase tracking-wider bg-[#252a24] text-[#a3a89e] px-2.5 py-1 rounded-full">
+                    <span className="text-[10px] font-mono uppercase tracking-wider bg-[#1a1e19] text-[#a3a89e] px-2.5 py-1 rounded-full border border-[#ffffff10]">
                       {option.badge}
                     </span>
                   )}

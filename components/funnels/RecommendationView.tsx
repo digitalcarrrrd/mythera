@@ -42,8 +42,8 @@ export default function RecommendationView({
     <div>
       {/* Header */}
       <div className="flex items-center gap-2 mb-3">
-        <Sparkles className="w-4 h-4 text-[#d6e8aa]" />
-        <span className="eyebrow-text">TAILORED PRODUCTION ROADMAP</span>
+        <Sparkles className="w-4 h-4 text-[#d8ff44]" />
+        <span className="eyebrow-text text-[#d8ff44]">TAILORED PRODUCTION ROADMAP</span>
       </div>
       <h2 className="font-serif text-3xl sm:text-5xl font-bold text-[#f3f3eb] mb-4 tracking-tight uppercase">
         YOUR RECOMMENDED PATH
@@ -53,8 +53,8 @@ export default function RecommendationView({
       </p>
 
       {/* Featured Offer Tier Card */}
-      <div className="p-8 sm:p-10 rounded-3xl bg-[#141714] border-2 border-[#d6e8aa] shadow-[0_12px_40px_rgba(214,232,170,0.12)] mb-8 relative">
-        <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 pb-6 border-b border-[#252a24]">
+      <div className="p-8 sm:p-10 rounded-3xl bg-[#080a08] border-2 border-[#d8ff44] shadow-2xl shadow-[#d8ff44]/15 mb-8 relative">
+        <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 pb-6 border-b border-[#ffffff15]">
           <div>
             <span className="film-credit text-[#a3a89e] block mb-1">
               MYTHRA {offer.persona} · {offer.tagline}
@@ -68,14 +68,14 @@ export default function RecommendationView({
             <div className="font-serif text-4xl sm:text-5xl font-bold text-[#f3f3eb]">
               {offer.priceDisplay}
             </div>
-            <span className="text-xs font-mono font-semibold text-[#d6e8aa] block mt-1">
+            <span className="text-xs font-mono font-semibold text-[#d8ff44] block mt-1">
               {offer.turnaround} estimated delivery
             </span>
           </div>
         </div>
 
         {/* Deliverables & Specifications */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 py-6 border-b border-[#252a24] text-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 py-6 border-b border-[#ffffff15] text-xs">
           <div>
             <span className="font-semibold text-[#a3a89e] block uppercase tracking-wider mb-2.5">
               Deliverables:
@@ -83,7 +83,7 @@ export default function RecommendationView({
             <ul className="space-y-2 text-[#f3f3eb]">
               {offer.deliverables.map((d, i) => (
                 <li key={i} className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#d6e8aa] shrink-0" />
+                  <span className="w-2 h-2 rounded-full bg-[#d8ff44] shrink-0" />
                   <span>{d}</span>
                 </li>
               ))}
@@ -104,7 +104,7 @@ export default function RecommendationView({
         {/* Primary Action Button */}
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="text-xs text-[#a3a89e] flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-[#d6e8aa] shrink-0" />
+            <ShieldCheck className="w-4 h-4 text-[#d8ff44] shrink-0" />
             <span>Strict likeness verification & 100% satisfaction revision policy</span>
           </div>
 
@@ -121,14 +121,14 @@ export default function RecommendationView({
 
       {/* Rationale Checklist */}
       {scoring.rationale.length > 0 && (
-        <div className="p-6 rounded-2xl bg-[#141714] border border-[#252a24] mb-6">
+        <div className="p-6 rounded-2xl bg-[#080a08] border border-[#ffffff15] mb-6">
           <span className="text-[10px] uppercase font-mono tracking-widest text-[#a3a89e] block mb-3 font-bold">
             EVALUATION FACTORS & SCORING RATIONALE
           </span>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#a3a89e]">
             {scoring.rationale.map((r, idx) => (
               <div key={idx} className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-[#d6e8aa] shrink-0" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#d8ff44] shrink-0" />
                 <span>{r}</span>
               </div>
             ))}
@@ -138,12 +138,12 @@ export default function RecommendationView({
 
       {/* Secondary path option */}
       <div className="text-center pt-4">
-        <Link
+        <a
           href={`/${offer.persona.toLowerCase()}`}
-          className="text-xs text-[#a3a89e] hover:text-[#d6e8aa] uppercase tracking-wider underline transition-colors"
+          className="text-xs text-[#a3a89e] hover:text-[#d8ff44] uppercase tracking-wider underline transition-colors"
         >
           &larr; View all {offer.persona} tiers and comparison table
-        </Link>
+        </a>
       </div>
     </div>
   );

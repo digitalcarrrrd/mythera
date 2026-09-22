@@ -4,15 +4,15 @@ import { ShieldCheck, Lock, AlertTriangle, ArrowLeft } from 'lucide-react';
 
 export default function LikenessConsentLegalPage() {
   return (
-    <div className="pt-28 pb-20 px-6 sm:px-8 bg-[#090909] text-[#F4F0E8]">
+    <div className="pt-28 pb-20 px-6 sm:px-8 bg-[#000000] text-[#F4F0E8]">
       <div className="max-w-4xl mx-auto">
-        <Link href="/" className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-[#A7A39B] hover:text-[#C8965B] mb-8">
+        <a href="/" className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-[#A7A39B] hover:text-[#d8ff44] mb-8 transition-colors">
           <ArrowLeft className="w-4 h-4" /> Back to Studio
-        </Link>
+        </a>
 
         <div className="flex items-center gap-2 mb-3">
-          <ShieldCheck className="w-5 h-5 text-[#C8965B]" />
-          <span className="eyebrow-text">LEGAL & ETHICAL PROTOCOL</span>
+          <ShieldCheck className="w-5 h-5 text-[#d8ff44]" />
+          <span className="eyebrow-text text-[#d8ff44]">LEGAL & ETHICAL PROTOCOL</span>
         </div>
         <h1 className="font-serif text-3xl sm:text-5xl font-bold uppercase mb-4">
           LIKENESS & VOICE AUTHORIZATION POLICY
@@ -21,7 +21,7 @@ export default function LikenessConsentLegalPage() {
           Effective Date: August 15, 2026 &bull; Version 1.0 (Strict Purpose Limitation)
         </p>
 
-        <div className="space-y-10 text-xs sm:text-sm text-[#A7A39B] leading-relaxed border-t border-[#1C1B19] pt-8">
+        <div className="space-y-10 text-xs sm:text-sm text-[#A7A39B] leading-relaxed border-t border-[#ffffff15] pt-8">
           <div>
             <h2 className="font-serif text-xl font-bold text-[#F4F0E8] mb-3">1. Mandatory Consent Requirement</h2>
             <p>
@@ -46,7 +46,7 @@ export default function LikenessConsentLegalPage() {
           <div>
             <h2 className="font-serif text-xl font-bold text-[#F4F0E8] mb-3">4. Right to Deletion & Consent Withdrawal</h2>
             <p>
-              Any authorized subject may withdraw consent or request the immediate permanent deletion of their source media assets and generative seeds by submitting a request to <span className="text-[#C8965B]">privacy@mythra.com</span>. Deletions are processed within 7 business days.
+              Any authorized subject may withdraw consent or request the immediate permanent deletion of their source media assets and generative seeds by submitting a request to <span className="text-[#d8ff44]">privacy@mythra.com</span>. Deletions are processed within 7 business days.
             </p>
           </div>
 

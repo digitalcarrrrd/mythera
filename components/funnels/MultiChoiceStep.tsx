@@ -58,8 +58,8 @@ export default function MultiChoiceStep({
               onClick={() => toggleOption(opt.id)}
               className={`text-left p-5 rounded-2xl border transition-all flex items-start justify-between gap-3 ${
                 isSelected
-                  ? 'bg-[#1e231e] border-[#d6e8aa] ring-2 ring-[#d6e8aa]/40 shadow-[0_4px_16px_rgba(214,232,170,0.12)]'
-                  : 'bg-[#141714] border-[#252a24] hover:border-[#384036] hover:bg-[#181d18]'
+                  ? 'bg-[#11160e] border-[#d8ff44] ring-2 ring-[#d8ff44]/40 shadow-[0_4px_16px_rgba(216,255,68,0.2)]'
+                  : 'bg-[#0d100c] border-[#ffffff15] hover:border-[#d8ff44]/40 hover:bg-[#121611]'
               }`}
             >
               <div>
@@ -75,8 +75,8 @@ export default function MultiChoiceStep({
               <div
                 className={`w-6 h-6 rounded-lg shrink-0 border flex items-center justify-center transition-colors ${
                   isSelected
-                    ? 'bg-[#d6e8aa] border-[#d6e8aa] text-[#11160e]'
-                    : 'border-[#384036] bg-[#0c0e0d]'
+                    ? 'bg-[#d8ff44] border-[#d8ff44] text-[#000000]'
+                    : 'border-[#384036] bg-[#000000]'
                 }`}
               >
                 {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
@@ -86,7 +86,7 @@ export default function MultiChoiceStep({
         })}
       </div>
 
-      <div className="flex justify-end pt-4 border-t border-[#252a24]">
+      <div className="flex justify-end pt-4 border-t border-[#ffffff15]">
         <button
           type="button"
           disabled={!isValid}

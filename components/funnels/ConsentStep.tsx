@@ -39,8 +39,8 @@ export default function ConsentStep({
   return (
     <div>
       <div className="flex items-center gap-2 mb-2">
-        <ShieldCheck className="w-4 h-4 text-[#d6e8aa]" />
-        <span className="eyebrow-text">LEGAL & ETHICAL CONSENT VERIFICATION</span>
+        <ShieldCheck className="w-4 h-4 text-[#d8ff44]" />
+        <span className="eyebrow-text text-[#d8ff44]">LEGAL & ETHICAL CONSENT VERIFICATION</span>
       </div>
       <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#f3f3eb] mb-3 tracking-tight">
         AUTHORIZATION & LIKENESS PROTOCOL
@@ -61,7 +61,7 @@ export default function ConsentStep({
             value={formData.subjectName}
             onChange={(e) => updateField('subjectName', e.target.value)}
             placeholder="e.g. Marcus Vance"
-            className="w-full bg-[#141714] border border-[#252a24] focus:border-[#d6e8aa] rounded-xl px-4 py-3.5 text-sm text-[#f3f3eb] outline-none transition-colors"
+            className="w-full bg-[#0d100c] border border-[#ffffff15] focus:border-[#d8ff44] rounded-xl px-4 py-3.5 text-sm text-[#f3f3eb] outline-none transition-colors"
           />
         </div>
 
@@ -82,8 +82,8 @@ export default function ConsentStep({
                 onClick={() => updateField('relationship', r.id)}
                 className={`text-left p-4 rounded-xl border transition-all text-xs ${
                   formData.relationship === r.id
-                    ? 'bg-[#1e231e] border-[#d6e8aa] text-[#f3f3eb] ring-2 ring-[#d6e8aa]/40'
-                    : 'bg-[#141714] border-[#252a24] text-[#a3a89e] hover:border-[#384036]'
+                    ? 'bg-[#11160e] border-[#d8ff44] text-[#f3f3eb] ring-2 ring-[#d8ff44]/40'
+                    : 'bg-[#0d100c] border-[#ffffff15] text-[#a3a89e] hover:border-[#384036]'
                 }`}
               >
                 <strong className="block text-[#f3f3eb] mb-1 text-sm">{r.label}</strong>
@@ -94,7 +94,7 @@ export default function ConsentStep({
         </div>
 
         {/* Checkbox Group */}
-        <div className="p-6 rounded-2xl bg-[#141714] border border-[#252a24] space-y-4 text-xs">
+        <div className="p-6 rounded-2xl bg-[#0d100c] border border-[#ffffff15] space-y-4 text-xs">
           {/* Likeness Checkbox */}
           <label className="flex items-start gap-3 cursor-pointer">
             <input
@@ -102,7 +102,7 @@ export default function ConsentStep({
               required
               checked={formData.likenessAuthorized}
               onChange={(e) => updateField('likenessAuthorized', e.target.checked)}
-              className="mt-0.5 rounded bg-[#0c0e0d] border-[#252a24] text-[#d6e8aa] focus:ring-0"
+              className="mt-0.5 rounded bg-[#000000] border-[#ffffff15] text-[#d8ff44] focus:ring-0"
             />
             <span className="text-[#f3f3eb] leading-relaxed">
               <strong>Explicit Likeness Authorization (Required):</strong> I authorize MYTHRA to generate cinematic images and video scenes depicting the authorized subject solely for this film project.
@@ -115,7 +115,7 @@ export default function ConsentStep({
               type="checkbox"
               checked={formData.voiceAuthorized}
               onChange={(e) => updateField('voiceAuthorized', e.target.checked)}
-              className="mt-0.5 rounded bg-[#0c0e0d] border-[#252a24] text-[#d6e8aa] focus:ring-0"
+              className="mt-0.5 rounded bg-[#000000] border-[#ffffff15] text-[#d8ff44] focus:ring-0"
             />
             <span className="text-[#f3f3eb] leading-relaxed">
               <strong>Voice Synthesis Authorization (Optional/Tier Dependent):</strong> I grant permission for MYTHRA to synthesize and match dialogue to the authorized voice sample provided.
@@ -129,7 +129,7 @@ export default function ConsentStep({
               required
               checked={formData.disclosureAcknowledged}
               onChange={(e) => updateField('disclosureAcknowledged', e.target.checked)}
-              className="mt-0.5 rounded bg-[#0c0e0d] border-[#252a24] text-[#d6e8aa] focus:ring-0"
+              className="mt-0.5 rounded bg-[#000000] border-[#ffffff15] text-[#d8ff44] focus:ring-0"
             />
             <span className="text-[#f3f3eb] leading-relaxed">
               <strong>AI & Creative Stylization Disclosure (Required):</strong> I understand MYTHRA creates dramatic cinematic interpretations and does not guarantee counterfeit photorealism. Prohibited uses (deepfakes of non-consenting public figures, fraud, or defamation) will result in immediate termination with no refund.
@@ -137,12 +137,12 @@ export default function ConsentStep({
           </label>
 
           {/* Non-training Opt-in */}
-          <label className="flex items-start gap-3 cursor-pointer pt-3 border-t border-[#252a24]">
+          <label className="flex items-start gap-3 cursor-pointer pt-3 border-t border-[#ffffff15]">
             <input
               type="checkbox"
               checked={formData.modelTrainingOptIn}
               onChange={(e) => updateField('modelTrainingOptIn', e.target.checked)}
-              className="mt-0.5 rounded bg-[#0c0e0d] border-[#252a24] text-[#d6e8aa] focus:ring-0"
+              className="mt-0.5 rounded bg-[#000000] border-[#ffffff15] text-[#d8ff44] focus:ring-0"
             />
             <span className="text-[#a3a89e] leading-relaxed">
               (Optional) I explicitly opt-in to allowing MYTHRA research team to refine internal visual consistency models on these project stills. (Default is OFF).
@@ -151,7 +151,7 @@ export default function ConsentStep({
         </div>
       </div>
 
-      <div className="flex justify-end pt-4 border-t border-[#252a24]">
+      <div className="flex justify-end pt-4 border-t border-[#ffffff15]">
         <button
           type="button"
           disabled={!isComplete}

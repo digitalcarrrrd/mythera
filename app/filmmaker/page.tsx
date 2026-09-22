@@ -73,7 +73,7 @@ export default function MythraFilmmakerPage() {
         headline={
           <>
             DON'T JUST WATCH THE AI FILM ERA.<br />
-            <span className="text-[#d6e8aa]">DIRECT IT.</span>
+            <span className="text-[#d8ff44]">DIRECT IT.</span>
           </>
         }
         lead="Learn the complete production system behind an AI-native studio."
@@ -85,12 +85,12 @@ export default function MythraFilmmakerPage() {
       />
 
       {/* Transformation Pipeline */}
-      <section className="py-24 px-6 sm:px-12 bg-[#0c0e0d]">
+      <section className="py-24 px-6 sm:px-12 bg-[#000000]">
         <div className="max-w-7xl mx-auto">
           <div className="max-w-3xl mb-16">
             <div className="flex items-center gap-2 mb-3">
-              <span className="w-2 h-2 rounded-full bg-[#d6e8aa]" />
-              <span className="eyebrow-text text-xs text-[#d6e8aa]">
+              <span className="w-2 h-2 rounded-full bg-[#d8ff44]" />
+              <span className="eyebrow-text text-xs text-[#d8ff44]">
                 THE TRANSFORMATION
               </span>
             </div>
@@ -106,12 +106,12 @@ export default function MythraFilmmakerPage() {
             {pipelineStages.map((stage) => (
               <div
                 key={stage.num}
-                className="p-8 bg-[#141714] border-2 border-[#ffffff15] hover:border-[#d6e8aa] rounded-2xl transition-all shadow-lg relative group"
+                className="p-8 bg-[#080a08] border-2 border-[#ffffff15] hover:border-[#d8ff44] rounded-2xl transition-all shadow-lg relative group"
               >
-                <span className="font-mono text-xs text-[#d6e8aa] font-bold block mb-4 px-2.5 py-1 bg-[#1a1e19] rounded-full border border-[#d6e8aa]/30 w-fit">
+                <span className="font-mono text-xs text-[#d8ff44] font-bold block mb-4 px-2.5 py-1 bg-[#0d100c] rounded-full border border-[#d8ff44]/30 w-fit">
                   STAGE {stage.num}
                 </span>
-                <h3 className="font-sans text-2xl font-black text-[#f3f3eb] mb-2 group-hover:text-[#d6e8aa] transition-colors">
+                <h3 className="font-sans text-2xl font-black text-[#f3f3eb] mb-2 group-hover:text-[#d8ff44] transition-colors">
                   {stage.title}
                 </h3>
                 <p className="text-xs text-[#9ea399] leading-relaxed">
@@ -122,9 +122,9 @@ export default function MythraFilmmakerPage() {
           </div>
 
           {/* Outcome highlight banner */}
-          <div className="p-8 sm:p-10 bg-[#141714] border-2 border-[#d6e8aa]/40 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl">
+          <div className="p-8 sm:p-10 bg-[#080a08] border-2 border-[#d8ff44]/40 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl">
             <div className="flex items-center gap-5">
-              <div className="w-14 h-14 rounded-full bg-[#1a1e19] text-[#d6e8aa] border border-[#d6e8aa]/40 flex items-center justify-center shrink-0">
+              <div className="w-14 h-14 rounded-full bg-[#0d100c] text-[#d8ff44] border border-[#d8ff44]/40 flex items-center justify-center shrink-0">
                 <Film className="w-7 h-7" />
               </div>
               <div>
@@ -136,22 +136,22 @@ export default function MythraFilmmakerPage() {
                 </p>
               </div>
             </div>
-            <Link
+            <a
               href="/filmmaker/start?tier=film-cohort"
-              className="btn-pill-primary text-xs !py-3 !px-6 shrink-0"
+              className="btn-pill-primary text-xs !py-3 !px-6 shrink-0 inline-flex items-center gap-2"
             >
               <span>Enroll in Cohort</span>
               <ArrowRight className="w-4 h-4 stroke-[2.5]" />
-            </Link>
+            </a>
           </div>
         </div>
       </section>
 
       {/* Who It Is For */}
-      <section className="py-24 px-6 sm:px-12 bg-[#0c0e0d] border-t border-[#ffffff15]">
+      <section className="py-24 px-6 sm:px-12 bg-[#000000] border-t border-[#ffffff15]">
         <div className="max-w-7xl mx-auto">
           <div className="max-w-3xl mb-16">
-            <span className="eyebrow-text block mb-3 text-[#d6e8aa]">WHO THIS IS BUILT FOR</span>
+            <span className="eyebrow-text block mb-3 text-[#d8ff44]">WHO THIS IS BUILT FOR</span>
             <h2 className="font-sans text-4xl sm:text-6xl font-black tracking-tight text-[#f3f3eb] uppercase">
               FIVE CREATOR PATHWAYS.
             </h2>
@@ -159,7 +159,7 @@ export default function MythraFilmmakerPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {targetAudiences.map((aud, i) => (
-              <div key={i} className="p-8 bg-[#141714] border-2 border-[#ffffff15] hover:border-[#d6e8aa] rounded-2xl transition-all shadow-lg">
+              <div key={i} className="p-8 bg-[#080a08] border-2 border-[#ffffff15] hover:border-[#d8ff44] rounded-2xl transition-all shadow-lg">
                 <h3 className="font-sans text-xl font-black text-[#f3f3eb] mb-2">
                   {aud.title}
                 </h3>
@@ -173,10 +173,10 @@ export default function MythraFilmmakerPage() {
       </section>
 
       {/* Program Ladder */}
-      <section id="programs" className="py-24 px-6 sm:px-12 bg-[#0c0e0d] border-t border-[#ffffff15]">
+      <section id="programs" className="py-24 px-6 sm:px-12 bg-[#000000] border-t border-[#ffffff15]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="eyebrow-text block mb-3 text-[#d6e8aa]">THE EDUCATION LADDER</span>
+            <span className="eyebrow-text block mb-3 text-[#d8ff44]">THE EDUCATION LADDER</span>
             <h2 className="font-sans text-4xl sm:text-6xl font-black tracking-tight text-[#f3f3eb] uppercase">
               CHOOSE YOUR LEARNING PATH.
             </h2>
@@ -192,14 +192,14 @@ export default function MythraFilmmakerPage() {
           </div>
 
           {/* Alumni info box */}
-          <div className="p-6 bg-[#141714] border-2 border-[#ffffff15] rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#9ea399] shadow-lg">
+          <div className="p-6 bg-[#080a08] border-2 border-[#ffffff15] rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#9ea399] shadow-lg">
             <div>
               <strong className="text-[#f3f3eb] block mb-1 text-sm font-sans">Optional Alumni Mastermind &bull; $49/month</strong>
               <span>Post-cohort critique rooms, workflow updates, and collaborative project opportunities. Never required to retain core course access.</span>
             </div>
-            <Link href="/filmmaker/start?tier=film-cohort" className="btn-pill-secondary text-xs !py-2 !px-4 shrink-0">
-              Explore Cohort &rarr;
-            </Link>
+            <a href="/filmmaker/start?tier=film-cohort" className="btn-pill-secondary text-xs !py-2 !px-4 shrink-0 inline-flex items-center gap-1">
+              <span>Explore Cohort &rarr;</span>
+            </a>
           </div>
         </div>
       </section>

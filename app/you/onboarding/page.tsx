@@ -73,13 +73,13 @@ export default function SecureOnboardingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#090909] text-[#F4F0E8] pt-28 pb-20 px-6 sm:px-8">
+    <div className="min-h-screen bg-[#000000] text-[#F4F0E8] pt-28 pb-20 px-6 sm:px-8">
       <div className="max-w-3xl mx-auto">
         {/* Top Header */}
         <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 mb-3 px-3 py-1 bg-[#121212] border border-[#262522] rounded-full">
-            <ShieldCheck className="w-4 h-4 text-[#C8965B]" />
-            <span className="eyebrow-text text-[10px] text-[#C8965B]">
+          <div className="inline-flex items-center gap-2 mb-3 px-3 py-1 bg-[#080a08] border border-[#ffffff15] rounded-full">
+            <ShieldCheck className="w-4 h-4 text-[#d8ff44]" />
+            <span className="eyebrow-text text-[10px] text-[#d8ff44]">
               SECURE PRODUCTION ONBOARDING
             </span>
           </div>
@@ -93,20 +93,20 @@ export default function SecureOnboardingPage() {
 
         {/* Progress Strip */}
         <div className="grid grid-cols-3 gap-2 mb-8 text-[11px] uppercase tracking-wider font-mono">
-          <div className={`p-2 border text-center ${stage === 'consent' ? 'border-[#C8965B] bg-[#1A1917] text-[#C8965B]' : 'border-[#262522] text-[#727b66]'}`}>
+          <div className={`p-2 rounded-xl border text-center ${stage === 'consent' ? 'border-[#d8ff44] bg-[#11160e] text-[#d8ff44]' : 'border-[#ffffff15] text-[#8e9587]'}`}>
             1. Consent
           </div>
-          <div className={`p-2 border text-center ${stage === 'uploads' ? 'border-[#C8965B] bg-[#1A1917] text-[#C8965B]' : 'border-[#262522] text-[#727b66]'}`}>
+          <div className={`p-2 rounded-xl border text-center ${stage === 'uploads' ? 'border-[#d8ff44] bg-[#11160e] text-[#d8ff44]' : 'border-[#ffffff15] text-[#8e9587]'}`}>
             2. Asset Upload
           </div>
-          <div className={`p-2 border text-center ${stage === 'creative' || stage === 'complete' ? 'border-[#C8965B] bg-[#1A1917] text-[#C8965B]' : 'border-[#262522] text-[#727b66]'}`}>
+          <div className={`p-2 rounded-xl border text-center ${stage === 'creative' || stage === 'complete' ? 'border-[#d8ff44] bg-[#11160e] text-[#d8ff44]' : 'border-[#ffffff15] text-[#8e9587]'}`}>
             3. Creative Notes
           </div>
         </div>
 
         {/* STAGE 1: Consent Verification */}
         {stage === 'consent' && (
-          <div className="p-8 bg-[#121212] border border-[#262522]">
+          <div className="p-8 bg-[#080a08] border border-[#ffffff15] rounded-2xl shadow-xl">
             <ConsentStep
               formData={consentData}
               onChange={setConsentData}
@@ -117,7 +117,7 @@ export default function SecureOnboardingPage() {
 
         {/* STAGE 2: Secure Asset Uploads */}
         {stage === 'uploads' && (
-          <div className="p-8 bg-[#121212] border border-[#262522]">
+          <div className="p-8 bg-[#080a08] border border-[#ffffff15] rounded-2xl shadow-xl">
             <h2 className="font-serif text-2xl sm:text-3xl font-bold mb-2">
               UPLOAD AUTHORIZED MEDIA ASSETS
             </h2>
@@ -139,18 +139,18 @@ export default function SecureOnboardingPage() {
               maxFiles={2}
             />
 
-            <div className="flex justify-between items-center pt-6 border-t border-[#1C1B19]">
+            <div className="flex justify-between items-center pt-6 border-t border-[#ffffff15]">
               <button
                 type="button"
                 onClick={() => setStage('consent')}
-                className="text-xs text-[#A7A39B] hover:text-white uppercase tracking-wider"
+                className="text-xs text-[#A7A39B] hover:text-[#d8ff44] uppercase tracking-wider transition-colors"
               >
                 &larr; Back to Consent
               </button>
               <button
                 type="button"
                 onClick={handleUploadsNext}
-                className="bg-[#C8965B] hover:bg-[#d8a66b] text-[#090909] px-8 py-3.5 text-xs uppercase tracking-widest font-bold inline-flex items-center gap-2"
+                className="btn-pill-primary text-xs !py-3.5 !px-8 inline-flex items-center gap-2"
               >
                 <span>Proceed to Creative Notes</span>
                 <ArrowRight className="w-4 h-4" />
@@ -161,7 +161,7 @@ export default function SecureOnboardingPage() {
 
         {/* STAGE 3: Creative Notes & Deletion Controls */}
         {stage === 'creative' && (
-          <form onSubmit={handleFinalSubmit} className="p-8 bg-[#121212] border border-[#262522]">
+          <form onSubmit={handleFinalSubmit} className="p-8 bg-[#080a08] border border-[#ffffff15] rounded-2xl shadow-xl">
             <h2 className="font-serif text-2xl sm:text-3xl font-bold mb-2">
               STORY FACTS & PRODUCTION CONTROLS
             </h2>
@@ -179,7 +179,7 @@ export default function SecureOnboardingPage() {
                   value={pronunciation}
                   onChange={(e) => setPronunciation(e.target.value)}
                   placeholder="e.g. Elena Vance -> 'eh-LAY-nuh VANS'"
-                  className="w-full bg-[#151412] border border-[#262522] focus:border-[#C8965B] px-4 py-3 text-sm text-[#F4F0E8] outline-none"
+                  className="w-full bg-[#0d100c] border border-[#ffffff15] focus:border-[#d8ff44] rounded-xl px-4 py-3 text-sm text-[#F4F0E8] outline-none transition-colors"
                 />
               </div>
 
@@ -192,7 +192,7 @@ export default function SecureOnboardingPage() {
                   value={storyFacts}
                   onChange={(e) => setStoryFacts(e.target.value)}
                   placeholder="Include specific plot details, quotes, inside jokes, or real achievements you want reflected in the screenplay..."
-                  className="w-full bg-[#151412] border border-[#262522] focus:border-[#C8965B] p-3 text-sm text-[#F4F0E8] outline-none resize-none"
+                  className="w-full bg-[#0d100c] border border-[#ffffff15] focus:border-[#d8ff44] rounded-xl p-3 text-sm text-[#F4F0E8] outline-none resize-none transition-colors"
                 />
               </div>
 
@@ -210,10 +210,10 @@ export default function SecureOnboardingPage() {
                       key={cf.id}
                       type="button"
                       onClick={() => setCreativeFreedom(cf.id)}
-                      className={`text-left p-3 border transition-all ${
+                      className={`text-left p-3.5 rounded-xl border transition-all ${
                         creativeFreedom === cf.id
-                          ? 'bg-[#1C1B19] border-[#C8965B] text-[#F4F0E8]'
-                          : 'bg-[#151412] border-[#262522] text-[#A7A39B]'
+                          ? 'bg-[#11160e] border-[#d8ff44] text-[#F4F0E8] shadow-md shadow-[#d8ff44]/15'
+                          : 'bg-[#0d100c] border-[#ffffff15] text-[#A7A39B] hover:border-[#d8ff44]/40'
                       }`}
                     >
                       <strong className="block text-[#F4F0E8] mb-1">{cf.label}</strong>
@@ -227,7 +227,7 @@ export default function SecureOnboardingPage() {
                 <label className="block text-xs uppercase tracking-wider text-[#A7A39B] mb-2 font-semibold">
                   Post-Delivery Media Retention & Deletion Preference
                 </label>
-                <div className="p-4 bg-[#151412] border border-[#262522] space-y-3 text-xs">
+                <div className="p-4 bg-[#0d100c] border border-[#ffffff15] rounded-xl space-y-3 text-xs">
                   {[
                     { id: 'auto_purge_30_days', label: 'Auto-Purge Raw Uploads After 30 Days (Recommended)', desc: 'Keeps final master available while securely deleting source biometric photos/audio.' },
                     { id: 'immediate_purge', label: 'Immediate Purge Upon Delivery Approval', desc: 'Source files deleted immediately when final film is accepted.' },
@@ -239,7 +239,7 @@ export default function SecureOnboardingPage() {
                         name="retention"
                         checked={deletionPreference === p.id}
                         onChange={() => setDeletionPreference(p.id)}
-                        className="mt-0.5 text-[#C8965B] focus:ring-0"
+                        className="mt-0.5 text-[#d8ff44] focus:ring-0"
                       />
                       <div>
                         <span className="font-semibold text-[#F4F0E8] block">{p.label}</span>
@@ -251,18 +251,18 @@ export default function SecureOnboardingPage() {
               </div>
             </div>
 
-            <div className="flex justify-between items-center pt-6 border-t border-[#1C1B19]">
+            <div className="flex justify-between items-center pt-6 border-t border-[#ffffff15]">
               <button
                 type="button"
                 onClick={() => setStage('uploads')}
-                className="text-xs text-[#A7A39B] hover:text-white uppercase tracking-wider"
+                className="text-xs text-[#A7A39B] hover:text-[#d8ff44] uppercase tracking-wider transition-colors"
               >
                 &larr; Back to Uploads
               </button>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-[#C8965B] hover:bg-[#d8a66b] text-[#090909] px-8 py-3.5 text-xs uppercase tracking-widest font-bold inline-flex items-center gap-2"
+                className="btn-pill-primary text-xs !py-3.5 !px-8 inline-flex items-center gap-2"
               >
                 <span>{isSubmitting ? 'Locking Queue...' : 'Lock Brief & Begin Production'}</span>
                 <CheckCircle2 className="w-4 h-4" />
@@ -273,11 +273,11 @@ export default function SecureOnboardingPage() {
 
         {/* STAGE 4: Completion Confirmation */}
         {stage === 'complete' && (
-          <div className="p-10 bg-[#121212] border-2 border-[#C8965B] text-center shadow-2xl">
-            <div className="w-16 h-16 rounded-full bg-[#C8965B]/10 text-[#C8965B] flex items-center justify-center mx-auto mb-6 border border-[#C8965B]">
+          <div className="p-10 bg-[#080a08] border-2 border-[#d8ff44] rounded-2xl text-center shadow-2xl shadow-[#d8ff44]/15">
+            <div className="w-16 h-16 rounded-full bg-[#11160e] text-[#d8ff44] flex items-center justify-center mx-auto mb-6 border border-[#d8ff44]">
               <Film className="w-8 h-8" />
             </div>
-            <span className="eyebrow-text block mb-2 text-[#C8965B]">PRODUCTION LOCKED</span>
+            <span className="eyebrow-text block mb-2 text-[#d8ff44]">PRODUCTION LOCKED</span>
             <h2 className="font-serif text-3xl sm:text-4xl font-bold uppercase mb-4">
               YOUR FILM HAS ENTERED THE STUDIO QUEUE
             </h2>
@@ -285,14 +285,14 @@ export default function SecureOnboardingPage() {
               Your assets and consent record have been verified. Our creative directors have commenced screenplay draft and scene orchestration. You will receive private cut previews via email.
             </p>
 
-            <div className="p-6 bg-[#181715] border border-[#262522] max-w-md mx-auto text-left text-xs text-[#A7A39B] space-y-2 mb-8 font-mono">
+            <div className="p-6 bg-[#0d100c] border border-[#ffffff15] rounded-xl max-w-md mx-auto text-left text-xs text-[#A7A39B] space-y-2 mb-8 font-mono">
               <div className="flex justify-between">
                 <span>PROJECT ID:</span>
                 <span className="text-[#F4F0E8]">MYTHRA-PROJ-2026-99</span>
               </div>
               <div className="flex justify-between">
                 <span>LIKENESS CONSENT:</span>
-                <span className="text-[#C8965B]">VERIFIED & SIGNED</span>
+                <span className="text-[#d8ff44]">VERIFIED & SIGNED</span>
               </div>
               <div className="flex justify-between">
                 <span>FIRST CUT ESTIMATE:</span>
@@ -301,19 +301,19 @@ export default function SecureOnboardingPage() {
             </div>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
+              <a
                 href="/genesis"
-                className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold bg-[#C8965B] text-[#090909] px-6 py-3.5"
+                className="btn-pill-primary inline-flex items-center gap-2 text-xs"
               >
                 <span>Read Genesis Case Study</span>
                 <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-              <Link
+              </a>
+              <a
                 href="/"
-                className="text-xs text-[#A7A39B] hover:text-white uppercase tracking-widest px-4 py-3"
+                className="text-xs text-[#A7A39B] hover:text-[#d8ff44] uppercase tracking-widest px-4 py-3 transition-colors"
               >
                 Return to Master Studio
-              </Link>
+              </a>
             </div>
           </div>
         )}

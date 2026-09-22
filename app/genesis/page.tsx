@@ -39,13 +39,13 @@ export default function GenesisCaseStudyPage() {
   ];
 
   return (
-    <div className="pt-24 pb-20 bg-[#0c0e0d] text-[#f3f3eb]">
+    <div className="pt-24 pb-20 bg-[#000000] text-[#f3f3eb]">
       {/* Hero */}
-      <section className="py-20 px-6 sm:px-8 border-b border-[#252a24]">
+      <section className="py-20 px-6 sm:px-8 border-b border-[#ffffff15]">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#141714] border border-[#252a24] rounded-full">
-            <ShieldCheck className="w-4 h-4 text-[#d6e8aa]" />
-            <span className="eyebrow-text text-[10px] text-[#d6e8aa]">
+          <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-[#080a08] border border-[#ffffff15] rounded-full">
+            <ShieldCheck className="w-4 h-4 text-[#d8ff44]" />
+            <span className="eyebrow-text text-[10px] text-[#d8ff44]">
               CASE STUDY 01 · AUDITED EXPERIMENT
             </span>
           </div>
@@ -67,9 +67,9 @@ export default function GenesisCaseStudyPage() {
           {chapters.map((ch) => (
             <div
               key={ch.num}
-              className="p-8 sm:p-12 bg-[#121212] border border-[#262522] relative"
+              className="p-8 sm:p-12 bg-[#080a08] border border-[#ffffff15] hover:border-[#d8ff44]/40 transition-colors rounded-2xl relative"
             >
-              <span className="font-mono text-xs text-[#C8965B] font-bold block mb-2">
+              <span className="font-mono text-xs text-[#d8ff44] font-bold block mb-2">
                 CHAPTER {ch.num}
               </span>
               <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#F4F0E8] mb-1">

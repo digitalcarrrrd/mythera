@@ -84,7 +84,7 @@ export default function MythraStudiosPage() {
         headline={
           <>
             DON'T MAKE ANOTHER AD.<br />
-            <span className="text-[#d6e8aa]">BUILD A STORY PEOPLE CHOOSE TO WATCH.</span>
+            <span className="text-[#d8ff44]">BUILD A STORY PEOPLE CHOOSE TO WATCH.</span>
           </>
         }
         lead="Original AI-native films, branded drama, and scalable story worlds."
@@ -96,17 +96,17 @@ export default function MythraStudiosPage() {
       />
 
       {/* Public Pricing Anchor Rule Line */}
-      <div className="bg-[#141714] border-y border-[#ffffff15] py-4 px-6 text-center text-xs sm:text-sm font-sans text-[#f3f3eb] font-semibold tracking-wide">
-        Studio engagements begin at <strong className="text-[#d6e8aa] font-black">$7,500</strong>. Original IP and long-form productions are scoped individually.
+      <div className="bg-[#080a08] border-y border-[#ffffff15] py-4 px-6 text-center text-xs sm:text-sm font-sans text-[#f3f3eb] font-semibold tracking-wide">
+        Studio engagements begin at <strong className="text-[#d8ff44] font-black">$7,500</strong>. Original IP and long-form productions are scoped individually.
       </div>
 
       {/* 5 Clear Intent Cards */}
-      <section className="py-24 px-6 sm:px-12 bg-[#0c0e0d]">
+      <section className="py-24 px-6 sm:px-12 bg-[#000000]">
         <div className="max-w-7xl mx-auto">
           <div className="max-w-3xl mb-16">
             <div className="flex items-center gap-2 mb-3">
-              <span className="w-2 h-2 rounded-full bg-[#d6e8aa]" />
-              <span className="eyebrow-text text-xs text-[#d6e8aa]">
+              <span className="w-2 h-2 rounded-full bg-[#d8ff44]" />
+              <span className="eyebrow-text text-xs text-[#d8ff44]">
                 HOW CAN WE WORK TOGETHER?
               </span>
             </div>
@@ -119,26 +119,26 @@ export default function MythraStudiosPage() {
             {intentCards.map((card) => {
               const Icon = card.icon;
               return (
-                <Link
+                <a
                   key={card.id}
                   href={card.href}
-                  className="p-8 bg-[#141714] border-2 border-[#ffffff15] hover:border-[#d6e8aa] rounded-2xl transition-all flex flex-col justify-between group shadow-xl hover:-translate-y-1"
+                  className="p-8 bg-[#080a08] border-2 border-[#ffffff15] hover:border-[#d8ff44] rounded-2xl transition-all flex flex-col justify-between group shadow-xl hover:-translate-y-1"
                 >
                   <div>
-                    <div className="w-12 h-12 rounded-full bg-[#1a1e19] border border-[#d6e8aa]/30 flex items-center justify-center mb-6 text-[#d6e8aa] group-hover:bg-[#d6e8aa] group-hover:text-[#11160e] transition-colors">
+                    <div className="w-12 h-12 rounded-full bg-[#0d100c] border border-[#d8ff44]/30 flex items-center justify-center mb-6 text-[#d8ff44] group-hover:bg-[#d8ff44] group-hover:text-[#000000] transition-colors">
                       <Icon className="w-6 h-6" />
                     </div>
-                    <h3 className="font-sans text-xl font-black text-[#f3f3eb] mb-2 group-hover:text-[#d6e8aa] transition-colors">
+                    <h3 className="font-sans text-xl font-black text-[#f3f3eb] mb-2 group-hover:text-[#d8ff44] transition-colors">
                       {card.title}
                     </h3>
                     <p className="text-xs text-[#9ea399] leading-relaxed">
                       {card.desc}
                     </p>
                   </div>
-                  <div className="mt-8 pt-4 border-t border-[#ffffff15] flex items-center justify-between text-xs text-[#d6e8aa] font-bold uppercase tracking-wider">
+                  <div className="mt-8 pt-4 border-t border-[#ffffff15] flex items-center justify-between text-xs text-[#d8ff44] font-bold uppercase tracking-wider">
                     <span>Explore &rarr;</span>
                   </div>
-                </Link>
+                </a>
               );
             })}
           </div>
@@ -146,10 +146,10 @@ export default function MythraStudiosPage() {
       </section>
 
       {/* Studio Capabilities */}
-      <section className="py-24 px-6 sm:px-12 bg-[#0c0e0d] border-t border-[#ffffff15]">
+      <section className="py-24 px-6 sm:px-12 bg-[#000000] border-t border-[#ffffff15]">
         <div className="max-w-7xl mx-auto">
           <div className="max-w-3xl mb-16">
-            <span className="eyebrow-text block mb-3 text-[#d6e8aa]">CORE CAPABILITIES</span>
+            <span className="eyebrow-text block mb-3 text-[#d8ff44]">CORE CAPABILITIES</span>
             <h2 className="font-sans text-4xl sm:text-6xl font-black tracking-tight text-[#f3f3eb] uppercase">
               END-TO-END NARRATIVE ARCHITECTURE.
             </h2>
@@ -157,8 +157,8 @@ export default function MythraStudiosPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {capabilities.map((c, i) => (
-              <div key={i} className="p-8 bg-[#141714] border-2 border-[#ffffff15] rounded-2xl shadow-lg hover:border-[#d6e8aa] transition-colors">
-                <span className="font-mono text-xs text-[#d6e8aa] font-bold block mb-3 px-2 py-0.5 bg-[#1a1e19] rounded-full border border-[#d6e8aa]/30 w-fit">
+              <div key={i} className="p-8 bg-[#080a08] border-2 border-[#ffffff15] rounded-2xl shadow-lg hover:border-[#d8ff44] transition-colors">
+                <span className="font-mono text-xs text-[#d8ff44] font-bold block mb-3 px-2 py-0.5 bg-[#0d100c] rounded-full border border-[#d8ff44]/30 w-fit">
                   0{i + 1}
                 </span>
                 <h3 className="font-sans text-2xl font-black text-[#f3f3eb] mb-2">
@@ -174,10 +174,10 @@ export default function MythraStudiosPage() {
       </section>
 
       {/* Engagement Models (Tier Pricing & Starting Points) */}
-      <section id="models" className="py-24 px-6 sm:px-12 bg-[#0c0e0d] border-t border-[#ffffff15]">
+      <section id="models" className="py-24 px-6 sm:px-12 bg-[#000000] border-t border-[#ffffff15]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="eyebrow-text block mb-3 text-[#d6e8aa]">ENGAGEMENT MODELS</span>
+            <span className="eyebrow-text block mb-3 text-[#d8ff44]">ENGAGEMENT MODELS</span>
             <h2 className="font-sans text-4xl sm:text-6xl font-black tracking-tight text-[#f3f3eb] uppercase">
               PRODUCTION STARTING POINTS.
             </h2>

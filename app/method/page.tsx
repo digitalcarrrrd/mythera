@@ -85,15 +85,15 @@ export default function MethodPage() {
   const current = METHOD_STEPS[activeStep];
 
   return (
-    <div className="pt-24 pb-20 bg-[#090909] text-[#F4F0E8]">
+    <div className="pt-24 pb-20 bg-[#000000] text-[#F4F0E8]">
       {/* Hero */}
-      <section className="py-20 px-6 sm:px-8 border-b border-[#1C1B19]">
+      <section className="py-20 px-6 sm:px-8 border-b border-[#ffffff15]">
         <div className="max-w-4xl mx-auto text-center">
-          <span className="eyebrow-text block mb-3 text-[#C8965B]">THE PRODUCTION ARCHITECTURE</span>
+          <span className="eyebrow-text block mb-3 text-[#d8ff44]">THE PRODUCTION ARCHITECTURE</span>
           <h1 className="font-serif text-4xl sm:text-6xl font-bold uppercase tracking-tight leading-tight">
             THE DRAMA METHOD
           </h1>
-          <p className="mt-4 font-serif text-xl sm:text-2xl text-[#C8965B] italic font-normal">
+          <p className="mt-4 font-serif text-xl sm:text-2xl text-[#d8ff44] italic font-normal">
             &ldquo;The tools will change. The story system remains.&rdquo;
           </p>
           <p className="mt-6 text-sm sm:text-base text-[#A7A39B] max-w-2xl mx-auto leading-relaxed">
@@ -113,21 +113,21 @@ export default function MethodPage() {
                 <button
                   key={step.num}
                   onClick={() => setActiveStep(idx)}
-                  className={`w-full text-left p-4 border transition-all flex items-center justify-between ${
+                  className={`w-full text-left p-4 rounded-xl border transition-all flex items-center justify-between ${
                     isActive
-                      ? 'bg-[#1C1B19] border-[#C8965B] text-[#F4F0E8]'
-                      : 'bg-[#121212] border-[#262522] text-[#A7A39B] hover:border-[#38342D]'
+                      ? 'bg-[#080a08] border-2 border-[#d8ff44] text-[#F4F0E8] shadow-lg shadow-[#d8ff44]/10'
+                      : 'bg-[#080a08] border border-[#ffffff15] text-[#A7A39B] hover:border-[#d8ff44]/40'
                   }`}
                 >
                   <div className="flex items-center gap-4">
-                    <span className="font-mono text-xs text-[#C8965B] font-bold">
+                    <span className="font-mono text-xs text-[#d8ff44] font-bold">
                       {step.num}
                     </span>
                     <span className="text-sm font-semibold">
                       {step.name}
                     </span>
                   </div>
-                  <ChevronRight className={`w-4 h-4 transition-transform ${isActive ? 'text-[#C8965B] translate-x-1' : 'text-[#727b66]'}`} />
+                  <ChevronRight className={`w-4 h-4 transition-transform ${isActive ? 'text-[#d8ff44] translate-x-1' : 'text-[#8e9587]'}`} />
                 </button>
               );
             })}
@@ -135,18 +135,18 @@ export default function MethodPage() {
 
           {/* Right Column: Active Stage Detail Box (Sticky) */}
           <div className="lg:col-span-6 lg:sticky lg:top-28 h-fit">
-            <div className="p-8 sm:p-12 bg-[#121212] border-2 border-[#C8965B] shadow-2xl relative">
-              <span className="font-mono text-6xl sm:text-8xl font-bold text-[#C8965B]/20 absolute top-4 right-8 select-none">
+            <div className="p-8 sm:p-12 bg-[#080a08] border-2 border-[#d8ff44] rounded-2xl shadow-2xl relative shadow-[#d8ff44]/10">
+              <span className="font-mono text-6xl sm:text-8xl font-bold text-[#d8ff44]/15 absolute top-4 right-8 select-none">
                 {current.num}
               </span>
-              <span className="film-credit text-[#C8965B] block mb-2">STAGE {current.num}</span>
+              <span className="film-credit text-[#d8ff44] block mb-2">STAGE {current.num}</span>
               <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#F4F0E8] mb-4">
                 {current.name}
               </h2>
               <p className="text-sm sm:text-base font-semibold text-[#F4F0E8] mb-6 leading-relaxed">
                 {current.summary}
               </p>
-              <div className="pt-6 border-t border-[#262522] text-xs sm:text-sm text-[#A7A39B] leading-relaxed">
+              <div className="pt-6 border-t border-[#ffffff15] text-xs sm:text-sm text-[#A7A39B] leading-relaxed">
                 {current.detail}
               </div>
             </div>

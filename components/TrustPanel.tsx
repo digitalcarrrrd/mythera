@@ -29,13 +29,13 @@ export default function TrustPanel() {
   ];
 
   return (
-    <section className="py-20 px-6 sm:px-12 bg-[#0c0e0d] border-t border-[#ffffff15]">
+    <section className="py-20 px-6 sm:px-12 bg-[#000000] border-t border-[#ffffff15]">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="max-w-3xl mb-16">
           <div className="flex items-center gap-2 mb-3">
-            <span className="w-2 h-2 rounded-full bg-[#d6e8aa]" />
-            <span className="eyebrow-text text-xs text-[#d6e8aa]">
+            <span className="w-2 h-2 rounded-full bg-[#d8ff44]" />
+            <span className="eyebrow-text text-xs text-[#d8ff44]">
               LIKENESS SECURITY & ETHICAL AI
             </span>
           </div>
@@ -54,9 +54,9 @@ export default function TrustPanel() {
             return (
               <div
                 key={i}
-                className="p-8 bg-[#141714] border-2 border-[#ffffff15] hover:border-[#d6e8aa] rounded-2xl transition-all shadow-lg"
+                className="p-8 bg-[#080a08] border-2 border-[#ffffff15] hover:border-[#d8ff44] rounded-2xl transition-all shadow-lg"
               >
-                <div className="w-12 h-12 rounded-full bg-[#1a1e19] border border-[#d6e8aa]/30 flex items-center justify-center mb-6 text-[#d6e8aa]">
+                <div className="w-12 h-12 rounded-full bg-[#0d100c] border border-[#d8ff44]/30 flex items-center justify-center mb-6 text-[#d8ff44]">
                   <Icon className="w-6 h-6" />
                 </div>
                 <h3 className="text-lg font-bold text-[#f3f3eb] mb-2 font-sans">
@@ -71,10 +71,10 @@ export default function TrustPanel() {
         </div>
 
         {/* Expectation & Legal Notice Box */}
-        <div className="p-8 bg-[#141714] border-2 border-[#ffffff15] rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xl">
+        <div className="p-8 bg-[#080a08] border-2 border-[#ffffff15] rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xl">
           <div>
             <div className="flex items-center gap-2 text-xs font-bold text-[#f3f3eb] uppercase tracking-wider mb-2 font-mono">
-              <Sliders className="w-4 h-4 text-[#d6e8aa]" />
+              <Sliders className="w-4 h-4 text-[#d8ff44]" />
               <span>Creative Style & Likeness Expectation Notice</span>
             </div>
             <p className="text-xs text-[#9ea399] max-w-3xl leading-relaxed">
@@ -82,13 +82,13 @@ export default function TrustPanel() {
             </p>
           </div>
           <div className="flex items-center gap-4 shrink-0">
-            <Link
+            <a
               href="/legal/likeness-consent"
-              className="btn-pill-secondary text-xs !py-2.5 !px-5"
+              className="btn-pill-secondary text-xs !py-2.5 !px-5 inline-flex items-center gap-2"
             >
               <span>Read Likeness Policy</span>
               <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
+            </a>
           </div>
         </div>
       </div>

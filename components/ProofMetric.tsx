@@ -23,48 +23,48 @@ export default function ProofMetric({ showAll = false }: ProofMetricProps) {
   ];
 
   return (
-    <section className="py-20 px-6 sm:px-12 bg-[#0c0e0d] border-y border-[#ffffff15]">
+    <section className="py-20 px-6 sm:px-12 bg-[#000000] border-y border-[#ffffff15]">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-14">
           <div className="flex items-center gap-2 mb-3">
-            <span className="w-2 h-2 rounded-full bg-[#d6e8aa]" />
-            <span className="eyebrow-text text-xs text-[#d6e8aa]">VERIFIED PROOF & TRUTH CONTROLS</span>
+            <span className="w-2 h-2 rounded-full bg-[#d8ff44]" />
+            <span className="eyebrow-text text-xs text-[#d8ff44]">VERIFIED PROOF & TRUTH CONTROLS</span>
           </div>
-          <h2 className="font-sans text-3xl sm:text-5xl font-black tracking-tight text-[#f3f3eb] uppercase">
+          <h2 className="font-sans text-3xl sm:text-5xl font-black tracking-tight text-[#ffffff] uppercase">
             ONE CREATOR. ONE ORIGINAL DRAMA. A GLOBAL SIGNAL.
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-[#9ea399] max-w-3xl">
+          <p className="mt-3 text-sm sm:text-base text-[#a3a89e] max-w-3xl">
             In our Genesis experiment, we tested whether an AI-native production pipeline could carry a full 28-minute emotional drama. All metrics below are audited and strictly labeled by source.
           </p>
         </div>
 
         {/* Part 1: Production Economics */}
         <div className="mb-12">
-          <div className="text-xs font-mono tracking-widest uppercase mb-4 text-[#d6e8aa] font-bold">
+          <div className="text-xs font-mono tracking-widest uppercase mb-4 text-[#d8ff44] font-bold">
             01 / PRODUCTION BENCHMARKS (GENESIS EXPERIMENT)
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {productionMetrics.map((metric) => (
               <div
                 key={metric.key}
-                className="p-8 bg-[#141714] border-2 border-[#ffffff15] rounded-2xl relative group hover:border-[#d6e8aa] transition-colors shadow-lg"
+                className="p-8 bg-[#0a0d08] border-2 border-[#ffffff15] rounded-2xl relative group hover:border-[#d8ff44] transition-colors shadow-lg"
               >
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs uppercase tracking-widest text-[#9ea399] font-semibold">
+                  <span className="text-xs uppercase tracking-widest text-[#a3a89e] font-semibold">
                     {metric.label}
                   </span>
                   {metric.verified ? (
-                    <span className="inline-flex items-center gap-1 text-[10px] text-[#11160e] font-bold bg-[#d6e8aa] px-2.5 py-0.5 rounded-full">
+                    <span className="inline-flex items-center gap-1 text-[10px] text-[#000000] font-black bg-[#d8ff44] px-2.5 py-0.5 rounded-full">
                       <ShieldCheck className="w-3 h-3" /> Audited
                     </span>
                   ) : (
-                    <span className="text-[10px] text-[#9ea399] bg-[#1a1e19] px-2 py-0.5 rounded-full">
+                    <span className="text-[10px] text-[#a3a89e] bg-[#141a10] px-2 py-0.5 rounded-full">
                       Unverified
                     </span>
                   )}
                 </div>
-                <div className="font-sans text-4xl sm:text-6xl font-black text-[#f3f3eb] tracking-tight">
+                <div className="font-sans text-4xl sm:text-6xl font-black text-[#ffffff] tracking-tight">
                   {metric.value}
                 </div>
                 {metric.methodologyNote && (
@@ -80,7 +80,7 @@ export default function ProofMetric({ showAll = false }: ProofMetricProps) {
         {/* Part 2: Audience & Distribution Breakdown */}
         <div>
           <div className="flex items-center justify-between mb-4">
-            <div className="text-xs font-mono tracking-widest uppercase text-[#d6e8aa] font-bold">
+            <div className="text-xs font-mono tracking-widest uppercase text-[#d8ff44] font-bold">
               02 / DISTRIBUTION & REACH (SEPARATED BY ATTRIBUTION CATEGORY)
             </div>
             <div className="text-[11px] text-[#727b66] hidden sm:block">
@@ -95,30 +95,30 @@ export default function ProofMetric({ showAll = false }: ProofMetricProps) {
                   key={metric.key}
                   className={`p-6 border-2 rounded-2xl relative flex flex-col justify-between shadow-lg ${
                     isEcosystem
-                      ? 'bg-[#181c17] border-[#d6e8aa]/30'
-                      : 'bg-[#141714] border-[#ffffff15]'
+                      ? 'bg-[#0f140e] border-[#d8ff44]/40'
+                      : 'bg-[#0a0d08] border-[#ffffff15] hover:border-[#d8ff44]/60 transition-colors'
                   }`}
                 >
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs font-bold text-[#f3f3eb]">
+                      <span className="text-xs font-bold text-[#ffffff]">
                         {metric.label}
                       </span>
                     </div>
-                    <span className="text-[10px] uppercase tracking-wider text-[#9ea399] block mb-3 font-mono">
+                    <span className="text-[10px] uppercase tracking-wider text-[#a3a89e] block mb-3 font-mono font-semibold">
                       {metric.category === 'official_owned'
                         ? 'Official Owned Channel'
                         : metric.category === 'licensed_partner'
                         ? 'Licensed Channel Partner'
                         : 'Observed Ecosystem Reach'}
                     </span>
-                    <div className="font-sans text-4xl sm:text-5xl font-black text-[#f3f3eb]">
+                    <div className="font-sans text-4xl sm:text-5xl font-black text-[#ffffff]">
                       {metric.value}
                     </div>
                   </div>
 
                   <div className="mt-4 pt-3 border-t border-[#ffffff15]">
-                    <p className="text-[11px] text-[#9ea399] leading-relaxed">
+                    <p className="text-[11px] text-[#a3a89e] leading-relaxed">
                       {metric.methodologyNote}
                     </p>
                     {metric.evidenceUrl && (
@@ -126,7 +126,7 @@ export default function ProofMetric({ showAll = false }: ProofMetricProps) {
                         href={metric.evidenceUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-1 text-[10px] text-[#d6e8aa] hover:underline mt-2 font-bold"
+                        className="inline-flex items-center gap-1 text-[10px] text-[#d8ff44] hover:underline mt-2 font-bold"
                       >
                         <span>Evidence reference</span>
                         <ExternalLink className="w-2.5 h-2.5" />

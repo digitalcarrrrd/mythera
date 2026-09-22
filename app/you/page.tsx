@@ -89,7 +89,7 @@ export default function MythraYouPage() {
         headline={
           <>
             YOU'VE WATCHED MOVIES YOUR WHOLE LIFE.<br />
-            <span className="text-[#d6e8aa]">NOW ENTER ONE.</span>
+            <span className="text-[#d8ff44]">NOW ENTER ONE.</span>
           </>
         }
         lead="Your face. Your voice. Your story. Made cinematic."
@@ -101,12 +101,12 @@ export default function MythraYouPage() {
       />
 
       {/* Emotional Use Cases */}
-      <section className="py-24 px-6 sm:px-12 bg-[#0c0e0d]">
+      <section className="py-24 px-6 sm:px-12 bg-[#000000]">
         <div className="max-w-7xl mx-auto">
           <div className="max-w-3xl mb-16">
             <div className="flex items-center gap-2 mb-3">
-              <span className="w-2 h-2 rounded-full bg-[#d6e8aa]" />
-              <span className="eyebrow-text text-xs text-[#d6e8aa]">
+              <span className="w-2 h-2 rounded-full bg-[#d8ff44]" />
+              <span className="eyebrow-text text-xs text-[#d8ff44]">
                 EMOTIONAL CINEMA & MILESTONES
               </span>
             </div>
@@ -124,9 +124,9 @@ export default function MythraYouPage() {
               return (
                 <div
                   key={i}
-                  className="p-8 bg-[#141714] border-2 border-[#ffffff15] hover:border-[#d6e8aa] rounded-2xl transition-all shadow-lg group"
+                  className="p-8 bg-[#080a08] border-2 border-[#ffffff15] hover:border-[#d8ff44] rounded-2xl transition-all shadow-lg group"
                 >
-                  <div className="w-12 h-12 rounded-full bg-[#1a1e19] border border-[#d6e8aa]/30 flex items-center justify-center mb-6 text-[#d6e8aa] group-hover:bg-[#d6e8aa] group-hover:text-[#11160e] transition-colors">
+                  <div className="w-12 h-12 rounded-full bg-[#0d100c] border border-[#d8ff44]/30 flex items-center justify-center mb-6 text-[#d8ff44] group-hover:bg-[#d8ff44] group-hover:text-[#000000] transition-colors">
                     <Icon className="w-6 h-6" />
                   </div>
                   <h3 className="font-sans text-2xl font-black text-[#f3f3eb] mb-3">
@@ -148,12 +148,12 @@ export default function MythraYouPage() {
       </div>
 
       {/* How It Works (6 Steps) */}
-      <section className="py-24 px-6 sm:px-12 bg-[#0c0e0d] border-t border-[#ffffff15]">
+      <section className="py-24 px-6 sm:px-12 bg-[#000000] border-t border-[#ffffff15]">
         <div className="max-w-7xl mx-auto">
           <div className="max-w-3xl mb-16">
             <div className="flex items-center gap-2 mb-3">
-              <span className="w-2 h-2 rounded-full bg-[#d6e8aa]" />
-              <span className="eyebrow-text text-xs text-[#d6e8aa]">THE PRODUCTION PROCESS</span>
+              <span className="w-2 h-2 rounded-full bg-[#d8ff44]" />
+              <span className="eyebrow-text text-xs text-[#d8ff44]">THE PRODUCTION PROCESS</span>
             </div>
             <h2 className="font-sans text-4xl sm:text-6xl font-black tracking-tight text-[#f3f3eb] uppercase">
               HOW YOUR FILM IS MADE.
@@ -164,9 +164,9 @@ export default function MythraYouPage() {
             {steps.map((s) => (
               <div
                 key={s.num}
-                className="p-8 bg-[#141714] border-2 border-[#ffffff15] rounded-2xl relative shadow-lg hover:border-[#d6e8aa] transition-colors"
+                className="p-8 bg-[#080a08] border-2 border-[#ffffff15] rounded-2xl relative shadow-lg hover:border-[#d8ff44] transition-colors"
               >
-                <span className="font-mono text-xs text-[#d6e8aa] font-bold block mb-4 px-2.5 py-1 bg-[#1a1e19] rounded-full border border-[#d6e8aa]/30 w-fit">
+                <span className="font-mono text-xs text-[#d8ff44] font-bold block mb-4 px-2.5 py-1 bg-[#0d100c] rounded-full border border-[#d8ff44]/30 w-fit">
                   STEP {s.num}
                 </span>
                 <h3 className="font-sans text-2xl font-black text-[#f3f3eb] mb-2">
@@ -182,10 +182,10 @@ export default function MythraYouPage() {
       </section>
 
       {/* Pricing Ladder */}
-      <section id="pricing" className="py-24 px-6 sm:px-12 bg-[#0c0e0d] border-t border-[#ffffff15]">
+      <section id="pricing" className="py-24 px-6 sm:px-12 bg-[#000000] border-t border-[#ffffff15]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="eyebrow-text block mb-3 text-[#d6e8aa]">PUBLIC PRICING LADDER</span>
+            <span className="eyebrow-text block mb-3 text-[#d8ff44]">PUBLIC PRICING LADDER</span>
             <h2 className="font-sans text-4xl sm:text-6xl font-black tracking-tight text-[#f3f3eb] uppercase">
               CHOOSE YOUR CINEMATIC FORMAT.
             </h2>
@@ -202,16 +202,16 @@ export default function MythraYouPage() {
           </div>
 
           {/* Add-ons Row */}
-          <div className="p-8 bg-[#141714] border-2 border-[#ffffff15] rounded-2xl shadow-xl">
+          <div className="p-8 bg-[#080a08] border-2 border-[#ffffff15] rounded-2xl shadow-xl">
             <h3 className="font-sans text-2xl font-black text-[#f3f3eb] mb-6 flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-[#d6e8aa]" />
+              <Sparkles className="w-5 h-5 text-[#d8ff44]" />
               <span>Available Production Add-Ons</span>
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-xs">
               {mythraOffers.youAddOns.map((addon) => (
-                <div key={addon.id} className="p-5 bg-[#1a1e19] rounded-xl border border-[#ffffff10]">
+                <div key={addon.id} className="p-5 bg-[#0d100c] rounded-xl border border-[#ffffff10]">
                   <strong className="block text-[#f3f3eb] text-sm mb-1">{addon.name}</strong>
-                  <span className="text-[#d6e8aa] font-mono font-bold block mb-2">{addon.priceDisplay}</span>
+                  <span className="text-[#d8ff44] font-mono font-bold block mb-2">{addon.priceDisplay}</span>
                   <p className="text-[#9ea399]">{addon.description}</p>
                 </div>
               ))}

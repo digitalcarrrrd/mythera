@@ -4,26 +4,26 @@
 
 @layer base {
   :root {
-    --background: #0c0e0d;
+    --background: #000000;
     --foreground: #f3f3eb;
-    --card: #141714;
+    --card: #080a08;
     --card-foreground: #f3f3eb;
-    --popover: #141714;
+    --popover: #080a08;
     --popover-foreground: #f3f3eb;
-    --primary: #d6e8aa;
-    --primary-foreground: #11150d;
-    --secondary: #1a1e19;
+    --primary: #d8ff44;
+    --primary-foreground: #000000;
+    --secondary: #121612;
     --secondary-foreground: #f3f3eb;
-    --muted: #1a1e19;
+    --muted: #121612;
     --muted-foreground: #9ea399;
-    --accent: #d6e8aa;
-    --accent-foreground: #11150d;
+    --accent: #d8ff44;
+    --accent-foreground: #000000;
     --oxblood: #6B1F2A;
     --destructive: #8A2B35;
     --destructive-foreground: #f3f3eb;
     --border: #ffffff20;
     --input: #ffffff26;
-    --ring: #d6e8aa;
+    --ring: #d8ff44;
     --radius: 9999px;
   }
 }
@@ -59,14 +59,14 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 90px;
-  background-color: #0c0e0d;
+  scroll-padding-top: 100px;
+  background-color: #000000;
   color: #f3f3eb;
 }
 
 body {
   margin: 0;
-  background: #0c0e0d;
+  background: #000000;
   color: #f3f3eb;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-size: 16px;
@@ -83,9 +83,9 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  pointer-events: none;
-  z-index: 999;
-  opacity: 0.035;
+  pointer-events: none !important;
+  z-index: 1;
+  opacity: 0.025;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
@@ -110,27 +110,29 @@ body {
   justify-content: center;
   gap: 0.6rem;
   border-radius: 9999px;
-  background-color: #d6e8aa;
-  color: #11160e;
-  font-weight: 750;
-  font-size: 0.925rem;
+  background-color: #d8ff44;
+  color: #000000;
+  font-weight: 800;
+  font-size: 0.875rem;
+  letter-spacing: -0.01em;
   padding: 0.85rem 1.85rem;
-  border: 2px solid #11160e;
-  box-shadow: 0 4px 0 0 #11160e;
-  transition: all 0.15s ease-out;
+  border: 2px solid #000000;
+  box-shadow: 0 4px 0 0 #000000, 0 8px 25px rgba(216, 255, 68, 0.45);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   text-decoration: none;
 }
 
 .btn-pill-primary:hover {
-  background-color: #e4f5bc;
   transform: translateY(-2px);
-  box-shadow: 0 6px 0 0 #11160e;
+  background-color: #e4ff66;
+  box-shadow: 0 6px 0 0 #000000, 0 12px 32px rgba(216, 255, 68, 0.65);
+  color: #000000;
 }
 
 .btn-pill-primary:active {
-  transform: translateY(2px);
-  box-shadow: 0 1px 0 0 #11160e;
+  transform: translateY(1px);
+  box-shadow: 0 2px 0 0 #000000;
 }
 
 .btn-pill-secondary {
@@ -139,30 +141,28 @@ body {
   justify-content: center;
   gap: 0.6rem;
   border-radius: 9999px;
-  background-color: rgba(20, 23, 20, 0.85);
+  background-color: #0c0e0c;
   color: #f3f3eb;
   font-weight: 700;
-  font-size: 0.925rem;
+  font-size: 0.875rem;
   padding: 0.85rem 1.85rem;
-  border: 2px solid #ffffff40;
-  box-shadow: 0 4px 0 0 rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(8px);
-  transition: all 0.15s ease-out;
+  border: 2px solid rgba(216, 255, 68, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   text-decoration: none;
 }
 
 .btn-pill-secondary:hover {
-  background-color: rgba(34, 39, 34, 0.95);
-  border-color: #ffffff70;
-  color: #ffffff;
   transform: translateY(-2px);
-  box-shadow: 0 6px 0 0 rgba(0, 0, 0, 0.8);
+  border-color: #d8ff44;
+  color: #ffffff;
+  background-color: #141814;
+  box-shadow: 0 6px 20px rgba(216, 255, 68, 0.25);
 }
 
 .btn-pill-secondary:active {
-  transform: translateY(2px);
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.8);
+  transform: translateY(1px);
 }
 
 .btn-pill-white {
@@ -172,21 +172,21 @@ body {
   gap: 0.6rem;
   border-radius: 9999px;
   background-color: #ffffff;
-  color: #11160e;
-  font-weight: 750;
-  font-size: 0.925rem;
+  color: #000000;
+  font-weight: 800;
+  font-size: 0.875rem;
   padding: 0.85rem 1.85rem;
-  border: 2px solid #11160e;
-  box-shadow: 0 4px 0 0 #11160e;
-  transition: all 0.15s ease-out;
+  border: 2px solid #000000;
+  box-shadow: 0 4px 0 0 #000000;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   text-decoration: none;
 }
 
 .btn-pill-white:hover {
-  background-color: #f5f5ee;
   transform: translateY(-2px);
-  box-shadow: 0 6px 0 0 #11160e;
+  box-shadow: 0 6px 0 0 #000000;
+  background-color: #f5f5f0;
 }
 
 .btn-pill-white:active {
@@ -200,7 +200,7 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.22em;
   font-weight: 600;
-  color: #d6e8aa;
+  color: #d8ff44;
 }
 
 .film-credit {
@@ -216,13 +216,13 @@ button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: 2px solid #d6e8aa;
+  outline: 2px solid #d8ff44;
   outline-offset: 4px;
 }
 
 ::selection {
-  background: #d6e8aa;
-  color: #11160e;
+  background: #d8ff44;
+  color: #000000;
 }
 
 /* Custom Scrollbar */
@@ -230,14 +230,14 @@ select:focus-visible {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0c0e0d;
+  background: #000000;
 }
 ::-webkit-scrollbar-thumb {
   background: #252b24;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #d6e8aa;
+  background: #d8ff44;
 }
 
 @media (prefers-reduced-motion: reduce) {
