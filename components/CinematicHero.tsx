@@ -23,7 +23,7 @@ export default function CinematicHero({
     <>
       A ONE-PERSON<br />
       HOLLYWOOD<br />
-      <span className="text-[#d8ff44]">STUDIO.</span>
+      <span className="text-primary">STUDIO.</span>
     </>
   ),
   lead = 'Original drama built for the AI era.',
@@ -49,7 +49,7 @@ export default function CinematicHero({
   };
 
   return (
-    <section className="relative min-h-[95vh] flex items-center justify-start pt-32 pb-24 px-6 sm:px-12 lg:px-16 overflow-hidden bg-[#000000]">
+    <section className="relative min-h-[95vh] flex items-center justify-start pt-32 pb-24 px-6 sm:px-12 lg:px-16 overflow-hidden bg-background">
       {/* Background Image with Cinematic Gradient Shade */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <img
@@ -57,39 +57,39 @@ export default function CinematicHero({
           alt="MYTHRA cinematic fantasy universe"
           className="w-full h-full object-cover object-[center_40%] animate-cinema-zoom opacity-85 scale-105"
         />
-        {/* Multilayer gradient shade for pitch-black immersion and maximum contrast */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#000000]/95 via-[#000000]/60 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-transparent to-[#000000]/70" />
+        {/* Multilayer gradient shade for immersion and maximum contrast */}
+        <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/70" />
       </div>
 
       <div className="relative z-10 max-w-4xl">
         {/* Eyebrow with horizontal dash line */}
         <div className="flex items-center gap-3 mb-6">
-          <span className="w-8 h-[2px] bg-[#d8ff44]" />
-          <span className="text-[11px] sm:text-xs font-mono font-bold tracking-[0.25em] text-[#d8ff44] uppercase">
+          <span className="w-8 h-[2px] bg-primary" />
+          <span className="text-[11px] sm:text-xs font-mono font-bold tracking-[0.25em] text-primary uppercase">
             {eyebrow}
           </span>
           {badge && (
-            <span className="text-[9px] uppercase tracking-widest bg-[#0a0d08] border border-[#d8ff44]/40 text-[#d8ff44] px-2.5 py-0.5 rounded-full ml-2">
+            <span className="text-[9px] uppercase tracking-widest bg-[var(--surface-elevated)] border border-primary/40 text-primary px-2.5 py-0.5 rounded-full ml-2">
               {badge}
             </span>
           )}
         </div>
 
         {/* Big Bold Headline */}
-        <h1 className="font-sans text-5xl sm:text-7xl md:text-8xl font-black tracking-[-0.04em] text-[#ffffff] leading-[0.96] uppercase drop-shadow-2xl">
+        <h1 className="font-sans text-5xl sm:text-7xl md:text-8xl font-black tracking-[-0.04em] text-[var(--text-primary)] leading-[0.96] uppercase drop-shadow-2xl">
           {headline}
         </h1>
 
         {/* Subtitle Lead & Support */}
         <div className="mt-8 space-y-2 max-w-xl">
           {lead && (
-            <p className="text-xl sm:text-2xl text-[#f3f3eb] font-semibold tracking-tight">
+            <p className="text-xl sm:text-2xl text-foreground font-semibold tracking-tight">
               {lead}
             </p>
           )}
           {support && (
-            <p className="text-sm sm:text-base text-[#a3a89e] font-normal leading-relaxed">
+            <p className="text-sm sm:text-base text-[var(--text-secondary)] font-normal leading-relaxed">
               {support}
             </p>
           )}
@@ -111,8 +111,8 @@ export default function CinematicHero({
               href={secondaryCtaHref}
               className="btn-pill-secondary text-sm sm:text-base"
             >
-              <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center -ml-1">
-                <Play className="w-3 h-3 fill-current ml-0.5 text-[#d8ff44]" />
+              <div className="w-6 h-6 rounded-full bg-foreground/10 flex items-center justify-center -ml-1">
+                <Play className="w-3 h-3 fill-current ml-0.5 text-primary" />
               </div>
               <span>{secondaryCtaText}</span>
             </a>
@@ -120,12 +120,12 @@ export default function CinematicHero({
         </div>
 
         {/* Bottom Banner Note */}
-        <div className="mt-16 pt-8 border-t border-white/10 flex flex-wrap items-center justify-between gap-6 text-[11px] uppercase tracking-widest text-[#a3a89e]">
+        <div className="mt-16 pt-8 border-t border-foreground/10 flex flex-wrap items-center justify-between gap-6 text-[11px] uppercase tracking-widest text-[var(--text-secondary)]">
           <div className="flex items-center gap-2 font-mono">
-            <span className="w-2 h-2 rounded-full bg-[#d8ff44] animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
             <span>THE FUTURE OF FILM IS INDEPENDENT.</span>
           </div>
-          <div className="hidden sm:block text-[#727b66] font-mono">
+          <div className="hidden sm:block text-[var(--text-muted)] font-mono">
             MYTHRA UNIVERSE · ORIGINAL CINEMA
           </div>
         </div>

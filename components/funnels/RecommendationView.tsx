@@ -95,8 +95,6 @@ export default function RecommendationView({
             </span>
             <div className="space-y-1.5 text-[#a3a89e]">
               <div>Turnaround: <strong className="text-[#f3f3eb]">{offer.turnaround}</strong></div>
-              <div>Revisions: <strong className="text-[#f3f3eb]">{offer.revisions}</strong></div>
-              <div>Voice: <strong className="text-[#f3f3eb]">{offer.voiceCloningIncluded ? 'Voice Clone Included' : 'Narration / Text Only'}</strong></div>
             </div>
           </div>
         </div>

@@ -198,10 +198,10 @@ export default function StudiosFunnelPage() {
               title="WHAT FORMAT ARE YOU SCOPING?"
               subtitle="Select the planned narrative scope and runtime."
               options={[
-                { id: '45-90s Social Pilot', title: 'Social Drama Pilot (45–90s)', description: 'Starting from $7,500' },
-                { id: '3-5 min Branded Short Film', title: 'Branded Short Film (3–5 min)', description: 'Starting from $15,000' },
-                { id: 'Episodic Series (3-5 Episodes)', title: 'Episodic Story System (3–5 Episodes)', description: 'Starting from $30,000' },
-                { id: 'Original IP / Co-Production', title: 'Long-Form / Slate Co-Production', description: 'Starting from $50,000' },
+                { id: 'Story Opportunity Sprint', title: 'Story Opportunity Sprint ($2,500)', description: 'Strategic discovery before production · 100% credited toward production' },
+                { id: 'Audience Proof Pilot', title: 'Audience Proof Pilot (From $7,500)', description: 'Narrative proof-of-concept to test audience signal' },
+                { id: 'Original Entertainment Partnership', title: 'Original Story World Partnership', description: 'Series & entertainment system custom-scoped after validation' },
+                { id: 'Original IP / Co-Production', title: 'Private Slate & Co-Production', description: 'Confidential slate presentation & rights partnership' },
               ]}
               selectedValue={answers.objective}
               onSelect={(v) => updateAnswer('objective', v)}
@@ -221,7 +221,7 @@ export default function StudiosFunnelPage() {
             { id: 'Have an idea / Brief in development', title: 'Concept / Core Premise Only', description: 'We will develop the screenplay and character bible from scratch' },
             { id: 'Completed Script / Detailed Brief', title: 'Completed Script or Brand Brief', description: 'Screenplay ready for visual adaptation and scene generation' },
             { id: 'Full Digital Asset Library Ready', title: 'Existing 3D / Brand Assets & Logos', description: 'Assets available to seed into the character and world bible' },
-            { id: 'Need Concept Sprint first', title: 'Need a Story Concept Sprint ($2,500)', description: 'Develop the strategy and format before full production' },
+            { id: 'Need Concept Sprint first', title: 'Start with Story Opportunity Sprint ($2,500)', description: 'Find the story before producing · 100% credited toward production' },
           ]}
           selectedValue={answers.stage}
           onSelect={(v) => updateAnswer('stage', v)}
