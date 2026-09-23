@@ -36,11 +36,11 @@ export class MockCrmProvider implements CrmProvider {
   }
 }
 
-const DEFAULT_GHL_API_KEY = 'pit-bc2b732d-2bb3-459e-b6aa-a544f50bb35e';
-const DEFAULT_GHL_LOCATION_ID = 'AeIZDAxEhTypA4Eja6j6';
-const DEFAULT_GHL_PIPELINE_ID = 'upL94xEQbDfaAiIRlyiD';
-const DEFAULT_GHL_STAGE_ID = '1565480e-e873-4bc4-89b5-c148dc986422';
-const NOTIFY_EMAIL = 'shahid@zetomate.com';
+const DEFAULT_GHL_API_KEY = process.env.GHL_API_KEY || 'pit-bc2b732d-2bb3-459e-b6aa-a544f50bb35e';
+const DEFAULT_GHL_LOCATION_ID = process.env.GHL_LOCATION_ID || 'AeIZDAxEhTypA4Eja6j6';
+const DEFAULT_GHL_PIPELINE_ID = process.env.GHL_PIPELINE_ID || 'upL94xEQbDfaAiIRlyiD';
+const DEFAULT_GHL_STAGE_ID = process.env.GHL_STAGE_ID || '1565480e-e873-4bc4-89b5-c148dc986422';
+const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL || process.env.GHL_NOTIFY_EMAIL || 'info@zetomate.com';
 
 export class GhlCrmProvider implements CrmProvider {
   private apiKey: string;
@@ -60,6 +60,35 @@ export class GhlCrmProvider implements CrmProvider {
     opportunity?: GhlOpportunityPayload
   ): Promise<CrmSyncResult> {
     try {
+      // 0. If GHL Inbound Webhook is configured, fire workflow automation directly
+      const webhookUrl = process.env.GHL_WEBHOOK_URL;
+      if (webhookUrl) {
+        try {
+          await fetch(webhookUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              event: 'mythra_lead_submitted',
+              contact: {
+                firstName: contact.firstName,
+                lastName: contact.lastName,
+                email: contact.email,
+                phone: contact.phone,
+                company: contact.companyName,
+                tags: contact.tags,
+                source: contact.source,
+                ...contact.customFields,
+              },
+              opportunity,
+              notifyEmail: NOTIFY_EMAIL,
+              submittedAt: new Date().toISOString(),
+            }),
+          });
+        } catch (webhookErr) {
+          console.warn('GHL Webhook trigger error:', webhookErr);
+        }
+      }
+
       // 1. Direct REST call to GoHighLevel Contacts Upsert v2 API
       const contactRes = await fetch('https://services.leadconnectorhq.com/contacts/upsert', {
         method: 'POST',
@@ -86,7 +115,12 @@ export class GhlCrmProvider implements CrmProvider {
 
       if (!contactRes.ok) {
         const errorText = await contactRes.text();
-        throw new Error(`GHL Contact API error: ${contactRes.status} - ${errorText}`);
+        console.warn(`GHL Contact API error: ${contactRes.status} - ${errorText}`);
+        return {
+          success: false,
+          error: `GHL API ${contactRes.status}: ${errorText}`,
+          syncedAt: new Date().toISOString(),
+        };
       }
 
       const contactData = (await contactRes.json()) as { contact?: { id?: string } };
@@ -166,6 +200,65 @@ Submitted via MYTHRA Live Funnel`;
         }
       } catch (oppErr) {
         console.warn('GHL Opportunity sync warning:', oppErr);
+      }
+
+      // 4. Send internal notification email to info@zetomate.com via GHL conversation API
+      try {
+        const adminContactRes = await fetch('https://services.leadconnectorhq.com/contacts/upsert', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${this.apiKey}`,
+            Version: '2021-07-28',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            locationId: this.locationId,
+            firstName: 'MYTHRA',
+            lastName: 'Notifications',
+            email: NOTIFY_EMAIL,
+          }),
+        });
+        const adminData = (await adminContactRes.json()) as any;
+        const adminContactId = adminData.contact?.id;
+
+        if (adminContactId) {
+          const custom = contact.customFields || {};
+          await fetch('https://services.leadconnectorhq.com/conversations/messages', {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${this.apiKey}`,
+              Version: '2021-07-28',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              type: 'Email',
+              contactId: adminContactId,
+              emailTo: NOTIFY_EMAIL,
+              subject: `🔥 New MYTHRA Lead: ${contact.firstName} ${contact.lastName} (${custom.mythra_recommended_offer || 'General'})`,
+              html: `
+                <div style="font-family:Arial,sans-serif;max-width:650px;margin:0 auto;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;background:#ffffff;">
+                  <div style="background:#000000;color:#d8ff44;padding:20px;text-align:center;">
+                    <h1 style="margin:0;font-size:22px;letter-spacing:1px;">MYTHRA · NEW LEAD RECEIVED</h1>
+                    <p style="margin:6px 0 0 0;color:#ffffff;font-size:14px;">Pipeline: methrya</p>
+                  </div>
+                  <div style="padding:24px;color:#1a1a1a;">
+                    <h2 style="font-size:16px;border-bottom:2px solid #f0f0f0;padding-bottom:8px;margin-top:0;">Lead Details</h2>
+                    <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">
+                      <tr><td style="padding:6px 0;width:140px;font-weight:bold;color:#555;">Name:</td><td>${contact.firstName} ${contact.lastName}</td></tr>
+                      <tr><td style="padding:6px 0;font-weight:bold;color:#555;">Email:</td><td><a href="mailto:${contact.email}" style="color:#2563eb;">${contact.email}</a></td></tr>
+                      <tr><td style="padding:6px 0;font-weight:bold;color:#555;">WhatsApp/Phone:</td><td>${contact.phone || 'N/A'}</td></tr>
+                      <tr><td style="padding:6px 0;font-weight:bold;color:#555;">Country:</td><td>${custom.mythra_country || 'N/A'}</td></tr>
+                      <tr><td style="padding:6px 0;font-weight:bold;color:#555;">Recommended:</td><td><strong>${custom.mythra_recommended_offer || 'N/A'}</strong></td></tr>
+                      <tr><td style="padding:6px 0;font-weight:bold;color:#555;">Tags:</td><td>${contact.tags.join(', ')}</td></tr>
+                    </table>
+                  </div>
+                </div>
+              `,
+            }),
+          });
+        }
+      } catch (notifyErr) {
+        console.warn('GHL notification email warning:', notifyErr);
       }
 
       return {

@@ -67,18 +67,37 @@ export function buildGhlContactPayload(
   scoring: ScoringResult,
   answers: Record<string, unknown>
 ): GhlContactPayload {
+  const tags = new Set<string>([
+    'mythra-lead',
+    'mythra',
+    `mythra-persona-${persona.toLowerCase()}`,
+    ...scoring.tags,
+  ]);
+
+  if (answers.ghlTag && typeof answers.ghlTag === 'string') {
+    tags.add(answers.ghlTag);
+  }
+  if (answers.door && typeof answers.door === 'string') {
+    tags.add(`mythra-door-${answers.door}`);
+    if (answers.door === 'cast') {
+      tags.add('mythra-cast');
+    } else if (answers.door === 'personal') {
+      tags.add('mythra-you');
+    }
+  }
+
   return {
     email: contact.email,
     firstName: contact.firstName,
     lastName: contact.lastName,
     phone: contact.whatsapp || undefined,
     companyName: contact.organization || undefined,
-    tags: Array.from(new Set(scoring.tags)),
+    tags: Array.from(tags),
     customFields: {
       mythra_persona: persona,
       mythra_lead_score: scoring.score,
       mythra_qualification: scoring.category,
-      mythra_recommended_offer: scoring.recommendedOffer.name,
+      mythra_recommended_offer: (answers.recommendedOffer as string) || scoring.recommendedOffer.name,
       mythra_offer_code: scoring.recommendedOffer.code,
       mythra_country: contact.country || '',
       mythra_role: contact.role || '',

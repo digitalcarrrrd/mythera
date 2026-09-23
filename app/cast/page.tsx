@@ -53,7 +53,7 @@ export default function CastApplicationPage() {
     e.preventDefault();
     setSubmitting(true);
 
-    // Store in localStorage for prototype demonstration
+    // Store in localStorage
     try {
       const existing = JSON.parse(localStorage.getItem('mythra_cast_applications') || '[]');
       existing.push({
@@ -65,6 +65,40 @@ export default function CastApplicationPage() {
     } catch (err) {
       console.error(err);
     }
+
+    // Capture in GoHighLevel & CRM automation
+    const nameParts = (formData.fullName || '').trim().split(/\s+/);
+    const selectedOffer = mythraOffers.cast.find((c) => c.id.replace('cast-', '') === formData.preferredRole) || mythraOffers.cast[0];
+    const roleTag = 'MYTHRA_CAST_' + (formData.preferredRole || 'cameo').toUpperCase().replace(/-/g, '_');
+
+    fetch('/api/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        persona: 'YOU',
+        contact: {
+          fullName: formData.fullName,
+          firstName: nameParts[0] || 'Applicant',
+          lastName: nameParts.slice(1).join(' ') || '',
+          email: formData.email,
+          whatsapp: formData.whatsapp,
+          country: formData.country,
+          website: formData.socialProfile,
+          message: formData.whyStoryMatters,
+          consentMarketing: formData.consentGiven,
+        },
+        answers: {
+          door: 'cast',
+          doorTitle: 'A ROLE INSIDE MYTHRA (Mother’s Monster Casting)',
+          preferredRole: formData.preferredRole,
+          recommendedOffer: selectedOffer.name,
+          budgetReadiness: formData.budgetReadiness,
+          socialProfile: formData.socialProfile,
+          whyStoryMatters: formData.whyStoryMatters,
+          ghlTag: roleTag,
+        },
+      }),
+    }).catch((err) => console.error('GHL casting application error:', err));
 
     setTimeout(() => {
       setSubmitting(false);

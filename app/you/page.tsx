@@ -243,6 +243,32 @@ export default function MythraYouPage() {
       console.error(err);
     }
 
+    // Capture in GoHighLevel & CRM automation
+    const nameParts = (leadForm.fullName || '').trim().split(/\s+/);
+    fetch('/api/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        persona: 'YOU',
+        contact: {
+          fullName: leadForm.fullName,
+          firstName: nameParts[0] || 'Lead',
+          lastName: nameParts.slice(1).join(' ') || '',
+          email: leadForm.email,
+          whatsapp: leadForm.whatsapp,
+          country: leadForm.country,
+          consentMarketing: leadForm.consent,
+        },
+        answers: {
+          door: selectedDoor,
+          doorTitle: selectedDoor === 'personal' ? 'A FILM MADE FOR ME' : 'A ROLE INSIDE MYTHRA',
+          ...(selectedDoor === 'personal' ? personalAnswers : castAnswers),
+          recommendedOffer: recData.recommended.name,
+          ghlTag: recData.ghlTag,
+        },
+      }),
+    }).catch((err) => console.error('GHL lead capture error:', err));
+
     setCurrentQuestion(4);
   };
 

@@ -7,39 +7,49 @@ import { db } from '../../../db';
 export async function POST(req: NextRequest) {
   try {
     const body = (await req.json()) as Record<string, any>;
-    const { persona, answers, contact } = body;
+    const { persona = 'YOU', answers = {}, contact = {} } = body;
 
-    if (!persona || !contact || !contact.email) {
-      return NextResponse.json({ error: 'Missing required persona or contact fields' }, { status: 400 });
+    if (!contact || !contact.email) {
+      return NextResponse.json({ error: 'Missing required contact email' }, { status: 400 });
     }
 
+    // Normalize full name into firstName / lastName
+    const rawFullName = (contact.fullName || contact.name || '').trim();
+    const nameParts = rawFullName ? rawFullName.split(/\s+/) : [];
+    const normalizedContact = {
+      ...contact,
+      firstName: contact.firstName || nameParts[0] || 'Lead',
+      lastName: contact.lastName || nameParts.slice(1).join(' ') || '',
+    };
+
     // Evaluate scoring
-    const scoring = evaluateLead(persona, answers || {}, contact);
+    const scoring = evaluateLead(persona, answers || {}, normalizedContact);
 
     // Save lead to store
     const leadId = `lead_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+    const recommendedOfferName = (answers.recommendedOffer as string) || scoring.recommendedOffer.name;
     const newLead = {
       id: leadId,
       persona,
-      branch: String(answers?.branch || answers?.tier || 'general'),
+      branch: String(answers?.door || answers?.branch || answers?.tier || 'general'),
       status: 'new',
       score: scoring.score,
       qualification: scoring.category,
-      firstName: contact.firstName || '',
-      lastName: contact.lastName || '',
-      email: contact.email,
-      whatsapp: contact.whatsapp || null,
-      country: contact.country || null,
-      organization: contact.organization || null,
-      role: contact.role || null,
-      website: contact.website || null,
+      firstName: normalizedContact.firstName,
+      lastName: normalizedContact.lastName,
+      email: normalizedContact.email,
+      whatsapp: normalizedContact.whatsapp || null,
+      country: normalizedContact.country || null,
+      organization: normalizedContact.organization || null,
+      role: normalizedContact.role || null,
+      website: normalizedContact.website || null,
       answersJson: JSON.stringify(answers || {}),
-      recommendedOffer: scoring.recommendedOffer.name,
+      recommendedOffer: recommendedOfferName,
       source: `MYTHRA_${persona}_Funnel`,
       utmSource: null,
       utmMedium: null,
       utmCampaign: null,
-      consentMarketingAt: contact.consentMarketing ? new Date().toISOString() : null,
+      consentMarketingAt: normalizedContact.consentMarketing ? new Date().toISOString() : null,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
@@ -48,8 +58,8 @@ export async function POST(req: NextRequest) {
 
     // Sync to CRM Provider (GoHighLevel)
     const crm = getCrmProvider();
-    const ghlContact = buildGhlContactPayload(persona, contact, scoring, answers || {});
-    const ghlOpportunity = buildGhlOpportunityPayload(persona, contact, scoring);
+    const ghlContact = buildGhlContactPayload(persona, normalizedContact, scoring, answers || {});
+    const ghlOpportunity = buildGhlOpportunityPayload(persona, normalizedContact, scoring);
 
     const crmResult = await crm.syncContactAndOpportunity(ghlContact, ghlOpportunity);
 
