@@ -36,7 +36,7 @@ export class MockCrmProvider implements CrmProvider {
   }
 }
 
-const DEFAULT_GHL_API_KEY = process.env.GHL_API_KEY || 'pit-bc2b732d-2bb3-459e-b6aa-a544f50bb35e';
+const DEFAULT_GHL_API_KEY = process.env.GHL_API_KEY || 'pit-a90d2e32-948d-4726-b9a9-5a76fd8852eb';
 const DEFAULT_GHL_LOCATION_ID = process.env.GHL_LOCATION_ID || 'AeIZDAxEhTypA4Eja6j6';
 const DEFAULT_GHL_PIPELINE_ID = process.env.GHL_PIPELINE_ID || 'upL94xEQbDfaAiIRlyiD';
 const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL || process.env.GHL_NOTIFY_EMAIL || 'info@gmail.com';

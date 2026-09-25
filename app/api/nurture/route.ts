@@ -8,7 +8,7 @@ export async function POST(req: Request) {
     const persona = (d?.persona || 'GENERAL') as Persona;
     
     const locationId = process.env.GHL_LOCATION_ID || 'AeIZDAxEhTypA4Eja6j6';
-    const apiKey = process.env.GHL_API_KEY || 'pit-bc2b732d-2bb3-459e-b6aa-a544f50bb35e';
+    const apiKey = process.env.GHL_API_KEY || 'pit-a90d2e32-948d-4726-b9a9-5a76fd8852eb';
     const notifyEmail = process.env.NOTIFY_EMAIL || process.env.GHL_NOTIFY_EMAIL || 'info@zetomate.com';
 
     // Helper to format answers into readable text
