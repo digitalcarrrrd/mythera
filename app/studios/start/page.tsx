@@ -16,17 +16,21 @@ export default function StudiosFunnelPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const initialIntent = searchParams.get('intent') || '';
+  const initialTier = searchParams.get('tier') || '';
 
-  const [step, setStep] = useState(1);
-  const totalSteps = 6;
+  // If tier is specified from pricing cards, jump straight to executive brief contact form
+  const hasSpecificTier = Boolean(initialTier);
+  const [step, setStep] = useState(hasSpecificTier ? 5 : 1);
+  const totalSteps = 5;
 
   const [answers, setAnswers] = useState<Record<string, any>>({
     branch: initialIntent || 'brand',
     objective: 'Create original branded film or pilot',
     stage: 'Have an idea / Brief in development',
-    budget: '$15K–$30K',
+    budget: initialTier === 'story-sprint' ? '$2,500' : initialTier === 'proof-pilot' ? '$7,500' : '$15K–$30K',
     timeline: 'Within 60 days',
     isDecisionMaker: true,
+    selectedTier: initialTier || '',
   });
 
   const [contact, setContact] = useState<LeadContact>({
@@ -48,7 +52,7 @@ export default function StudiosFunnelPage() {
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
+      if (saved && !hasSpecificTier) {
         const parsed = JSON.parse(saved);
         if (parsed.answers) setAnswers((prev) => ({ ...prev, ...parsed.answers }));
         if (parsed.contact) setContact((prev) => ({ ...prev, ...parsed.contact }));
@@ -57,7 +61,7 @@ export default function StudiosFunnelPage() {
     } catch {
       // Ignore parse error
     }
-  }, []);
+  }, [hasSpecificTier]);
 
   useEffect(() => {
     try {
@@ -83,15 +87,31 @@ export default function StudiosFunnelPage() {
     setIsProcessing(true);
 
     const evaluated = evaluateLead('STUDIOS', answers, contact);
+    if (initialTier) {
+      const directOffer = mythraOffers.studios.find(
+        (o) =>
+          o.id === initialTier ||
+          o.id === `studio-${initialTier}` ||
+          o.id.includes(initialTier)
+      );
+      if (directOffer) {
+        evaluated.recommendedOffer = directOffer;
+      }
+    }
     setScoringResult(evaluated);
 
     try {
+      // 1. Capture lead in GHL under MYTHRA Leads & dispatch alerts
       await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           persona: 'STUDIOS',
-          answers,
+          answers: {
+            ...answers,
+            selectedTier: initialTier || evaluated.recommendedOffer.id,
+            recommendedOffer: evaluated.recommendedOffer.name,
+          },
           contact,
           scoring: evaluated,
         }),
@@ -102,11 +122,31 @@ export default function StudiosFunnelPage() {
         offerCode: evaluated.recommendedOffer.code,
         qualificationCategory: evaluated.category,
       });
+
+      // 2. Direct Outbound Checkout to Whop
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          offerCode: evaluated.recommendedOffer.code,
+          customerEmail: contact.email,
+          customerName: `${contact.firstName} ${contact.lastName}`,
+          successUrl: `${window.location.origin}/studios?brief_submitted=true`,
+          cancelUrl: `${window.location.origin}/studios`,
+        }),
+      });
+
+      const data = (await res.json()) as any;
+      if (data.url) {
+        window.location.href = data.url;
+        return;
+      }
+      window.location.href = 'https://whop.com';
     } catch (e) {
-      console.error('Lead sync error:', e);
+      console.error('Lead sync/checkout error:', e);
+      window.location.href = 'https://whop.com';
     } finally {
       setIsProcessing(false);
-      setStep(totalSteps);
     }
   };
 
@@ -248,28 +288,18 @@ export default function StudiosFunnelPage() {
         />
       )}
 
-      {/* STEP 5: Contact Capture */}
+      {/* STEP 5: Contact Capture & Direct Whop Dispatch */}
       {step === 5 && (
         <ContactStep
-          eyebrow="QUESTION 5 OF 5 · EXECUTIVE BRIEF DISPATCH"
-          title="COMPANY & LEADERSHIP CONTACT"
-          subtitle="Our executive creative director will review your brief and prepare feasibility estimates."
+          eyebrow={hasSpecificTier ? `EXECUTIVE BRIEF · ${String(initialTier).toUpperCase().replace(/-/g, ' ')}` : "QUESTION 5 OF 5 · EXECUTIVE BRIEF DISPATCH"}
+          title={hasSpecificTier ? "CONFIRM LEADERSHIP CONTACT & PROCEED" : "COMPANY & LEADERSHIP CONTACT"}
+          subtitle="Our executive creative director will review your brief. You will be redirected directly to secure Whop checkout."
           contact={contact}
           onChange={setContact}
           onSubmit={handleContactSubmit}
           isSubmitting={isProcessing}
           showOrganizationFields={true}
-          submitLabel="Submit Studio Brief & Feasibility Review &rarr;"
-        />
-      )}
-
-      {/* STEP 6: Recommendation & Next Action */}
-      {step === 6 && scoringResult && (
-        <RecommendationView
-          scoring={scoringResult}
-          onBookCall={() => router.push('/studios?brief_submitted=true')}
-          onCheckout={() => router.push('/studios?brief_submitted=true')}
-          isProcessing={isProcessing}
+          submitLabel={hasSpecificTier ? "Submit Brief & Proceed to Whop Checkout &rarr;" : "Submit Studio Brief & Proceed to Checkout &rarr;"}
         />
       )}
     </FunnelShell>

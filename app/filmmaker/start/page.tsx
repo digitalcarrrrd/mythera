@@ -14,10 +14,10 @@ const STORAGE_KEY = 'mythra_filmmaker_funnel_state';
 export default function FilmmakerFunnelPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const initialTier = searchParams.get('tier') || '';
-
-  const [step, setStep] = useState(1);
-  const totalSteps = 7;
+  // If tier is specified from pricing card, jump straight to enrollment contact form
+  const hasSpecificTier = Boolean(initialTier && initialTier !== 'film-blueprint');
+  const [step, setStep] = useState(hasSpecificTier ? 6 : 1);
+  const totalSteps = 6;
 
   const [answers, setAnswers] = useState<Record<string, any>>({
     ambition: 'AI filmmaker',
@@ -30,6 +30,7 @@ export default function FilmmakerFunnelPage() {
     goal90Days: 'Publish a 2–5 min portfolio short film',
     timeCommitment: initialTier.includes('blueprint') ? 'Workshop only (1 hr)' : '5–10 hrs/week',
     timezone: 'Americas / EMEA',
+    selectedTier: initialTier || 'film-cohort',
   });
 
   const [contact, setContact] = useState<LeadContact>({
@@ -48,7 +49,7 @@ export default function FilmmakerFunnelPage() {
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
+      if (saved && !hasSpecificTier) {
         const parsed = JSON.parse(saved);
         if (parsed.answers) setAnswers((prev) => ({ ...prev, ...parsed.answers }));
         if (parsed.contact) setContact((prev) => ({ ...prev, ...parsed.contact }));
@@ -57,7 +58,7 @@ export default function FilmmakerFunnelPage() {
     } catch {
       // Local storage error ignored
     }
-  }, []);
+  }, [hasSpecificTier]);
 
   useEffect(() => {
     try {
@@ -83,15 +84,30 @@ export default function FilmmakerFunnelPage() {
     setIsProcessing(true);
 
     const evaluated = evaluateLead('FILMMAKER', answers, contact);
+    if (initialTier) {
+      const directOffer = [
+        ...mythraOffers.filmmaker,
+        ...mythraOffers.you,
+        ...mythraOffers.cast,
+      ].find((o) => o.id === initialTier || o.id === `film-${initialTier}`);
+      if (directOffer) {
+        evaluated.recommendedOffer = directOffer;
+      }
+    }
     setScoringResult(evaluated);
 
     try {
+      // 1. Capture lead in GHL under MYTHRA Leads & dispatch alerts
       await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           persona: 'FILMMAKER',
-          answers,
+          answers: {
+            ...answers,
+            selectedTier: initialTier || evaluated.recommendedOffer.id,
+            recommendedOffer: evaluated.recommendedOffer.name,
+          },
           contact,
           scoring: evaluated,
         }),
@@ -102,40 +118,35 @@ export default function FilmmakerFunnelPage() {
         offerCode: evaluated.recommendedOffer.code,
         qualificationCategory: evaluated.category,
       });
-    } catch (e) {
-      console.error('Lead sync error:', e);
-    } finally {
-      setIsProcessing(false);
-      setStep(totalSteps);
-    }
-  };
 
-  const handleCheckout = async () => {
-    if (!scoringResult) return;
-    setIsProcessing(true);
+      // Free Blueprint tier routes to confirmation
+      if (evaluated.recommendedOffer.price === 0) {
+        window.location.href = '/filmmaker?blueprint_unlocked=true';
+        return;
+      }
 
-    try {
+      // 2. Direct Outbound Checkout to Whop
       const res = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          offerCode: scoringResult.recommendedOffer.code,
+          offerCode: evaluated.recommendedOffer.code,
           customerEmail: contact.email,
           customerName: `${contact.firstName} ${contact.lastName}`,
           successUrl: `${window.location.origin}/filmmaker?enrolled=true`,
-          cancelUrl: `${window.location.origin}/filmmaker/start`,
+          cancelUrl: `${window.location.origin}/filmmaker`,
         }),
       });
 
       const data = (await res.json()) as any;
       if (data.url) {
         window.location.href = data.url;
-      } else {
-        router.push('/filmmaker');
+        return;
       }
+      window.location.href = 'https://whop.com';
     } catch (e) {
-      console.error('Checkout error:', e);
-      router.push('/filmmaker');
+      console.error('Lead sync or checkout error:', e);
+      window.location.href = 'https://whop.com';
     } finally {
       setIsProcessing(false);
     }
@@ -243,28 +254,18 @@ export default function FilmmakerFunnelPage() {
         />
       )}
 
-      {/* STEP 6: Contact Capture */}
+      {/* STEP 6: Contact Capture & Direct Whop Dispatch */}
       {step === 6 && (
         <ContactStep
-          eyebrow="QUESTION 6 OF 6 · CONTACT DISPATCH"
-          title="WHERE SHOULD WE SEND YOUR PROGRAM RECOMMENDATION?"
-          subtitle="We will calculate your studio readiness and recommend the exact education track."
+          eyebrow={hasSpecificTier ? `ENROLLMENT REGISTRATION · ${String(initialTier).toUpperCase().replace(/-/g, ' ')}` : "QUESTION 6 OF 6 · APPLICATION DISPATCH"}
+          title={hasSpecificTier ? "CONFIRM YOUR ENROLLMENT DETAILS" : "ENTER YOUR PRODUCTION PROFILE"}
+          subtitle="Your registration is logged into our production queue. You will be redirected directly to secure Whop checkout."
           contact={contact}
           onChange={setContact}
           onSubmit={handleContactSubmit}
           isSubmitting={isProcessing}
           showOrganizationFields={true}
-          submitLabel="Reveal My Filmmaker Roadmap &rarr;"
-        />
-      )}
-
-      {/* STEP 7: Recommendation View */}
-      {step === 7 && scoringResult && (
-        <RecommendationView
-          scoring={scoringResult}
-          onCheckout={handleCheckout}
-          onBookCall={() => router.push('/filmmaker?apply=true')}
-          isProcessing={isProcessing}
+          submitLabel={hasSpecificTier ? "Proceed to Secure Whop Checkout &rarr;" : "Submit Application & Proceed to Checkout &rarr;"}
         />
       )}
     </FunnelShell>
