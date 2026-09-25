@@ -203,6 +203,28 @@ Submitted via MYTHRA Live Funnel`;
         console.warn('GHL Note sync warning:', noteErr);
       }
 
+      // 2b. Create high-visibility Task in GoHighLevel for immediate follow-up alert
+      try {
+        const custom = contact.customFields || {};
+        const offer = custom.mythra_recommended_offer || 'Production Inquiry';
+        const dueDate = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+        await fetch(`https://services.leadconnectorhq.com/contacts/${contactId}/tasks`, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${this.apiKey}`,
+            Version: '2021-07-28',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            title: `🔥 NEW MYTHRA LEAD: ${contact.firstName} ${contact.lastName} (${offer})`,
+            dueDate,
+            completed: false,
+          }),
+        });
+      } catch (taskErr) {
+        console.warn('GHL Task create notice:', taskErr);
+      }
+
       // 3. Create or sync Opportunity in GoHighLevel Pipeline for active deal tracking
       let opportunityId: string | undefined;
       try {
