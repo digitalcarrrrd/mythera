@@ -7,40 +7,42 @@ export async function POST(req: NextRequest) {
     const body = (await req.json()) as Record<string, any>;
     const { offerCode, customerEmail, customerName, successUrl, cancelUrl } = body;
 
-    // Check if direct Stripe payout or payment link is configured
-    const payoutUrl = process.env.PAYOUT_URL || process.env.STRIPE_PAYOUT_URL || process.env.NEXT_PUBLIC_PAYOUT_URL;
-    if (payoutUrl) {
+    // Check for product-specific Whop checkout link or global payout URL
+    const offerKey = String(offerCode || '').toUpperCase().replace(/-/g, '_');
+    const specificWhopUrl = process.env[`WHOP_URL_${offerKey}`];
+    const globalPayoutUrl =
+      specificWhopUrl ||
+      process.env.WHOP_CHECKOUT_URL ||
+      process.env.PAYOUT_URL ||
+      process.env.STRIPE_PAYOUT_URL ||
+      process.env.NEXT_PUBLIC_PAYOUT_URL;
+
+    if (globalPayoutUrl) {
       return NextResponse.json({
-        sessionId: `payout_${Date.now()}`,
-        url: payoutUrl,
+        sessionId: `whop_${Date.now()}`,
+        url: globalPayoutUrl,
         isPayoutLink: true,
       });
     }
 
-    // Find offer by code across all paths
-    const allOffers = [...mythraOffers.you, ...mythraOffers.filmmaker, ...mythraOffers.studios];
-    const offer = allOffers.find((o) => o.code === offerCode) || mythraOffers.you[1]; // default Trailer
+    // Find offer by code or ID across all paths (YOU, CAST, FILMMAKER, STUDIOS)
+    const allOffers = [
+      ...mythraOffers.you,
+      ...mythraOffers.cast,
+      ...mythraOffers.filmmaker,
+      ...mythraOffers.studios,
+    ];
+    const offer =
+      allOffers.find((o) => o.code === offerCode || o.id === offerCode) ||
+      mythraOffers.you[1]; // default Trailer
 
-    const payment = getPaymentProvider();
-    const session = await payment.createCheckoutSession({
-      offerCode: offer.code,
-      offerName: offer.name,
-      amountCents: offer.price * 100,
-      currency: 'USD',
-      customerEmail: customerEmail || 'guest@mythra.com',
-      customerName: customerName || 'Valued Guest',
-      successUrl: successUrl || `${req.nextUrl.origin}/you/onboarding`,
-      cancelUrl: cancelUrl || `${req.nextUrl.origin}/you`,
-      metadata: {
-        offerCode: offer.code,
-        persona: offer.persona,
-      },
-    });
+    // Return the dedicated /checkout dummy checkout link
+    const dummyCheckoutUrl = `${req.nextUrl.origin}/checkout?tier=${offer.id}&code=${offer.code}&email=${encodeURIComponent(customerEmail || '')}&name=${encodeURIComponent(customerName || '')}`;
 
     return NextResponse.json({
-      sessionId: session.sessionId,
-      url: session.url,
-      isMock: session.isMock,
+      sessionId: `dummy_${Date.now()}`,
+      url: dummyCheckoutUrl,
+      isMock: true,
     });
   } catch (error: any) {
     console.error('Checkout error:', error);

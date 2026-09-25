@@ -49,7 +49,7 @@ export default function CastApplicationPage() {
     }
   }, [searchParams]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
 
@@ -71,39 +71,41 @@ export default function CastApplicationPage() {
     const selectedOffer = mythraOffers.cast.find((c) => c.id.replace('cast-', '') === formData.preferredRole) || mythraOffers.cast[0];
     const roleTag = 'MYTHRA_CAST_' + (formData.preferredRole || 'cameo').toUpperCase().replace(/-/g, '_');
 
-    fetch('/api/leads', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        persona: 'YOU',
-        contact: {
-          fullName: formData.fullName,
-          firstName: nameParts[0] || 'Applicant',
-          lastName: nameParts.slice(1).join(' ') || '',
-          email: formData.email,
-          whatsapp: formData.whatsapp,
-          country: formData.country,
-          website: formData.socialProfile,
-          message: formData.whyStoryMatters,
-          consentMarketing: formData.consentGiven,
-        },
-        answers: {
-          door: 'cast',
-          doorTitle: 'A ROLE INSIDE MYTHRA (Mother’s Monster Casting)',
-          preferredRole: formData.preferredRole,
-          recommendedOffer: selectedOffer.name,
-          budgetReadiness: formData.budgetReadiness,
-          socialProfile: formData.socialProfile,
-          whyStoryMatters: formData.whyStoryMatters,
-          ghlTag: roleTag,
-        },
-      }),
-    }).catch((err) => console.error('GHL casting application error:', err));
-
-    setTimeout(() => {
+    try {
+      await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          persona: 'YOU',
+          contact: {
+            fullName: formData.fullName,
+            firstName: nameParts[0] || 'Applicant',
+            lastName: nameParts.slice(1).join(' ') || '',
+            email: formData.email,
+            whatsapp: formData.whatsapp,
+            country: formData.country,
+            website: formData.socialProfile,
+            message: formData.whyStoryMatters,
+            consentMarketing: formData.consentGiven,
+          },
+          answers: {
+            door: 'cast',
+            doorTitle: 'A ROLE INSIDE MYTHRA (Mother’s Monster Casting)',
+            preferredRole: formData.preferredRole,
+            recommendedOffer: selectedOffer.name,
+            budgetReadiness: formData.budgetReadiness,
+            socialProfile: formData.socialProfile,
+            whyStoryMatters: formData.whyStoryMatters,
+            ghlTag: roleTag,
+          },
+        }),
+      });
+    } catch (err) {
+      console.error('GHL casting application error:', err);
+    } finally {
       setSubmitting(false);
       setSubmitted(true);
-    }, 600);
+    }
   };
 
   return (
@@ -383,7 +385,7 @@ export default function CastApplicationPage() {
               </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <a
-                  href="/api/checkout"
+                  href="/checkout"
                   onClick={async (e) => {
                     e.preventDefault();
                     try {
@@ -397,14 +399,18 @@ export default function CastApplicationPage() {
                         }),
                       });
                       const data = await res.json();
-                      if (data.url) window.location.href = data.url;
+                      if (data.url) {
+                        window.location.href = data.url;
+                      } else {
+                        window.location.href = `/checkout?tier=cast-${formData.preferredRole}&email=${encodeURIComponent(formData.email)}&name=${encodeURIComponent(formData.fullName)}`;
+                      }
                     } catch {
-                      window.location.href = '/pricing';
+                      window.location.href = `/checkout?tier=cast-${formData.preferredRole}&email=${encodeURIComponent(formData.email)}&name=${encodeURIComponent(formData.fullName)}`;
                     }
                   }}
-                  className="btn-pill-primary text-xs !py-3.5 !px-8"
+                  className="btn-pill-primary text-xs !py-3.5 !px-8 cursor-pointer"
                 >
-                  <span>Proceed to Reservation / Stripe Deposit &rarr;</span>
+                  <span>Proceed to Reservation / Whop Checkout &rarr;</span>
                 </a>
                 <Link
                   href="/you"

@@ -286,7 +286,7 @@ export default function MythraYouPage() {
     }
   };
 
-  // ── Handle Checkout Trigger for Direct Payout / Stripe / Onboarding ──
+  // ── Handle Checkout Trigger for Direct Whop / Payout / Dummy Link ──
   const handleCheckoutTrigger = async (tier: any) => {
     const tierIdentifier = tier.code || tier.id || tier.name;
     try {
@@ -295,7 +295,7 @@ export default function MythraYouPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          offerCode: tier.code || 'you-trailer',
+          offerCode: tier.code || tier.id || 'MYTHRA_TRAILER',
           customerEmail: leadForm.email?.trim() || undefined,
           customerName: leadForm.firstName?.trim() || undefined,
           successUrl: `${window.location.origin}/you/onboarding?tier=${tier.id || tier.code || 'you-trailer'}`,
@@ -306,11 +306,11 @@ export default function MythraYouPage() {
       if (data.url) {
         window.location.href = data.url;
       } else {
-        window.location.href = `/you/onboarding?session_id=mock_active&tier=${tier.id || tier.code || 'you-trailer'}`;
+        window.location.href = `/checkout?tier=${tier.id || tier.code}&email=${encodeURIComponent(leadForm.email?.trim() || '')}&name=${encodeURIComponent(leadForm.firstName?.trim() || '')}`;
       }
     } catch (err) {
       console.error('Checkout error:', err);
-      window.location.href = `/you/onboarding?session_id=mock_active&tier=${tier.id || tier.code || 'you-trailer'}`;
+      window.location.href = `/checkout?tier=${tier.id || tier.code}&email=${encodeURIComponent(leadForm.email?.trim() || '')}&name=${encodeURIComponent(leadForm.firstName?.trim() || '')}`;
     } finally {
       setIsCheckingOut(null);
     }
@@ -434,6 +434,10 @@ export default function MythraYouPage() {
 
                 <button
                   type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleSelectDoor('personal');
+                  }}
                   className="btn-pill-primary w-full text-center text-sm !py-3.5 justify-center cursor-pointer"
                 >
                   <span>{t('you.door1Cta')}</span>
@@ -478,6 +482,10 @@ export default function MythraYouPage() {
 
                 <button
                   type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleSelectDoor('cast');
+                  }}
                   className="btn-pill-primary w-full text-center text-sm !py-3.5 justify-center cursor-pointer"
                 >
                   <span>{t('you.door2Cta')}</span>
