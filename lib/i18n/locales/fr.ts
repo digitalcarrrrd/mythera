@@ -34,7 +34,7 @@ const fr: TranslationDict = {
 
   // ── Proof Section ──
   'proof.eyebrow': 'ANALYSE DU PREMIER FILM AUDITÉ',
-  'proof.headline': 'Découvrez comment un drame émotionnel de 28 minutes a été produit en moins de 72 heures avec moins de $1,000 de calcul.',
+  'proof.headline': 'Découvrez comment un drame émotionnel de 28 minutes a été produit en moins de 72 heures avec moins de $2,000 de calcul.',
   'proof.cta': 'Explorer l\'étude de cas Genesis',
 
   // ── Path Selector ──

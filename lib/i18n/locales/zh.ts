@@ -34,7 +34,7 @@ const zh: TranslationDict = {
 
   // ── Proof Section ──
   'proof.eyebrow': '首部影片审计拆解',
-  'proof.headline': '了解一部 28 分钟的情感剧情片如何以低于 $1,000 的算力成本在 72 小时内完成制作。',
+  'proof.headline': '了解一部 28 分钟的情感剧情片如何以低于 $2,000 的算力成本在 72 小时内完成制作。',
   'proof.cta': '探索创世案例研究',
 
   // ── Path Selector ──

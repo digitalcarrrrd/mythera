@@ -37,8 +37,34 @@ if (fs.existsSync(wranglerPath)) {
     { pattern: 'mythralab.com', custom_domain: true },
     { pattern: 'www.mythralab.com', custom_domain: true }
   ];
+
+  // Inject .env variables into wrangler vars so Cloudflare Worker runtime has access
+  const envPath = path.resolve('.env');
+  if (fs.existsSync(envPath)) {
+    const envContent = fs.readFileSync(envPath, 'utf8');
+    const envVars = {};
+    for (const line of envContent.split('\n')) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith('#')) continue;
+      const idx = trimmed.indexOf('=');
+      if (idx !== -1) {
+        const key = trimmed.slice(0, idx).trim();
+        let val = trimmed.slice(idx + 1).trim();
+        if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+          val = val.slice(1, -1);
+        }
+        envVars[key] = val;
+      }
+    }
+    wranglerConfig.vars = {
+      ...(wranglerConfig.vars || {}),
+      ...envVars,
+    };
+    console.log('Injected environment variables into Cloudflare Worker vars:', Object.keys(envVars));
+  }
+
   fs.writeFileSync(wranglerPath, JSON.stringify(wranglerConfig, null, 2), 'utf8');
-  console.log('Configured custom domains in wrangler.json');
+  console.log('Configured custom domains and vars in wrangler.json');
 }
 
 console.log('=== Step 3: Deploying to Cloudflare Worker ===');

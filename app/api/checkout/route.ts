@@ -7,6 +7,16 @@ export async function POST(req: NextRequest) {
     const body = (await req.json()) as Record<string, any>;
     const { offerCode, customerEmail, customerName, successUrl, cancelUrl } = body;
 
+    // Check if direct Stripe payout or payment link is configured
+    const payoutUrl = process.env.PAYOUT_URL || process.env.STRIPE_PAYOUT_URL || process.env.NEXT_PUBLIC_PAYOUT_URL;
+    if (payoutUrl) {
+      return NextResponse.json({
+        sessionId: `payout_${Date.now()}`,
+        url: payoutUrl,
+        isPayoutLink: true,
+      });
+    }
+
     // Find offer by code across all paths
     const allOffers = [...mythraOffers.you, ...mythraOffers.filmmaker, ...mythraOffers.studios];
     const offer = allOffers.find((o) => o.code === offerCode) || mythraOffers.you[1]; // default Trailer

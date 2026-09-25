@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { evaluateLead } from '../../../lib/lead-scoring';
 import { getCrmProvider } from '../../../lib/adapters/crm';
 import { buildGhlContactPayload, buildGhlOpportunityPayload } from '../../../lib/ghl-mapping';
+import { dispatchLeadEmails } from '../../../lib/adapters/email';
 import { db } from '../../../db';
 
 export async function POST(req: NextRequest) {
@@ -63,6 +64,22 @@ export async function POST(req: NextRequest) {
 
     const crmResult = await crm.syncContactAndOpportunity(ghlContact, ghlOpportunity);
 
+    // Dispatch customer instant auto-reply (asking for 24h response) and admin notification
+    const emailResult = await dispatchLeadEmails({
+      customerName: `${normalizedContact.firstName} ${normalizedContact.lastName}`.trim(),
+      customerEmail: normalizedContact.email,
+      phone: normalizedContact.whatsapp,
+      country: normalizedContact.country,
+      persona,
+      recommendedOffer: recommendedOfferName,
+      offerPriceDisplay: scoring.recommendedOffer?.priceDisplay,
+      leadScore: scoring.score,
+      qualification: scoring.category,
+      answersJson: JSON.stringify(answers || {}),
+      message: normalizedContact.message,
+      payoutUrl: process.env.PAYOUT_URL || process.env.STRIPE_PAYOUT_URL,
+    });
+
     // Log CRM sync event
     db.store.crmSyncEvents.push({
       id: `crm_sync_${Date.now()}`,
@@ -72,7 +89,7 @@ export async function POST(req: NextRequest) {
       contactId: crmResult.contactId || null,
       opportunityId: crmResult.opportunityId || null,
       payloadJson: JSON.stringify(ghlContact),
-      errorMessage: crmResult.error || null,
+      errorMessage: crmResult.error || (emailResult.errors.length ? emailResult.errors.join('; ') : null),
       createdAt: new Date().toISOString(),
     });
 
@@ -81,6 +98,7 @@ export async function POST(req: NextRequest) {
       leadId,
       scoring,
       crmSynced: crmResult.success,
+      emailSent: emailResult.customerNotified || emailResult.adminNotified,
     });
   } catch (error: any) {
     console.error('Lead processing error:', error);

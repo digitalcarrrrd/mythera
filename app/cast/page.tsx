@@ -361,31 +361,56 @@ export default function CastApplicationPage() {
               </button>
             </form>
           ) : (
-            <div className="text-center py-12 animate-in fade-in">
+            <div className="text-center py-10 animate-in fade-in">
               <div className="w-16 h-16 rounded-full bg-primary/20 text-primary flex items-center justify-center mx-auto mb-6">
                 <CheckCircle2 className="w-8 h-8 stroke-[2.5]" />
               </div>
-              <h3 className="font-sans text-3xl font-black text-foreground uppercase mb-2">
-                Application Received
+              <h3 className="font-sans text-3xl sm:text-4xl font-black text-foreground uppercase mb-2">
+                APPLICATION RECEIVED · THANK YOU!
               </h3>
               <p className="text-primary font-mono text-xs uppercase font-bold tracking-wider mb-4">
-                Tier: {formData.preferredRole.toUpperCase()} · Status: In Qualification
+                Role: {formData.preferredRole.toUpperCase()} · Status: In Priority Review
               </p>
-              <p className="text-sm text-muted-foreground max-w-md mx-auto leading-relaxed mb-8">
-                Thank you, {formData.fullName}. Our narrative and casting team is reviewing your profile against upcoming episode requirements. We will contact you directly via WhatsApp / Email within 48 business hours.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="max-w-xl mx-auto p-5 rounded-2xl bg-secondary border border-border text-left mb-6">
+                <p className="text-xs sm:text-sm text-foreground leading-relaxed font-semibold">
+                  Thank you, {formData.fullName}. Your casting application has been registered into the MYTHRA production queue.
+                </p>
+                <div className="mt-3 p-3 bg-background/80 rounded-xl border border-primary/40">
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    <strong className="text-primary font-mono uppercase">Action Required:</strong> We have sent an instant confirmation email to <strong className="text-foreground">{formData.email}</strong>. <strong className="text-foreground">Please reply to that email within 24 hours</strong> to verify your likeness rights and confirm your availability for Episode 02 production.
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a
+                  href="/api/checkout"
+                  onClick={async (e) => {
+                    e.preventDefault();
+                    try {
+                      const res = await fetch('/api/checkout', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          offerCode: 'CAST_' + formData.preferredRole.toUpperCase().replace(/-/g, '_'),
+                          customerEmail: formData.email,
+                          customerName: formData.fullName,
+                        }),
+                      });
+                      const data = await res.json();
+                      if (data.url) window.location.href = data.url;
+                    } catch {
+                      window.location.href = '/pricing';
+                    }
+                  }}
+                  className="btn-pill-primary text-xs !py-3.5 !px-8"
+                >
+                  <span>Proceed to Reservation / Stripe Deposit &rarr;</span>
+                </a>
                 <Link
                   href="/you"
-                  className="btn-pill-secondary text-xs !py-3 !px-6"
+                  className="btn-pill-secondary text-xs !py-3.5 !px-6"
                 >
                   Return to MYTHRA YOU
-                </Link>
-                <Link
-                  href="/genesis"
-                  className="btn-pill-primary text-xs !py-3 !px-6"
-                >
-                  Explore Genesis Film Case
                 </Link>
               </div>
             </div>

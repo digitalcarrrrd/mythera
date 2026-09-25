@@ -862,6 +862,22 @@ export default function MythraYouPage() {
                     transition={{ duration: 0.35 }}
                     className="space-y-12"
                   >
+                    {/* Thank You & 24h Action Alert */}
+                    <div className="p-6 sm:p-8 rounded-3xl bg-primary/10 border-2 border-primary/50 text-foreground shadow-2xl">
+                      <div className="flex items-center gap-3 text-primary font-bold text-sm uppercase tracking-wider mb-2 font-mono">
+                        <CheckCircle2 className="w-6 h-6 text-primary shrink-0" />
+                        <span>INQUIRY SUBMITTED · THANK YOU, {leadForm.fullName || 'CREATOR'}!</span>
+                      </div>
+                      <p className="text-sm font-semibold text-foreground leading-relaxed">
+                        Your project brief has been registered with the MYTHRA narrative leads.
+                      </p>
+                      <div className="mt-3 p-4 bg-background/80 rounded-2xl border border-primary/40">
+                        <p className="text-xs text-muted-foreground leading-relaxed">
+                          <strong className="text-primary font-mono uppercase tracking-wide">Action Required:</strong> We have dispatched an instant confirmation email to <strong className="text-foreground">{leadForm.email}</strong>. <strong className="text-foreground">Please reply to that email within 24 hours</strong> with any notes or asset links to confirm your brief and secure your production slate.
+                        </p>
+                      </div>
+                    </div>
+
                     {/* The Primary Recommended Card */}
                     <div className="p-8 sm:p-12 rounded-3xl bg-card border-2 border-primary ring-2 ring-primary/40 shadow-2xl relative overflow-hidden">
                       <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none" />

@@ -40,6 +40,32 @@ export default function RecommendationView({
 
   return (
     <div>
+      {/* Thank You & 24h Action Alert */}
+      <div className="mb-8 p-6 sm:p-7 rounded-2xl bg-[#d8ff44]/10 border-2 border-[#d8ff44]/50 text-[#f3f3eb] shadow-xl">
+        <div className="flex items-center gap-2.5 text-[#d8ff44] font-bold text-sm uppercase tracking-wider mb-2 font-mono">
+          <CheckCircle2 className="w-5 h-5 text-[#d8ff44] shrink-0" />
+          <span>INQUIRY RECEIVED · THANK YOU!</span>
+        </div>
+        <p className="text-sm font-semibold text-[#f3f3eb] leading-relaxed">
+          Your project brief has been recorded and placed into the priority production queue.
+        </p>
+        <div className="mt-3 p-3.5 bg-[#000000]/60 rounded-xl border border-[#d8ff44]/30">
+          <p className="text-xs text-[#a3a89e] leading-relaxed">
+            <strong className="text-[#d8ff44] font-mono uppercase tracking-wide">Action Required:</strong> An instant confirmation email has been sent to your inbox. <strong className="text-[#ffffff]">Please reply to that email within 24 hours</strong> to confirm your project brief and secure your production slot.
+          </p>
+        </div>
+        <div className="mt-4 pt-3 border-t border-[#d8ff44]/20 flex flex-wrap items-center justify-between gap-3 text-xs">
+          <span className="text-[#a3a89e]">Ready to lock your slot immediately?</span>
+          <button
+            onClick={handleAction}
+            disabled={isProcessing}
+            className="btn-pill-primary text-xs !py-2.5 !px-5 inline-flex items-center gap-2 cursor-pointer"
+          >
+            <span>{isProcessing ? 'Connecting...' : 'Proceed to Stripe / Deposit &rarr;'}</span>
+          </button>
+        </div>
+      </div>
+
       {/* Header */}
       <div className="flex items-center gap-2 mb-3">
         <Sparkles className="w-4 h-4 text-[#d8ff44]" />

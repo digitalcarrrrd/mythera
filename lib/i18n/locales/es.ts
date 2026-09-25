@@ -34,7 +34,7 @@ const es: TranslationDict = {
 
   // ── Proof Section ──
   'proof.eyebrow': 'DESGLOSE AUDITADO DE LA PRIMERA PELÍCULA',
-  'proof.headline': 'Descubre cómo se produjo un drama emocional de 28 minutos en menos de 72 horas con un costo de cómputo inferior a $1,000.',
+  'proof.headline': 'Descubre cómo se produjo un drama emocional de 28 minutos en menos de 72 horas con un costo de cómputo inferior a $2,000.',
   'proof.cta': 'Explora el caso de estudio Génesis',
 
   // ── Path Selector ──

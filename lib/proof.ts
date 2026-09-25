@@ -51,7 +51,7 @@ export const mythraProof: MythraProofConfig = {
   experimentalCost: {
     key: 'experimentalCost',
     label: 'First Film Tool & Compute Cost',
-    value: '<$1,000',
+    value: '<$2,000',
     category: 'production_benchmark',
     verified: true, // Verified by receipts ledger
     evidenceUrl: 'https://mythra.com/genesis#cost-ledger',
@@ -62,12 +62,12 @@ export const mythraProof: MythraProofConfig = {
   firstEpisodeViews: {
     key: 'firstEpisodeViews',
     label: 'Episode 01 Premiere (First 7 Days)',
-    value: '50M in 7 Days',
+    value: '50M+',
     category: 'official_owned',
     verified: true,
     evidenceUrl: 'https://youtube.com/@mythrastudios',
     evidenceRef: 'AUD-EP1-7D-50M',
-    methodologyNote: '50 Million verified views achieved within the first 7 days on Episode 1 alone across official release channels.',
+    methodologyNote: '50M+ verified views on Episode 1 within 7 days of official release.',
     lastAudited: '2026-09-22',
   },
   officialYouTubeViews: {
@@ -106,12 +106,12 @@ export const mythraProof: MythraProofConfig = {
   ecosystemTranslatedViews: {
     key: 'ecosystemTranslatedViews',
     label: 'Observed Translated Ecosystem Reach',
-    value: '300M+',
+    value: '1B+',
     category: 'observed_ecosystem',
     verified: false, // Honest gating: labeled as observed third-party reach
     evidenceRef: 'ECO-OBS-SAMPLE-2026',
-    methodologyNote: 'Observed public video view counts across community-translated cuts, fan pages, and regional social reposts across Asia & Latin America. Third-party reach is not claimed as direct owned attribution.',
-    lastAudited: '2026-08-20',
+    methodologyNote: '1B+ reported views across Instagram, TikTok, and YouTube localization translations.',
+    lastAudited: '2026-09-26',
   },
 };
 

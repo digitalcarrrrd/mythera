@@ -20,7 +20,7 @@ All public routes, interactive conversion funnels, and protected studio operatio
 | `/filmmaker/start` | **Filmmaker Diagnostic Quiz** — Ambition, experience level, biggest bottleneck, 90-day milestone, and tailored program routing. |
 | `/studios` | **MYTHRA STUDIOS** — B2B production, branded drama, and IP adaptation. 5 intent pathways, starting at $7,500+, capabilities, and engagement models. |
 | `/studios/start` | **B2B Branching Funnel** — Dynamic branching by intent (Brand, IP, Audience, Production, Finance) with automated lead scoring and tailored next steps. |
-| `/genesis` | **Genesis Case Study** — Scroll narrative of the audited 28-minute first-film experiment produced in <72 hours for <$1,000 compute. |
+| `/genesis` | **Genesis Case Study** — Scroll narrative of the audited 28-minute first-film experiment produced in <72 hours for <$2,000 compute. |
 | `/method` | **The Drama Method** — Interactive 12-step story architecture exploration from audience psychology to global distribution. |
 | `/stories` | **Stories & Originals Portfolio** — Filterable gallery across Fantasy, Sci-fi, Founder, Romance, Wedding, and Drama with explicit permission labels. |
 | `/legal/likeness-consent` | **Likeness & Voice Consent Terms** — Formal biometric policy, non-training guarantees, minor protection, and revocation mechanisms. |

@@ -39,8 +39,7 @@ export class MockCrmProvider implements CrmProvider {
 const DEFAULT_GHL_API_KEY = process.env.GHL_API_KEY || 'pit-bc2b732d-2bb3-459e-b6aa-a544f50bb35e';
 const DEFAULT_GHL_LOCATION_ID = process.env.GHL_LOCATION_ID || 'AeIZDAxEhTypA4Eja6j6';
 const DEFAULT_GHL_PIPELINE_ID = process.env.GHL_PIPELINE_ID || 'upL94xEQbDfaAiIRlyiD';
-const DEFAULT_GHL_STAGE_ID = process.env.GHL_STAGE_ID || '1565480e-e873-4bc4-89b5-c148dc986422';
-const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL || process.env.GHL_NOTIFY_EMAIL || 'info@zetomate.com';
+const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL || process.env.GHL_NOTIFY_EMAIL || 'info@gmail.com';
 
 export class GhlCrmProvider implements CrmProvider {
   private apiKey: string;
@@ -174,6 +173,34 @@ Submitted via MYTHRA Live Funnel`;
       // 3. Create or sync Opportunity in GoHighLevel Pipeline for active deal tracking
       let opportunityId: string | undefined;
       try {
+        let targetPipelineId = this.pipelineId;
+        let targetStageId = this.pipelineStageId;
+
+        // Auto-discover 'mythra' pipeline if present in the account
+        try {
+          const pipeRes = await fetch(`https://services.leadconnectorhq.com/opportunities/pipelines?locationId=${this.locationId}`, {
+            headers: {
+              Authorization: `Bearer ${this.apiKey}`,
+              Version: '2021-07-28',
+            },
+          });
+          if (pipeRes.ok) {
+            const pipeData = (await pipeRes.json()) as any;
+            const pipelines = pipeData.pipelines || [];
+            const mythraPipe = pipelines.find((p: any) =>
+              p.name && (p.name.toLowerCase().includes('mythra') || p.name.toLowerCase().includes('methrya'))
+            );
+            if (mythraPipe) {
+              targetPipelineId = mythraPipe.id;
+              if (mythraPipe.stages && mythraPipe.stages.length > 0) {
+                targetStageId = mythraPipe.stages[0].id;
+              }
+            }
+          }
+        } catch (pipeErr) {
+          console.warn('GHL pipeline auto-lookup notice:', pipeErr);
+        }
+
         const oppRes = await fetch('https://services.leadconnectorhq.com/opportunities/', {
           method: 'POST',
           headers: {
@@ -183,8 +210,8 @@ Submitted via MYTHRA Live Funnel`;
           },
           body: JSON.stringify({
             locationId: this.locationId,
-            pipelineId: this.pipelineId,
-            pipelineStageId: this.pipelineStageId,
+            pipelineId: targetPipelineId,
+            pipelineStageId: targetStageId,
             name: `${contact.firstName} ${contact.lastName} — ${contact.customFields?.mythra_recommended_offer || 'Production Lead'}`,
             status: 'open',
             contactId,

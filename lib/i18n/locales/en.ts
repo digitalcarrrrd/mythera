@@ -34,7 +34,7 @@ const en: TranslationDict = {
 
   // ── Proof Section ──
   'proof.eyebrow': 'AUDITED FIRST-FILM BREAKDOWN',
-  'proof.headline': 'Read how a 28-minute emotional drama was produced in under 72 hours with sub-$1,000 compute.',
+  'proof.headline': 'Read how a 28-minute emotional drama was produced in under 72 hours with sub-$2,000 compute.',
   'proof.cta': 'Explore Genesis Case Study',
 
   // ── Path Selector ──

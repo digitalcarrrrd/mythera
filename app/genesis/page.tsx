@@ -21,14 +21,14 @@ export default function GenesisCaseStudyPage() {
     {
       num: '03',
       title: 'THE PRODUCTION ECONOMICS',
-      subtitle: 'Sub-$1,000 Experimental Compute Ledger',
-      content: 'The total third-party compute, software subscriptions, and licensed audio assets required for the master cut amounted to less than $1,000 USD. This does not represent the commercial price of studio commissions; it demonstrates that production economics have fundamentally inverted. The leverage now belongs entirely to story architecture and audience empathy.',
+      subtitle: 'Sub-$2,000 Experimental Compute Ledger',
+      content: 'The total third-party compute, software subscriptions, and licensed audio assets required for the master cut amounted to less than $2,000 USD. This does not represent the commercial price of studio commissions; it demonstrates that production economics have fundamentally inverted. The leverage now belongs entirely to story architecture and audience empathy.',
     },
     {
       num: '04',
       title: 'THE OFFICIAL RELEASE & NETWORK EFFECT',
-      subtitle: '50M Views in 7 Days on the First Episode Alone',
-      content: 'Upon official release on MYTHRA channels, Episode 1 alone generated over 50 million verified views in its first 7 days. Subsequently, authorized translation partners added multi-language distributions across global feeds. Beyond owned properties, community-translated cuts and fan reposts across Asia and Latin America accumulated an observed 300M+ views across third-party social platforms.',
+      subtitle: '50M+ Views in 7 Days on the First Episode Alone',
+      content: 'Upon official release on MYTHRA channels, Episode 1 alone generated over 50 million verified views in its first 7 days. Subsequently, authorized translation partners added multi-language distributions across global feeds. Beyond owned properties, community-translated cuts and regional social reposts across Instagram, TikTok, and YouTube accumulated an observed 1B+ reported views across third-party social platforms.',
     },
     {
       num: '05',
