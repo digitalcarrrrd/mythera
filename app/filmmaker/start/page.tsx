@@ -14,6 +14,7 @@ const STORAGE_KEY = 'mythra_filmmaker_funnel_state';
 export default function FilmmakerFunnelPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const initialTier = searchParams.get('tier') || '';
   // If tier is specified from pricing card, jump straight to enrollment contact form
   const hasSpecificTier = Boolean(initialTier && initialTier !== 'film-blueprint');
   const [step, setStep] = useState(hasSpecificTier ? 6 : 1);
