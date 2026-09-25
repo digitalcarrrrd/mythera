@@ -306,11 +306,11 @@ export default function MythraYouPage() {
       if (data.url) {
         window.location.href = data.url;
       } else {
-        window.location.href = `/checkout?tier=${tier.id || tier.code}&email=${encodeURIComponent(leadForm.email?.trim() || '')}&name=${encodeURIComponent(leadForm.firstName?.trim() || '')}`;
+        window.location.href = 'https://whop.com';
       }
     } catch (err) {
       console.error('Checkout error:', err);
-      window.location.href = `/checkout?tier=${tier.id || tier.code}&email=${encodeURIComponent(leadForm.email?.trim() || '')}&name=${encodeURIComponent(leadForm.firstName?.trim() || '')}`;
+      window.location.href = 'https://whop.com';
     } finally {
       setIsCheckingOut(null);
     }

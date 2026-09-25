@@ -133,6 +133,40 @@ export class GhlCrmProvider implements CrmProvider {
       // 2. Add detailed lead dossier Note in GoHighLevel for follow-up
       try {
         const custom = contact.customFields || {};
+        let parsedAnswersText = 'None provided';
+        let doorTitle = '';
+        let recipient = '';
+        let occasion = '';
+        let ambition = '';
+        let role = '';
+        let whyMatters = '';
+
+        try {
+          if (custom.mythra_answers_json) {
+            const a = typeof custom.mythra_answers_json === 'string' ? JSON.parse(custom.mythra_answers_json) : custom.mythra_answers_json;
+            doorTitle = a.doorTitle || a.door || '';
+            recipient = a.recipient || '';
+            occasion = a.occasion || '';
+            ambition = a.ambition || '';
+            role = a.preferredRole || a.roleLevel || '';
+            whyMatters = a.whyStoryMatters || a.message || '';
+
+            const lines = [];
+            if (doorTitle) lines.push(`• Track / Door: ${doorTitle}`);
+            if (recipient) lines.push(`• Film Made For: ${recipient}`);
+            if (occasion) lines.push(`• Story Occasion / Theme: ${occasion}`);
+            if (ambition) lines.push(`• Cinematic Ambition: ${ambition}`);
+            if (role) lines.push(`• Cast Role Level: ${role}`);
+            if (a.assetsUsed) lines.push(`• Assets to Integrate: ${a.assetsUsed}`);
+            if (a.motivation) lines.push(`• Motivation: ${a.motivation}`);
+            if (a.budgetReadiness) lines.push(`• Budget Readiness: ${a.budgetReadiness}`);
+            if (whyMatters) lines.push(`• Story Details / Premise: "${whyMatters}"`);
+            if (lines.length > 0) parsedAnswersText = lines.join('\n');
+          }
+        } catch (e) {
+          parsedAnswersText = String(custom.mythra_answers_json || 'None');
+        }
+
         const noteContent = `🌟 NEW MYTHRA LEAD DOSSIER
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 👤 CONTACT:
@@ -140,20 +174,18 @@ export class GhlCrmProvider implements CrmProvider {
 • Email: ${contact.email}
 • WhatsApp/Phone: ${contact.phone || 'None'}
 • Company: ${contact.companyName || 'None'}
-• Role: ${custom.mythra_role || 'None'}
 • Country: ${custom.mythra_country || 'None'}
 
-🎯 INTENT & ROUTING:
-• Persona: MYTHRA ${custom.mythra_persona || 'UNKNOWN'}
+🎯 WHAT THIS CLIENT WANTS:
+• Selected Package: ${custom.mythra_recommended_offer || 'Production Package'}
+• Persona Track: MYTHRA ${custom.mythra_persona || 'YOU'}
 • Lead Score: ${custom.mythra_lead_score || 0} (${custom.mythra_qualification || 'Standard'})
-• Recommended Offer: ${custom.mythra_recommended_offer || 'Custom Scope'}
-• Offer Code: ${custom.mythra_offer_code || 'N/A'}
 
-📋 LEAD QUESTIONNAIRE ANSWERS:
-${custom.mythra_answers_json ? JSON.stringify(JSON.parse(String(custom.mythra_answers_json)), null, 2) : 'None'}
+📋 QUESTIONNAIRE ANSWERS:
+${parsedAnswersText}
 
-📝 PROJECT MESSAGE / NOTES:
-${custom.mythra_message || 'None provided'}
+📝 PROJECT NOTES / STORY PREMISE:
+${whyMatters || custom.mythra_message || 'None provided'}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Submitted via MYTHRA Live Funnel`;
@@ -310,6 +342,10 @@ Submitted via MYTHRA Live Funnel`;
 
         if (adminContactId) {
           const custom = contact.customFields || {};
+          const cleanPhone = (contact.phone || '').replace(/[^0-9]/g, '');
+          const waMsg = encodeURIComponent(`Hi ${contact.firstName}, this is the MYTHRA production team regarding your ${custom.mythra_recommended_offer || 'film'} inquiry. We have reviewed your story brief and are ready to send your official Whop reservation link.`);
+          const waLink = cleanPhone ? `https://wa.me/${cleanPhone}?text=${waMsg}` : '';
+
           await fetch('https://services.leadconnectorhq.com/conversations/messages', {
             method: 'POST',
             headers: {
@@ -323,21 +359,42 @@ Submitted via MYTHRA Live Funnel`;
               emailTo: NOTIFY_EMAIL,
               subject: `🔥 New MYTHRA Lead: ${contact.firstName} ${contact.lastName} (${custom.mythra_recommended_offer || 'General'})`,
               html: `
-                <div style="font-family:Arial,sans-serif;max-width:650px;margin:0 auto;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;background:#ffffff;">
-                  <div style="background:#000000;color:#d8ff44;padding:20px;text-align:center;">
+                <div style="font-family:Arial,sans-serif;max-width:650px;margin:0 auto;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;background:#ffffff;">
+                  <div style="background:#000000;color:#d8ff44;padding:24px;text-align:center;">
                     <h1 style="margin:0;font-size:22px;letter-spacing:1px;">MYTHRA · NEW LEAD RECEIVED</h1>
-                    <p style="margin:6px 0 0 0;color:#ffffff;font-size:14px;">Pipeline: MYTHRA Leads</p>
+                    <p style="margin:6px 0 0 0;color:#ffffff;font-size:13px;">Pipeline: MYTHRA Leads · Stage: New Request</p>
                   </div>
                   <div style="padding:24px;color:#1a1a1a;">
-                    <h2 style="font-size:16px;border-bottom:2px solid #f0f0f0;padding-bottom:8px;margin-top:0;">Lead Details</h2>
-                    <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">
-                      <tr><td style="padding:6px 0;width:140px;font-weight:bold;color:#555;">Name:</td><td>${contact.firstName} ${contact.lastName}</td></tr>
-                      <tr><td style="padding:6px 0;font-weight:bold;color:#555;">Email:</td><td><a href="mailto:${contact.email}" style="color:#2563eb;">${contact.email}</a></td></tr>
-                      <tr><td style="padding:6px 0;font-weight:bold;color:#555;">WhatsApp/Phone:</td><td>${contact.phone || 'N/A'}</td></tr>
-                      <tr><td style="padding:6px 0;font-weight:bold;color:#555;">Country:</td><td>${custom.mythra_country || 'N/A'}</td></tr>
-                      <tr><td style="padding:6px 0;font-weight:bold;color:#555;">Recommended:</td><td><strong>${custom.mythra_recommended_offer || 'N/A'}</strong></td></tr>
-                      <tr><td style="padding:6px 0;font-weight:bold;color:#555;">Tags:</td><td>${contact.tags.join(', ')}</td></tr>
+                    <!-- Highlighted What Client Wants Box -->
+                    <div style="background:#0a0a0a;color:#ffffff;border-radius:8px;padding:18px;margin-bottom:20px;border-left:4px solid #d8ff44;">
+                      <span style="font-size:11px;font-family:monospace;color:#a1a1aa;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:4px;">Target Selection</span>
+                      <h2 style="margin:0;font-size:20px;color:#d8ff44;">${custom.mythra_recommended_offer || 'Production Package'}</h2>
+                    </div>
+
+                    <h3 style="font-size:15px;border-bottom:2px solid #f0f0f0;padding-bottom:6px;margin:16px 0 12px 0;">👤 Contact Information</h3>
+                    <table style="width:100%;border-collapse:collapse;margin-bottom:16px;font-size:14px;">
+                      <tr><td style="padding:5px 0;width:140px;font-weight:bold;color:#555;">Name:</td><td><strong>${contact.firstName} ${contact.lastName}</strong></td></tr>
+                      <tr><td style="padding:5px 0;font-weight:bold;color:#555;">Email:</td><td><a href="mailto:${contact.email}" style="color:#2563eb;">${contact.email}</a></td></tr>
+                      <tr><td style="padding:5px 0;font-weight:bold;color:#555;">WhatsApp/Phone:</td><td><strong>${contact.phone || 'None provided'}</strong></td></tr>
+                      <tr><td style="padding:5px 0;font-weight:bold;color:#555;">Country:</td><td>${custom.mythra_country || 'N/A'}</td></tr>
                     </table>
+
+                    <h3 style="font-size:15px;border-bottom:2px solid #f0f0f0;padding-bottom:6px;margin:16px 0 12px 0;">📋 Questionnaire Breakdown (What They Want)</h3>
+                    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px;font-size:13px;line-height:1.6;white-space:pre-wrap;color:#1e293b;font-family:monospace;">${parsedAnswersText}</div>
+
+                    ${waLink ? `
+                    <div style="text-align:center;margin:24px 0 12px 0;">
+                      <a href="${waLink}" style="background:#25D366;color:#ffffff;font-weight:bold;text-decoration:none;padding:14px 28px;border-radius:8px;display:inline-block;font-size:14px;">
+                        💬 Open 1-Click WhatsApp Follow-Up &rarr;
+                      </a>
+                    </div>
+                    ` : ''}
+
+                    <div style="text-align:center;margin-top:16px;">
+                      <a href="mailto:${contact.email}?subject=${encodeURIComponent(`Your MYTHRA Production Request (${custom.mythra_recommended_offer || 'Package'})`)}" style="color:#2563eb;font-size:13px;text-decoration:underline;">
+                        Reply to ${contact.email} via Email
+                      </a>
+                    </div>
                   </div>
                 </div>
               `,

@@ -402,10 +402,10 @@ export default function CastApplicationPage() {
                       if (data.url) {
                         window.location.href = data.url;
                       } else {
-                        window.location.href = `/checkout?tier=cast-${formData.preferredRole}&email=${encodeURIComponent(formData.email)}&name=${encodeURIComponent(formData.fullName)}`;
+                        window.location.href = 'https://whop.com';
                       }
                     } catch {
-                      window.location.href = `/checkout?tier=cast-${formData.preferredRole}&email=${encodeURIComponent(formData.email)}&name=${encodeURIComponent(formData.fullName)}`;
+                      window.location.href = 'https://whop.com';
                     }
                   }}
                   className="btn-pill-primary text-xs !py-3.5 !px-8 cursor-pointer"
