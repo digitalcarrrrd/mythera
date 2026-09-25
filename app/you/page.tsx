@@ -16,6 +16,7 @@ import {
   Lock,
   ChevronDown,
   Star,
+  Loader2,
 } from 'lucide-react';
 import { useLanguage } from '../../components/LanguageProvider';
 import { mythraOffers, type OfferTier } from '../../lib/offers';
@@ -78,6 +79,8 @@ export default function MythraYouPage() {
     whatsapp: '',
     consent: true,
   });
+  const [isSubmittingLead, setIsSubmittingLead] = useState(false);
+  const [isCheckingOut, setIsCheckingOut] = useState<string | null>(null);
 
   // ── Handle Source-Specific Smart Links / Deep Linking ──
   useEffect(() => {
@@ -224,14 +227,21 @@ export default function MythraYouPage() {
   const recData = selectedDoor === 'personal' ? getPersonalRecommendation() : getCastRecommendation();
 
   // ── Handle Lead Submission ──
-  const handleLeadSubmit = (e: React.FormEvent) => {
+  const handleLeadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmittingLead(true);
+
+    const fullName = (leadForm.firstName || '').trim();
+    const nameParts = fullName.split(/\s+/);
+    const firstName = nameParts[0] || 'Lead';
+    const lastName = nameParts.slice(1).join(' ') || '';
 
     try {
       const existing = JSON.parse(localStorage.getItem('mythra_you_leads') || '[]');
       existing.push({
         id: 'lead_' + Date.now(),
         ...leadForm,
+        fullName,
         door: selectedDoor,
         answers: selectedDoor === 'personal' ? personalAnswers : castAnswers,
         ghlTag: recData.ghlTag,
@@ -244,32 +254,66 @@ export default function MythraYouPage() {
     }
 
     // Capture in GoHighLevel & CRM automation
-    const nameParts = (leadForm.fullName || '').trim().split(/\s+/);
-    fetch('/api/leads', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        persona: 'YOU',
-        contact: {
-          fullName: leadForm.fullName,
-          firstName: nameParts[0] || 'Lead',
-          lastName: nameParts.slice(1).join(' ') || '',
-          email: leadForm.email,
-          whatsapp: leadForm.whatsapp,
-          country: leadForm.country,
-          consentMarketing: leadForm.consent,
-        },
-        answers: {
-          door: selectedDoor,
-          doorTitle: selectedDoor === 'personal' ? 'A FILM MADE FOR ME' : 'A ROLE INSIDE MYTHRA',
-          ...(selectedDoor === 'personal' ? personalAnswers : castAnswers),
-          recommendedOffer: recData.recommended.name,
-          ghlTag: recData.ghlTag,
-        },
-      }),
-    }).catch((err) => console.error('GHL lead capture error:', err));
+    try {
+      await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          persona: 'YOU',
+          contact: {
+            fullName,
+            firstName,
+            lastName,
+            email: leadForm.email.trim(),
+            whatsapp: leadForm.whatsapp?.trim() || undefined,
+            country: leadForm.country?.trim() || undefined,
+            consentMarketing: leadForm.consent,
+          },
+          answers: {
+            door: selectedDoor,
+            doorTitle: selectedDoor === 'personal' ? 'A FILM MADE FOR ME' : 'A ROLE INSIDE MYTHRA',
+            ...(selectedDoor === 'personal' ? personalAnswers : castAnswers),
+            recommendedOffer: recData.recommended.name,
+            ghlTag: recData.ghlTag,
+          },
+        }),
+      });
+    } catch (err) {
+      console.error('GHL lead capture error:', err);
+    } finally {
+      setIsSubmittingLead(false);
+      setCurrentQuestion(4);
+    }
+  };
 
-    setCurrentQuestion(4);
+  // ── Handle Checkout Trigger for Direct Payout / Stripe / Onboarding ──
+  const handleCheckoutTrigger = async (tier: any) => {
+    const tierIdentifier = tier.code || tier.id || tier.name;
+    try {
+      setIsCheckingOut(tierIdentifier);
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          offerCode: tier.code || 'you-trailer',
+          customerEmail: leadForm.email?.trim() || undefined,
+          customerName: leadForm.firstName?.trim() || undefined,
+          successUrl: `${window.location.origin}/you/onboarding?tier=${tier.id || tier.code || 'you-trailer'}`,
+          cancelUrl: `${window.location.origin}/you`,
+        }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        window.location.href = `/you/onboarding?session_id=mock_active&tier=${tier.id || tier.code || 'you-trailer'}`;
+      }
+    } catch (err) {
+      console.error('Checkout error:', err);
+      window.location.href = `/you/onboarding?session_id=mock_active&tier=${tier.id || tier.code || 'you-trailer'}`;
+    } finally {
+      setIsCheckingOut(null);
+    }
   };
 
   return (
@@ -845,10 +889,20 @@ export default function MythraYouPage() {
 
                       <button
                         type="submit"
-                        className="btn-pill-primary w-full text-center text-sm !py-4 justify-center cursor-pointer shadow-xl mt-4"
+                        disabled={isSubmittingLead}
+                        className="btn-pill-primary w-full text-center text-sm !py-4 justify-center cursor-pointer shadow-xl mt-4 disabled:opacity-60"
                       >
-                        <span>{t('you.showPathCta')}</span>
-                        <ArrowRight className="w-4 h-4 stroke-[3]" />
+                        {isSubmittingLead ? (
+                          <div className="flex items-center gap-2">
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                            <span>Confirming Submission...</span>
+                          </div>
+                        ) : (
+                          <>
+                            <span>{t('you.showPathCta')}</span>
+                            <ArrowRight className="w-4 h-4 stroke-[3]" />
+                          </>
+                        )}
                       </button>
                     </form>
                   </motion.div>
@@ -915,13 +969,24 @@ export default function MythraYouPage() {
 
                       {/* Action Buttons */}
                       <div className="flex flex-col sm:flex-row items-center gap-4 pt-4 border-t border-border">
-                        <Link
-                          href={recData.recommended.ctaHref}
-                          className="btn-pill-primary w-full sm:w-auto flex-1 text-center justify-center text-sm !py-3.5 no-underline"
+                        <button
+                          type="button"
+                          disabled={isCheckingOut !== null}
+                          onClick={() => handleCheckoutTrigger(recData.recommended)}
+                          className="btn-pill-primary w-full sm:w-auto flex-1 text-center justify-center text-sm !py-3.5 cursor-pointer disabled:opacity-60"
                         >
-                          <span>{recData.recommended.ctaText}</span>
-                          <ArrowRight className="w-4 h-4 stroke-[3]" />
-                        </Link>
+                          {isCheckingOut === (recData.recommended.code || recData.recommended.id || recData.recommended.name) ? (
+                            <div className="flex items-center gap-2">
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                              <span>Opening Checkout...</span>
+                            </div>
+                          ) : (
+                            <>
+                              <span>{recData.recommended.ctaText}</span>
+                              <ArrowRight className="w-4 h-4 stroke-[3]" />
+                            </>
+                          )}
+                        </button>
 
                         <button
                           type="button"
@@ -963,12 +1028,21 @@ export default function MythraYouPage() {
                                   {recData.lower.description}
                                 </p>
                               </div>
-                              <Link
-                                href={recData.lower.ctaHref}
-                                className="btn-pill-secondary w-full text-center text-xs justify-center no-underline"
+                              <button
+                                type="button"
+                                disabled={isCheckingOut !== null}
+                                onClick={() => handleCheckoutTrigger(recData.lower)}
+                                className="btn-pill-secondary w-full text-center text-xs justify-center cursor-pointer disabled:opacity-60"
                               >
-                                <span>{t('you.selectTier', { tier: recData.lower.name })}</span>
-                              </Link>
+                                {isCheckingOut === (recData.lower.code || recData.lower.id || recData.lower.name) ? (
+                                  <div className="flex items-center justify-center gap-2">
+                                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                                    <span>Opening Checkout...</span>
+                                  </div>
+                                ) : (
+                                  <span>{t('you.selectTier', { tier: recData.lower.name })}</span>
+                                )}
+                              </button>
                             </div>
                           )}
 
@@ -988,12 +1062,21 @@ export default function MythraYouPage() {
                                   {recData.higher.description}
                                 </p>
                               </div>
-                              <Link
-                                href={recData.higher.ctaHref}
-                                className="btn-pill-secondary w-full text-center text-xs justify-center no-underline"
+                              <button
+                                type="button"
+                                disabled={isCheckingOut !== null}
+                                onClick={() => handleCheckoutTrigger(recData.higher)}
+                                className="btn-pill-secondary w-full text-center text-xs justify-center cursor-pointer disabled:opacity-60"
                               >
-                                <span>{t('you.selectTier', { tier: recData.higher.name })}</span>
-                              </Link>
+                                {isCheckingOut === (recData.higher.code || recData.higher.id || recData.higher.name) ? (
+                                  <div className="flex items-center justify-center gap-2">
+                                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                                    <span>Opening Checkout...</span>
+                                  </div>
+                                ) : (
+                                  <span>{t('you.selectTier', { tier: recData.higher.name })}</span>
+                                )}
+                              </button>
                             </div>
                           )}
                         </div>
