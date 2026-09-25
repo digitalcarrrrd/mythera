@@ -25,7 +25,7 @@ export async function dispatchLeadEmails(lead: LeadEmailData): Promise<{
   let customerNotified = false;
   let adminNotified = false;
 
-  const adminEmail = process.env.NOTIFY_EMAIL || process.env.GHL_NOTIFY_EMAIL || 'info@gmail.com';
+  const adminEmail = process.env.NOTIFY_EMAIL || process.env.GHL_NOTIFY_EMAIL || 'info@zetomate.com';
   const payoutLink = lead.payoutUrl || process.env.PAYOUT_URL || process.env.STRIPE_PAYOUT_URL || 'https://mythralab.com/pricing';
   const firstName = lead.customerName.trim().split(/\s+/)[0] || 'there';
 

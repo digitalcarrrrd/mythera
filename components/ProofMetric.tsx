@@ -112,9 +112,23 @@ export default function ProofMetric({ showAll = false }: ProofMetricProps) {
                         ? 'Licensed Channel Partner'
                         : 'Observed Ecosystem Reach'}
                     </span>
-                    <div className="font-sans text-4xl sm:text-5xl font-black text-[var(--text-primary)]">
-                      {metric.value}
-                    </div>
+                    {metric.key === 'officialFacebookViews' ? (
+                      <div className="flex items-baseline gap-2 sm:gap-2.5 flex-wrap">
+                        <div className="flex items-baseline gap-1">
+                          <span className="font-sans text-3xl sm:text-4xl font-black text-[var(--text-primary)]">4M</span>
+                          <span className="text-[11px] font-mono font-bold text-primary">FB</span>
+                        </div>
+                        <span className="text-lg text-[var(--text-muted)] font-light">+</span>
+                        <div className="flex items-baseline gap-1">
+                          <span className="font-sans text-3xl sm:text-4xl font-black text-[var(--text-primary)]">5M</span>
+                          <span className="text-[11px] font-mono font-bold text-primary">IG</span>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="font-sans text-4xl sm:text-5xl font-black text-[var(--text-primary)]">
+                        {metric.value}
+                      </div>
+                    )}
                   </div>
 
                   <div className="mt-4 pt-3 border-t border-[var(--border-subtle)]">
